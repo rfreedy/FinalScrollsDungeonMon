@@ -15,9 +15,12 @@ typedef struct skills{
 
 typedef struct stats{
 	int level;
-	int health;
-	int stamina;
-	int mana;
+	int currentHealth;
+	int maxHealth;
+	int currentStamina;
+	int maxStamina;
+	int currentMana;
+	int maxMana;
 } stat_type;
 
 
