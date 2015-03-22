@@ -3,12 +3,17 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include <iostream>
+#include<entity.h>
+#include<stdio.h>
+#include<SDL2/SDL.h>
 
 class character: public entity{
 	public:
 		virtual void render();
-
+		int getLevel();
+		void levelUp();	
+	
 	private:
-		int level;
+		skill_type skills;
+		stat_type stats;
 };
