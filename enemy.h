@@ -10,6 +10,7 @@ class Enemy: public entity{
 		~Enemy();	//deconstructor
 		virtual void render();	//implementation of pure virtual
 	private:
-		stat_type stats;	//creates structure
+		stat_type stats;	//creates structure for stats (health, mana,stamina)
+		skill_type skills;	//structure for skills (atk, def, power)
 		
 };
