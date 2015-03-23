@@ -12,6 +12,7 @@ class character: public entity{
 		virtual void render();
 		int getLevel();
 		void levelUp();	
+		void fight();		
 	
 	private:
 		skill_type skills;
