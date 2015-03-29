@@ -10,6 +10,17 @@ and may not be redistributed without written permission.*/
 #include <stdio.h>
 #include <string>
 
+//Key press surfaces constants 
+enum KeyPressSurfaces { 
+	KEY_PRESS_SURFACE_DEFAULT, 
+	KEY_PRESS_SURFACE_UP, 
+	KEY_PRESS_SURFACE_DOWN, 
+	KEY_PRESS_SURFACE_LEFT, 
+	KEY_PRESS_SURFACE_RIGHT,
+	KEY_PRESS_SURFACE_R, 
+	KEY_PRESS_SURFACE_TOTAL 
+};
+
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -28,6 +39,9 @@ SDL_Surface* loadSurface( std::string path );
 
 //The window we'll be rendering to
 SDL_Window* gWindow = NULL;
+
+//image corresponding to key press
+SDL_Surface* gKeyPressSurfaces[KEY_PRESS_SURFACE_TOTAL];
 	
 //The surface contained by the window
 SDL_Surface* gScreenSurface = NULL;
@@ -135,6 +149,10 @@ SDL_Surface* loadSurface( std::string path )
 
 int main( int argc, char* args[] )
 {
+	int up=0;		//counters to keep track of movement
+	int down=0;
+	int right=0;
+	int left=0;
 	//Start up SDL and create window
 	if( !init() )
 	{
@@ -155,6 +173,15 @@ int main( int argc, char* args[] )
 			//Event handler
 			SDL_Event e;
 
+			//Apply the image stretched
+				SDL_Rect stretchRect;
+				stretchRect.x = 50;
+				stretchRect.y = 50;
+				stretchRect.w = SCREEN_WIDTH/2;
+				stretchRect.h = SCREEN_HEIGHT/2;
+				SDL_BlitScaled( gPNGSurface, NULL, gScreenSurface, &stretchRect );
+				SDL_UpdateWindowSurface( gWindow );
+
 			//While application is running
 			while( !quit )
 			{
@@ -166,16 +193,46 @@ int main( int argc, char* args[] )
 					{
 						quit = true;
 					}
+					else if( e.type == SDL_KEYDOWN )
+					{
+						//Select surfaces based on key press
+						switch( e.key.keysym.sym )
+						{
+							case SDLK_UP:
+								stretchRect.y = stretchRect.y - 50;
+								up++;
+							break;
+
+							case SDLK_DOWN:
+								stretchRect.y = stretchRect.y + 50;
+								down++;
+							break;
+
+							case SDLK_LEFT:
+								stretchRect.x = stretchRect.x - 50;
+								left++;
+							break;
+
+							case SDLK_RIGHT:
+								stretchRect.x = stretchRect.x + 50;
+								right++;
+							break;
+
+							case SDLK_r:
+								up =0;
+								down=0;
+								right =0;
+								left =0;
+							break;
+
+							default:
+								//gCurrentSurface = gKeyPressSurfaces[ KEY_PRESS_SURFACE_DEFAULT ];
+							break;
+						}
+					}
 				}
-				//Apply the image stretched
-				SDL_Rect stretchRect;
-				stretchRect.x = 50;
-				stretchRect.y = 50;
-				stretchRect.w = SCREEN_WIDTH/2;
-				stretchRect.h = SCREEN_HEIGHT/2;
 				SDL_BlitScaled( gPNGSurface, NULL, gScreenSurface, &stretchRect );
 				SDL_UpdateWindowSurface( gWindow );
-
 				//Apply the PNG image
 				//SDL_BlitSurface( gPNGSurface, NULL, gScreenSurface, NULL );
 			
