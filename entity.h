@@ -5,10 +5,12 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
+using namespace std;
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 typedef struct skills{
         int slashing;		//attack stat for sharp melee weapons
@@ -33,13 +35,17 @@ typedef struct stats{
 
 class Entity{
 	public:
-		Entity();
-		~Entity();
-		virtual void render() = 0;	//all entities must be renderable		
+		Entity();			//default constructor
+		~Entity();			//deconstructor
+		virtual void render() = 0;		//all entities must be renderable		
+		virtual void toggleVisibility() = 0;	//all entities can change visibility
+		virtual int isVisible() = 0;		//virtual get function for visibility
+
+		int getVisibility();
+		void setVisibility(int);
 
 	private:
-		int isVisible;
-		SDL_Surface* texture;
+		int visibility;			//whether or not texture is rendered
 };
 
 #endif

@@ -2,23 +2,42 @@
 //Enemy Character for FSDM game, interface file
 //Lines commented #DEBUG# are for debugging and should be commented out for final release
 
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef ENEMY_H
+#define ENEMY_H
+
+#include <stdio.h>
+#include <string>
+using namespace std;
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <stdio.h>
-#include <string>
+
+#include "entity.h"
+#include "character.h"
 
 class Enemy: public Entity{
 	public:
 		Enemy();	//constructor
 		~Enemy();	//deconstructor
+
 		virtual void render();	//implementation of pure virtual
+		virtual void toggleVisibility();
+		virtual int isVisible();
+
+		int getCurrentHealth();
+		int getCurrentStamina();
+		int getCurrentMana();
+
+		void defend();		//take damage
+		void attack();		//calculate output damage
 	private:
 		stat_type stats;	//creates structure for stats (health, mana,stamina)
 		skill_type skills;	//structure for skills (atk, def, power)
+
+		int level_coordinates_x;
+		int level_coordinates_y;
 		
+		//LTexture unit_texture;		
 };
 
 #endif
