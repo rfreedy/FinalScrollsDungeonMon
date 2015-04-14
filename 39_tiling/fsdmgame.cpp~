@@ -7,34 +7,18 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
-#include "LTexture.h"
-#include "Tile.h"
-
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-//The dimensions of the level
-const int LEVEL_WIDTH = 1280;
-const int LEVEL_HEIGHT = 960;
-
-//Tile constants
-const int TILE_WIDTH = 80;
-const int TILE_HEIGHT = 80;
-const int TOTAL_TILES = 192;
-const int TOTAL_TILE_SPRITES = 12;
-
-
+#include "fsdmgame.h"
 
 void FSDMGame::start() {
-	if(init()){
-		if(loadMedia()){
-			
-		}else{
-			printf("Media loading failed!\n");	
-		}
-	}else{
+	if(!init()){
+		
 		printf("Initialization failed!\n");
+	}else{
+		if(!loadMedia()){
+			printf("Media loading failed!\n");
+		}else{
+			play();		
+		}
 	}
 	return;
 }
@@ -76,7 +60,7 @@ int FSDMGame::play(){
 			}
 
 			//Move the dot
-			dot.move( *(loaded_level).getTileSet() );
+			dot.move( loaded_level->getTileSet() );
 			dot.setCamera( camera );
 
 			//Clear screen
@@ -84,7 +68,7 @@ int FSDMGame::play(){
 			SDL_RenderClear( gRenderer );
 
 			//Render level
-			loaded_level->render(camera);
+			loaded_level->render(camera, textures.gTileTexture);
 
 			/*
 			//Render level
@@ -165,13 +149,13 @@ bool FSDMGame::init()
 
 void FSDMGame::close()
 {
-	*(loaded_level).free();
+	loaded_level->free();
 	delete loaded_level;	
 	loaded_level = NULL;	
 
 	//Free loaded images
-	gDotTexture.free();
-	gTileTexture.free();
+	textures.gDotTexture->free();
+	textures.gTileTexture->free();
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -184,7 +168,7 @@ void FSDMGame::close()
 	SDL_Quit();
 }
 
-bool FSDMGame::loadMedia( Tile* tiles[] )
+bool FSDMGame::loadMedia()
 {
 	//Loading success flag
 	bool success = true;
@@ -202,14 +186,14 @@ bool FSDMGame::loadMedia( Tile* tiles[] )
 	}
 
 	//Load dot texture - replace with character texture
-	if( !gDotTexture.loadFromFile( "39_tiling/dot.bmp" ) )
+	if( !textures.gDotTexture->loadFromFile( "39_tiling/dot.bmp" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
 	}
 
 	//Load tile texture - replace with our tile sprite sheet
-	if( !gTileTexture.loadFromFile( "39_tiling/tiles.png" ) )
+	if( !textures.gTileTexture->loadFromFile( "39_tiling/tiles.png" ) )
 	{
 		printf( "Failed to load tile set texture!\n" );
 		success = false;

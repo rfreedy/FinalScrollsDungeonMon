@@ -1,19 +1,17 @@
 //Tile.h Final Project
 
+#ifndef TILE_H
+#define TILE_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
-#include "Tile.cpp"
 #include "LTexture.h"
-#ifndef TILE_H
-#define TILE_H
 
 const int TILE_WIDTH = 80;
 const int TILE_HEIGHT = 80;
-const int TOTAL_TILES = 192;
-const int TOTAL_TILE_SPRITES = 12;
 
 class Tile
 {
@@ -22,7 +20,7 @@ class Tile
 		Tile( int x, int y, int tileType );
 
 		//Shows the tile
-		void render( SDL_Rect& camera );
+		void render( SDL_Rect&, SDL_Rect*, LTexture*);
 
 		//Get the tile type
 		int getType();
@@ -38,5 +36,6 @@ class Tile
 
 		//The tile type
 		int mType;
-}
+};
+
 #endif

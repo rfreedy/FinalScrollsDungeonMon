@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
-
+#include "LTexture.h"
 
 LTexture::LTexture()
 {

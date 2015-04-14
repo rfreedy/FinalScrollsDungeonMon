@@ -4,8 +4,8 @@
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
-#include "Tile.h"
-#include "LTexture.h"
+#include "Dot.h"
+#include "fsdmlevel.h"
 #include "fsdmgame.h"
 
 Dot::Dot()
@@ -168,6 +168,7 @@ bool Dot::checkCollision( SDL_Rect a, SDL_Rect b )
     return true;
 }
 
+/*
 bool Dot::touchesWall( SDL_Rect box, Tile* tiles[] )
 {
     //Go through the tiles
@@ -187,4 +188,4 @@ bool Dot::touchesWall( SDL_Rect box, Tile* tiles[] )
     //If no wall tiles were touched
     return false;
 }
-
+*/

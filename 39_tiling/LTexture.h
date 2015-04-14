@@ -1,13 +1,13 @@
 //LTexture.h Final Project
 
+#ifndef LTEXTURE_H
+#define LTEXTURE_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
-#include "LTexture.cpp"
-#ifndef LTEXTURE_H
-#define LTEXTURE_H
 
 class LTexture
 {
@@ -52,5 +52,6 @@ class LTexture
 		//Image dimensions
 		int mWidth;
 		int mHeight;
-}
+};
+
 #endif

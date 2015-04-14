@@ -4,8 +4,8 @@
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
-#include "Tile.h"
-#include "LTexture.h"
+#include "Dot.h"
+#include "fsdmlevel.h"
 #include "fsdmgame.h"
 
 Dot::Dot()
@@ -97,7 +97,7 @@ void Dot::setCamera( SDL_Rect& camera )
 	}
 }
 
-void Dot::render( SDL_Rect& camera )
+void Dot::render( SDL_Rect& camera, LTexture gDotTexture)
 {
     //Show the dot
 	gDotTexture.render( mBox.x - camera.x, mBox.y - camera.y );

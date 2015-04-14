@@ -20,10 +20,12 @@ Entity::~Entity(){
 	//nothing so far
 }
 
+//get function for visibility
 int Entity::getVisibility(){
 	return visibility;
 }
 
+//set function for visibility
 void Entity::setVisibility(int v){
 	visibility = v;
 }

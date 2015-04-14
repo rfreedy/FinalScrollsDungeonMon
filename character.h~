@@ -29,8 +29,10 @@ class Character: public Entity{
 		void levelUp();	
 		void fight(Enemy&);		
 
-		void defend();		//take damage
-		void attack();		//calculate output damage
+		void refillStamina();
+
+		void defend(int);		//take damage
+		int attack(int);		//calculate output damage
 	
 	private:
 		int getBestAttack();

@@ -5,12 +5,7 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
-
-//Tile constants
-const int TILE_WIDTH = 80;
-const int TILE_HEIGHT = 80;
-const int TOTAL_TILES = 192;
-const int TOTAL_TILE_SPRITES = 12;
+#include "Tile.h"
 
 Tile::Tile( int x, int y, int tileType)
 {
@@ -26,17 +21,14 @@ Tile::Tile( int x, int y, int tileType)
     mType = tileType;
 }
 
-void Tile::render( SDL_Rect& camera )
+void Tile::render( SDL_Rect& camera, SDL_Rect* tileClip, LTexture* gTileTexture)
 {
-	SDL_Rect *tileClip = NULL;
-
-	tileClip = getTileClip(mType);
 
     //If the tile is on screen
     if( checkCollision( camera, mBox ) )
     {
         //Show the tile
-        gTileTexture.render( mBox.x - camera.x, mBox.y - camera.y, tileClip );
+        gTileTexture->render( mBox.x - camera.x, mBox.y - camera.y, tileClip );
     }
 }
 

@@ -1,15 +1,15 @@
 //Dot.h Practice for the final project
 
+#ifndef DOT_H
+#define DOT_H
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
 #include "Tile.h"
 #include "LTexture.h"
-#include "fsdmgame.h"
 
-#ifndef DOT_H
-#define DOT_H
 class Dot
 {
     public:
@@ -45,5 +45,6 @@ class Dot
 
 		//The velocity of the dot
 		int mVelX, mVelY;
-}
+};
+
 #endif

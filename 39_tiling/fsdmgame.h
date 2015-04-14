@@ -10,14 +10,21 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
-#include "fsdmgame.cpp"
-#include "Tile.h"
 #include "LTexture.h"
+#include "Tile.h"
+#include "Dot.h"
+#include "fsdmlevel.h"
+
 
 typedef struct Textures {
 	LTexture *gDotTexture = NULL;
 	LTexture *gTileTexture = NULL;
 } Texture_type;
+
+
+//Screen dimension constants
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 
 class FSDMGame{
 	public:
@@ -25,19 +32,20 @@ class FSDMGame{
 		~FSDMGame();
 
 		void start();
+		int play();
 		bool init();
 		void close();
-		bool loadMedia( Tile* tiles[] );
+		bool loadMedia();
 	private:
 		FSDMLevel *loaded_level = NULL;
 		int current_level;
 		Texture_type textures;
-		FSDMCharacter *player1 = NULL;
+		//Character *player1 = NULL;
 
-		SDL_Renderer *gRenderer = NULL;
+		SDL_Renderer* gRenderer = NULL;
 	
 		SDL_Window* gWindow = NULL;
 
-}
+};
 
 #endif

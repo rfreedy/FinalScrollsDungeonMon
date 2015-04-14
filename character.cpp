@@ -154,11 +154,13 @@ void Character::fight(Enemy &opponent){
 	//TODO: finish this function	
 	
 	//start both combatants off with full stamina
-	stats.currentStamina = stats.maxStamina;
-	opponent
+	refillStamina();
+	opponent.refillStamina();
 
 	//while enemy is alive
 	while((opponent.getCurrentHealth() > 0) && (stats.currentHealth > 0)){
+		
+
 		//check speed against enemy		
 		if(opponent.speedCheck > skills.speed){
 			//opponent is faster, enemy moves first
@@ -180,11 +182,44 @@ void Character::fight(Enemy &opponent){
 			//opponent move
 			defend(opponent.attack());
 		}
+
+		
+		//give stamina/mana allowances
+		replenish();
+		opponent.replenish();
 	}
 
 	return;
 }
 
+//helper for fight()
+void Character::replenish(){
+	//stamina allowance
+	if((stats.currentStamina + 15) <= (stats.maxStamina)){
+		stats.currentStamina += 15;	
+	}else{
+		stats.currentStamina = stats.maxStamina;
+	}
+
+	//mana allowance
+	if((stats.currentMana + 20) <= (stats.maxMana)){
+		stats.currentMana += 20;	
+	}else{
+		stats.currentMana = stats.maxMana;
+	}
+
+	return;
+}
+
+//sets currentStamina to maxStamina
+void Character::refillStamina(){
+	stats.currentStamina = stats.maxStamina;
+}
+
+//sets currentMana to maxMana
+void Character::refillMana(){
+	stats.currentMana = stats.maxMana;
+}
 
 void Character::defend(int base_damage){
 	
@@ -202,26 +237,40 @@ void Character::defend(int base_damage){
 
 int Character::attack(int move_number){
 
-	int output_damage = 0;	
+	int stamina_cost = 0;
+	int mana_cost = 0;
+	int output_damage = 0;
+	
 	int attack_type = getBestAttack();	//1= slash, 2= blunt, 3= magic
 
 	//calculate damage out
 	switch(attack_type){
 		case 1:		//slashing
 			output_damage = (int)((skills.slashing * (0.33)) + (((double)1/move_number) * 0.5 * skills.sneak) + (0.025*stats.currentHealth) + (0.05*stats.currentStamina));
+			stamina_cost = 20;
 			break;
 		case 2:		//blunt
 			output_damage = (int)((skills.blunt * (0.33)) + (((double)1/move_number) * 0.5 * skills.sneak) + (0.05*stats.currentHealth) + (0.1*stats.currentStamina));
+			stamina_cost = 25;
 			break;
 		case 3:		//magic
 			output_damage = (int)((skills.offmage * 0.5) + ((double)1/move_number) * 0.25 * skills.sneak);
+			mana_cost = 25;			
 			break;
 		default:
-			printf("Error in enemy attack.\n");		//#DEBUG#
+			printf("Error in player attack.\n");		//#DEBUG#
 			break;
 	}
-
-	return output_damage;
+	
+	//check if stamina/mana are sufficient to attack
+	if((stats.currentStamina >= stamina_cost) && (stats.currentMana >= mana_cost))
+		//check passed, decrement stamina/mana and attack		
+		stats.currentStamina -= stamina_cost;
+		stats.currentMana -= mana_cost;
+		return output_damage;
+	}else{
+		return -1;	//not enough stamina/mana, return indicator
+	}
 }
 
 //helper function for attack

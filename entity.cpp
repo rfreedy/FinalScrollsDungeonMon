@@ -17,7 +17,7 @@ Entity::Entity(){
 
 //deconstructor
 Entity::~Entity(){
-	//nothing so far
+	//nothing so far; no pointers
 }
 
 //get function for visibility

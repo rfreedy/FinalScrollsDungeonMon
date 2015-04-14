@@ -30,6 +30,8 @@ class Enemy: public Entity{
 
 		int speedCheck();
 
+		void refillStamina();
+
 		void defend(int);	//take damage
 		int attack();		//calculate output damage
 	private:

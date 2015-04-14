@@ -73,8 +73,32 @@ int Enemy::speedCheck(){
 	return skills.speed;
 }
 
-//TODO
-void Enemy::refilStamina();
+void Enemy::refillStamina(){
+	stats.currentStamina = stats.maxStamina;
+}
+
+void Enemy::refillMana(){
+	stats.currentMana = stats.maxMana;
+}
+
+void Enemy::replenish(){
+	//stamina allowance
+	if((stats.currentStamina + 15) <= (stats.maxStamina)){
+		stats.currentStamina += 15;	
+	}else{
+		stats.currentStamina = stats.maxStamina;
+	}
+
+	//mana allowance
+	if((stats.currentMana + 20) <= (stats.maxMana)){
+		stats.currentMana += 20;	
+	}else{
+		stats.currentMana = stats.maxMana;
+	}
+
+	return;
+}
+
 
 void Enemy::defend(int base_damage){
 	
@@ -92,26 +116,40 @@ void Enemy::defend(int base_damage){
 
 int Enemy::attack(int move_number){
 
-	int output_damage = 0;	
+	int stamina_cost = 0;
+	int mana_cost = 0;
+	int output_damage = 0;
+	
 	int attack_type = getBestAttack();	//1= slash, 2= blunt, 3= magic
 
 	//calculate damage out
 	switch(attack_type){
 		case 1:		//slashing
 			output_damage = (int)((skills.slashing * (0.33)) + (((double)1/move_number) * 0.5 * skills.sneak) + (0.025*stats.currentHealth) + (0.05*stats.currentStamina));
+			stamina_cost = 20;
 			break;
 		case 2:		//blunt
 			output_damage = (int)((skills.blunt * (0.33)) + (((double)1/move_number) * 0.5 * skills.sneak) + (0.05*stats.currentHealth) + (0.1*stats.currentStamina));
+			stamina_cost = 25;
 			break;
 		case 3:		//magic
 			output_damage = (int)((skills.offmage * 0.5) + ((double)1/move_number) * 0.25 * skills.sneak);
+			mana_cost = 25;			
 			break;
 		default:
 			printf("Error in enemy attack.\n");		//#DEBUG#
 			break;
 	}
-
-	return output_damage;
+	
+	//check if stamina/mana are sufficient to attack
+	if((stats.currentStamina >= stamina_cost) && (stats.currentMana >= mana_cost))
+		//check passed, decrement stamina/mana and attack		
+		stats.currentStamina -= stamina_cost;
+		stats.currentMana -= mana_cost;
+		return output_damage;
+	}else{
+		return -1;	//not enough stamina/mana, return indicator
+	}
 }
 
 //helper function for attack
