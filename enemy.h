@@ -28,9 +28,15 @@ class Enemy: public Entity{
 		int getCurrentStamina();
 		int getCurrentMana();
 
-		void defend();		//take damage
-		void attack();		//calculate output damage
+		int speedCheck();
+
+		void refilStamina();
+
+		void defend(int);	//take damage
+		int attack();		//calculate output damage
 	private:
+		int getBestAttack(int);	//returns type of best attack; 1=slash, 2=blunt, 3=magic
+
 		stat_type stats;	//creates structure for stats (health, mana,stamina)
 		skill_type skills;	//structure for skills (atk, def, power)
 

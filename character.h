@@ -28,8 +28,13 @@ class Character: public Entity{
 		int getLevel();
 		void levelUp();	
 		void fight(Enemy&);		
+
+		void defend(int);		//take damage
+		int attack(int);		//calculate output damage
 	
 	private:
+		int getBestAttack();
+		
 		//helper functions
 		void incStats(int);
 		void incSkills(int);		

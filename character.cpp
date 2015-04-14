@@ -152,8 +152,93 @@ void Character::levelUp(){
 //engage in combat, requires enemy as argument
 void Character::fight(Enemy &opponent){
 	//TODO: finish this function	
+	
+	//start both combatants off with full stamina
+	stats.currentStamina = stats.maxStamina;
+	opponent
+
+	//while enemy is alive
+	while((opponent.getCurrentHealth() > 0) && (stats.currentHealth > 0)){
+		//check speed against enemy		
+		if(opponent.speedCheck > skills.speed){
+			//opponent is faster, enemy moves first
+			defend(opponent.attack());
+
+			//check for death
+			if(stats.currentHealth <= 0){break;};
+			
+			//player move
+			opponent.defend(attack());
+		
+		}else{
+			//character is faster, player moves first
+			opponent.defend(attack());
+
+			//check for death
+			if(opponent.getCurrentHealth() <= 0){break;};
+			
+			//opponent move
+			defend(opponent.attack());
+		}
+	}
 
 	return;
+}
+
+
+void Character::defend(int base_damage){
+	
+	int damage = base_damage;	//base_damage could just be substituted, but this would make damage modification easier
+
+	if(stats.currentHealth - damage > 0){
+		//regular damage taken, no KO
+		stats.currentHealth -= damage;
+	}else{
+		//KO enemy
+		stats.currentHealth = 0;
+	}
+	return;
+}
+
+int Character::attack(int move_number){
+
+	int output_damage = 0;	
+	int attack_type = getBestAttack();	//1= slash, 2= blunt, 3= magic
+
+	//calculate damage out
+	switch(attack_type){
+		case 1:		//slashing
+			output_damage = (int)((skills.slashing * (0.33)) + (((double)1/move_number) * 0.5 * skills.sneak) + (0.025*stats.currentHealth) + (0.05*stats.currentStamina));
+			break;
+		case 2:		//blunt
+			output_damage = (int)((skills.blunt * (0.33)) + (((double)1/move_number) * 0.5 * skills.sneak) + (0.05*stats.currentHealth) + (0.1*stats.currentStamina));
+			break;
+		case 3:		//magic
+			output_damage = (int)((skills.offmage * 0.5) + ((double)1/move_number) * 0.25 * skills.sneak);
+			break;
+		default:
+			printf("Error in enemy attack.\n");		//#DEBUG#
+			break;
+	}
+
+	return output_damage;
+}
+
+//helper function for attack
+int Character::getBestAttack(){
+	int atktype = 1;
+	int highSkill = skills.slashing;
+	if(skills.blunt > highSkill){
+		atktype = 2;
+		highSkill = skills.blunt;
+	}
+
+	if(skills.offmage > highSkill){
+		atktype = 3;
+		highSkill = skills.offmage
+	}
+	
+	return atktype;	//return indicator of best attack type
 }
 
 //helper function, interactively increase stats
