@@ -5,11 +5,15 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <string>
+using namespace std;
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+
 #include "entity.h"
+#include "enemy.h"
 
 class Character: public Entity{
 	public:
@@ -17,19 +21,31 @@ class Character: public Entity{
 		~Character();		
 
 		virtual void render();
+		virtual void toggleVisibility();
+		virtual int isVisible();
+
 		void createCharacter();
 		int getLevel();
 		void levelUp();	
-		void fight();		
+		void fight(Enemy&);		
+
+		void defend();		//take damage
+		void attack();		//calculate output damage
 	
 	private:
+		int getBestAttack();
+		
+		//helper functions
+		void incStats(int);
+		void incSkills(int);		
+
 		skill_type skills;
 		stat_type stats;
 
 		int level_coordinates_x;
 		int level_coordinates_y;
 		
-		LTexture player_texture;
+		//LTexture player_texture;
 };
 
 #endif

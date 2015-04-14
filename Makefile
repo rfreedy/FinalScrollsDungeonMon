@@ -1,13 +1,14 @@
-CC=g++
+combatTest: combatTest.o entity.o character.o enemy.o
+	g++ combatTest.o entity.o character.o enemy.o -lSDL2 -lSDL2_image -o combatTest
 
-TARGETS=fsdm
+combatTest.o: combatTest.cpp
+	g++ -c combatTest.cpp
 
-DBGFLAGS=-O0 -g3
+entity.o: entity.cpp
+	g++ -c entity.cpp
 
-all: $(TARGETS)
+character.o: character.cpp
+	g++ -c character.cpp
 
-fsdm: fsdmrender.cpp
-	$(CC) fsdmrender.cpp -w -lSDL2 -lSDL2_image -o fsdm
-
-debug: fsdmrender.cpp
-	$(CC) fsdmrender.cpp $(DBGFLAGS) -lSDL2 -lSDL2_image -o fsdm
+enemy.o: enemy.cpp
+	g++ -c enemy.cpp
