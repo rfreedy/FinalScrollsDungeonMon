@@ -8,8 +8,6 @@
 #include "LTexture.h"
 #include "Tile.h"
 
-
-
 Dot::Dot()
 {
     //Initialize the collision box

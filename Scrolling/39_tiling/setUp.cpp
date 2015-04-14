@@ -5,6 +5,7 @@
 #include <fstream>
 #include "setUp.h"
 #include "Tile.h"
+#include "Tile.cpp"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 240;

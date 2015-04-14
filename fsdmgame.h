@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string>
 
+
 class FSDMGame{
 	public:
 		FSDMGame();
