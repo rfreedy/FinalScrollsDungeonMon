@@ -124,65 +124,65 @@ bool FSDMLevel::setTiles()
 		//Clip the sprite sheet
 		if( tilesLoaded )
 		{
-			gTileClips[ TILE_RED ].x = 0;
-			gTileClips[ TILE_RED ].y = 0;
-			gTileClips[ TILE_RED ].w = TILE_WIDTH;
-			gTileClips[ TILE_RED ].h = TILE_HEIGHT;
+			gTileClips[ TILE_GRASS ].x = 0;
+			gTileClips[ TILE_GRASS ].y = 160*2;
+			gTileClips[ TILE_GRASS ].w = TILE_WIDTH;
+			gTileClips[ TILE_GRASS ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_GREEN ].x = 0;
-			gTileClips[ TILE_GREEN ].y = 80;
-			gTileClips[ TILE_GREEN ].w = TILE_WIDTH;
-			gTileClips[ TILE_GREEN ].h = TILE_HEIGHT;
+			gTileClips[ TILE_DIRT ].x = 176*2;
+			gTileClips[ TILE_DIRT ].y = 16*2;
+			gTileClips[ TILE_DIRT ].w = TILE_WIDTH;
+			gTileClips[ TILE_DIRT ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_BLUE ].x = 0;
-			gTileClips[ TILE_BLUE ].y = 160;
-			gTileClips[ TILE_BLUE ].w = TILE_WIDTH;
-			gTileClips[ TILE_BLUE ].h = TILE_HEIGHT;
+			gTileClips[ TILE_DUNGEON ].x = 304*2;
+			gTileClips[ TILE_DUNGEON ].y = 128*2;
+			gTileClips[ TILE_DUNGEON ].w = TILE_WIDTH;
+			gTileClips[ TILE_DUNGEON ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_TOPLEFT ].x = 80;
-			gTileClips[ TILE_TOPLEFT ].y = 0;
-			gTileClips[ TILE_TOPLEFT ].w = TILE_WIDTH;
-			gTileClips[ TILE_TOPLEFT ].h = TILE_HEIGHT;
+			gTileClips[ TILE_WATER ].x = 64*2;
+			gTileClips[ TILE_WATER ].y = 0;
+			gTileClips[ TILE_WATER ].w = TILE_WIDTH;
+			gTileClips[ TILE_WATER ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_LEFT ].x = 80;
-			gTileClips[ TILE_LEFT ].y = 80;
-			gTileClips[ TILE_LEFT ].w = TILE_WIDTH;
-			gTileClips[ TILE_LEFT ].h = TILE_HEIGHT;
+			gTileClips[ TILE_TREES ].x = 224*2;
+			gTileClips[ TILE_TREES ].y = 0;
+			gTileClips[ TILE_TREES ].w = TILE_WIDTH;
+			gTileClips[ TILE_TREES ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_BOTTOMLEFT ].x = 80;
-			gTileClips[ TILE_BOTTOMLEFT ].y = 160;
-			gTileClips[ TILE_BOTTOMLEFT ].w = TILE_WIDTH;
-			gTileClips[ TILE_BOTTOMLEFT ].h = TILE_HEIGHT;
+			gTileClips[ TILE_MOUNTAINS ].x = 48*2;
+			gTileClips[ TILE_MOUNTAINS ].y = 160*2;
+			gTileClips[ TILE_MOUNTAINS ].w = TILE_WIDTH;
+			gTileClips[ TILE_MOUNTAINS ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_TOP ].x = 160;
-			gTileClips[ TILE_TOP ].y = 0;
-			gTileClips[ TILE_TOP ].w = TILE_WIDTH;
-			gTileClips[ TILE_TOP ].h = TILE_HEIGHT;
+			gTileClips[ TILE_LAVA ].x = 128*2;
+			gTileClips[ TILE_LAVA ].y = 0;
+			gTileClips[ TILE_LAVA ].w = TILE_WIDTH;
+			gTileClips[ TILE_LAVA ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_CENTER ].x = 160;
-			gTileClips[ TILE_CENTER ].y = 80;
-			gTileClips[ TILE_CENTER ].w = TILE_WIDTH;
-			gTileClips[ TILE_CENTER ].h = TILE_HEIGHT;
+			gTileClips[ TILE_SKINNYTREES ].x = 176*2;
+			gTileClips[ TILE_SKINNYTREES ].y = 160*2;
+			gTileClips[ TILE_SKINNYTREES ].w = TILE_WIDTH;
+			gTileClips[ TILE_SKINNYTREES ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_BOTTOM ].x = 160;
-			gTileClips[ TILE_BOTTOM ].y = 160;
-			gTileClips[ TILE_BOTTOM ].w = TILE_WIDTH;
-			gTileClips[ TILE_BOTTOM ].h = TILE_HEIGHT;
+			gTileClips[ TILE_BRICKS ].x = 176*2;
+			gTileClips[ TILE_BRICKS ].y = 112*2;
+			gTileClips[ TILE_BRICKS ].w = TILE_WIDTH;
+			gTileClips[ TILE_BRICKS ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_TOPRIGHT ].x = 240;
-			gTileClips[ TILE_TOPRIGHT ].y = 0;
-			gTileClips[ TILE_TOPRIGHT ].w = TILE_WIDTH;
-			gTileClips[ TILE_TOPRIGHT ].h = TILE_HEIGHT;
+			gTileClips[ TILE_SANDWALL ].x = 240*2;
+			gTileClips[ TILE_SANDWALL ].y = 0;
+			gTileClips[ TILE_SANDWALL ].w = TILE_WIDTH;
+			gTileClips[ TILE_SANDWALL ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_RIGHT ].x = 240;
-			gTileClips[ TILE_RIGHT ].y = 80;
-			gTileClips[ TILE_RIGHT ].w = TILE_WIDTH;
-			gTileClips[ TILE_RIGHT ].h = TILE_HEIGHT;
+			gTileClips[ TILE_WATERFALL ].x = 64*2;
+			gTileClips[ TILE_WATERFALL ].y = 96*2;
+			gTileClips[ TILE_WATERFALL ].w = TILE_WIDTH;
+			gTileClips[ TILE_WATERFALL ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_BOTTOMRIGHT ].x = 240;
-			gTileClips[ TILE_BOTTOMRIGHT ].y = 160;
-			gTileClips[ TILE_BOTTOMRIGHT ].w = TILE_WIDTH;
-			gTileClips[ TILE_BOTTOMRIGHT ].h = TILE_HEIGHT;
+			gTileClips[ TILE_BOULDERS ].x = 272*2;
+			gTileClips[ TILE_BOULDERS ].y = 160*2;
+			gTileClips[ TILE_BOULDERS ].w = TILE_WIDTH;
+			gTileClips[ TILE_BOULDERS ].h = TILE_HEIGHT;
 		}
 	}
 
