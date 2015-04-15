@@ -17,6 +17,7 @@ class Dot
 		//The dimensions of the dot
 		static const int DOT_WIDTH = 20;
 		static const int DOT_HEIGHT = 20;
+		static const int TILE_SIZE = 20;	//number of spaces charact moves
 
 		//Maximum axis velocity of the dot
 		static const int DOT_VEL = 10;
@@ -34,11 +35,13 @@ class Dot
 		void setCamera( SDL_Rect& camera );
 
 		//Shows the dot on the screen
-		void render( SDL_Rect&, LTexture);
+		void render( SDL_Rect&, LTexture*);
 
 		bool touchesWall( SDL_Rect, Tile* [] );
 
 		bool checkCollision( SDL_Rect, SDL_Rect);
+
+		//friend class FSDMGame;
 
     private:
 		//Collision box of the dot
@@ -46,6 +49,9 @@ class Dot
 
 		//The velocity of the dot
 		int mVelX, mVelY;
+
+		SDL_Rect* currentClip;	//change
+		int count;		//need count
 };
 
 #endif
