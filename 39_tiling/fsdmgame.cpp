@@ -193,7 +193,7 @@ bool FSDMGame::loadMedia()
 	}
 
 	//Load dot texture - replace with character texture
-	if( !textures.gDotTexture->loadFromFile( "characters-2.png" ) )
+	if( !textures.gDotTexture->loadFromFile( "characters-2sizeChange.png" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
@@ -203,50 +203,50 @@ bool FSDMGame::loadMedia()
 		//Set top left sprite		FRONT
 		gRedMan[ 0 ].x =   0;
 		gRedMan[ 0 ].y =   0;
-		gRedMan[ 0 ].w = 25;
-		gRedMan[ 0 ].h = 25;
+		gRedMan[ 0 ].w = 25*2;
+		gRedMan[ 0 ].h = 25*2;
 
 		//Set top right sprite
-		gRedMan[ 1 ].x = 22;
+		gRedMan[ 1 ].x = 22*2;
 		gRedMan[ 1 ].y =   0;
-		gRedMan[ 1 ].w = 25;
-		gRedMan[ 1 ].h = 25;
+		gRedMan[ 1 ].w = 25*2;
+		gRedMan[ 1 ].h = 25*2;
 		
 		//Set bottom left sprite	BACK
 		gRedMan[ 2 ].x =   0;
-		gRedMan[ 2 ].y = 25;
-		gRedMan[ 2 ].w = 25;
-		gRedMan[ 2 ].h = 25;
+		gRedMan[ 2 ].y = 25*2;
+		gRedMan[ 2 ].w = 25*2;
+		gRedMan[ 2 ].h = 25*2;
 
 		//Set bottom right sprite
-		gRedMan[ 3 ].x = 22;
-		gRedMan[ 3 ].y = 25;
-		gRedMan[ 3 ].w = 25;
-		gRedMan[ 3 ].h = 25;
+		gRedMan[ 3 ].x = 22*2;
+		gRedMan[ 3 ].y = 25*2;
+		gRedMan[ 3 ].w = 25*2;
+		gRedMan[ 3 ].h = 25*2;
 
 		//Set bottom left sprite	RIGHT
-		gRedMan[ 4 ].x = 44;
+		gRedMan[ 4 ].x = 44*2;
 		gRedMan[ 4 ].y = 0;
-		gRedMan[ 4 ].w = 18;
-		gRedMan[ 4 ].h = 25;
+		gRedMan[ 4 ].w = 18*2;
+		gRedMan[ 4 ].h = 25*2;
 
 		//Set bottom right sprite
-		gRedMan[ 5 ].x = 62;
+		gRedMan[ 5 ].x = 62*2;
 		gRedMan[ 5 ].y = 0;
-		gRedMan[ 5 ].w = 18;
-		gRedMan[ 5 ].h = 25;
+		gRedMan[ 5 ].w = 18*2;
+		gRedMan[ 5 ].h = 25*2;
 
 		//Set bottom left sprite	LEFT
-		gRedMan[ 6 ].x = 44;
-		gRedMan[ 6 ].y = 21;
-		gRedMan[ 6 ].w = 25;
-		gRedMan[ 6 ].h = 25;
+		gRedMan[ 6 ].x = 44*2;
+		gRedMan[ 6 ].y = 21*2;
+		gRedMan[ 6 ].w = 25*2;
+		gRedMan[ 6 ].h = 25*2;
 
 		//Set bottom right sprite
-		gRedMan[ 7 ].x = 66;
-		gRedMan[ 7 ].y = 23;
-		gRedMan[ 7 ].w = 25;
-		gRedMan[ 7 ].h = 25;
+		gRedMan[ 7 ].x = 66*2;
+		gRedMan[ 7 ].y = 23*2;
+		gRedMan[ 7 ].w = 25*2;
+		gRedMan[ 7 ].h = 25*2;
 	}
 
 	//Load tile texture - replace with our tile sprite sheet
