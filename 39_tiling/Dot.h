@@ -17,6 +17,7 @@ class Dot
 		//The dimensions of the dot
 		static const int DOT_WIDTH = 20;
 		static const int DOT_HEIGHT = 20;
+		static const int TILE_SIZE = 20;	//number of spaces charact moves
 
 		//Maximum axis velocity of the dot
 		static const int DOT_VEL = 10;
@@ -40,12 +41,18 @@ class Dot
 
 		bool checkCollision( SDL_Rect, SDL_Rect);
 
+		//friend class FSDMGame;
+
     private:
 		//Collision box of the dot
 		SDL_Rect mBox;
 
 		//The velocity of the dot
 		int mVelX, mVelY;
+
+		SDL_Rect* currentClip;	//change
+		int count;		//need count
+		int up, down, right, left;
 };
 
 #endif

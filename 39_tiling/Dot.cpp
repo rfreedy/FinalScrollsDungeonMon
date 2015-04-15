@@ -20,6 +20,13 @@ Dot::Dot()
     //Initialize the velocity
     mVelX = 0;
     mVelY = 0;
+
+	count = 0;
+	currentClip = &gRedMan[ 0 ];
+	up =0;
+	down = 0;
+	left = 0;
+	right = 0;
 }
 
 void Dot::handleEvent( SDL_Event& e )
@@ -30,10 +37,68 @@ void Dot::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: mVelY -= DOT_VEL; break;
-            case SDLK_DOWN: mVelY += DOT_VEL; break;
-            case SDLK_LEFT: mVelX -= DOT_VEL; break;
-            case SDLK_RIGHT: mVelX += DOT_VEL; break;
+           case SDLK_UP: 
+		up++;
+		down = 0; left = 0; right = 0;
+		//mBox.y = mBox.y - TILE_SIZE; 
+		mVelY -= DOT_VEL; 
+		if(count%2 == 0){
+			currentClip = &gRedMan[ 2 ];
+		}
+		else{
+			currentClip = &gRedMan[ 3 ];
+		}
+		//count++;
+		//printf("count: %f\n", count);
+		break;
+            case SDLK_DOWN:
+		down++;
+		up = 0;
+		left =0; right = 0;
+		//mBox.y = mBox.y + TILE_SIZE; 
+		mVelY += DOT_VEL;
+		//count += 1;
+		if(count%2 == 0){
+			currentClip = &gRedMan[ 0 ];
+		}
+		else{
+			currentClip = &gRedMan[ 1 ];
+		}
+		//count++;
+		break;
+            case SDLK_LEFT:
+		right = 0;
+		up =0;
+		down = 0;
+		left++;
+		//mBox.x = mBox.x - TILE_SIZE; 
+		mVelX -= DOT_VEL; 
+		if(count%2 == 0){
+			currentClip = &gRedMan[ 6 ];
+		}
+		else{
+			currentClip = &gRedMan[ 7 ];
+		}
+								//gSpriteSheetTexture.render( posX, posY, currentClip );
+		//count++;
+		break;
+            case SDLK_RIGHT:
+		left = 0;
+		up = 0;
+		down = 0;
+		
+		right++;
+		//mBox.x = mBox.x + TILE_SIZE; 
+		mVelX += DOT_VEL; 
+		if(count%2 == 0){
+			currentClip = &gRedMan[ 4 ];
+		}
+		else{
+			currentClip = &gRedMan[ 5 ];
+		}
+								//gSpriteSheetTexture.render( posX, posY, currentClip );
+		//count++;
+		break;
         }
     }
     //If a key was released
@@ -42,10 +107,10 @@ void Dot::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: mVelY += DOT_VEL; break;
-            case SDLK_DOWN: mVelY -= DOT_VEL; break;
-            case SDLK_LEFT: mVelX += DOT_VEL; break;
-            case SDLK_RIGHT: mVelX -= DOT_VEL; break;
+            case SDLK_UP: mVelY += DOT_VEL; up = 0; break;
+            case SDLK_DOWN: mVelY -= DOT_VEL; down = 0; break;
+            case SDLK_LEFT: mVelX += DOT_VEL; left = 0; break;
+            case SDLK_RIGHT: mVelX -= DOT_VEL; right = 0; break;
         }
     }
 }
@@ -53,13 +118,50 @@ void Dot::handleEvent( SDL_Event& e )
 void Dot::move( Tile *tiles[] )
 {
     //Move the dot left or right
-    mBox.x += mVelX;
+	//left =0;
+	count++;		//increment count in move (continuous
+	if (right > 0){		//update SDL_ract in move
+		if(count%2 == 0){
+			currentClip = &gRedMan[ 4 ];
+		}
+		else{
+			currentClip = &gRedMan[ 5 ];
+		}
+	}
+	else if (left >0){
+		if(count%2 == 0){
+			currentClip = &gRedMan[ 6 ];
+		}
+		else{
+			currentClip = &gRedMan[ 7 ];
+		}
+	}
+	else if(down > 0){
+		if(count%2 == 0){
+			currentClip = &gRedMan[ 0 ];
+		}
+		else{
+			currentClip = &gRedMan[ 1 ];
+		}
+	}
+	else if (up >0){
+		if(count%2 == 0){
+			currentClip = &gRedMan[ 2 ];
+		}
+		else{
+			currentClip = &gRedMan[ 3 ];
+		}
+	}
 
+
+
+    mBox.x += mVelX;
     //If the dot went too far to the left or right or touched a wall
     if( ( mBox.x < 0 ) || ( mBox.x + DOT_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, tiles ) )
     {
         //move back
         mBox.x -= mVelX;
+	//mBox.x = mBox.x - TILE_SIZE;
     }
 
     //Move the dot up or down
@@ -70,6 +172,7 @@ void Dot::move( Tile *tiles[] )
     {
         //move back
         mBox.y -= mVelY;
+	//mBox.y = mBox.y + TILE_SIZE;
     }
 }
 
@@ -101,7 +204,7 @@ void Dot::setCamera( SDL_Rect& camera )
 void Dot::render( SDL_Rect& camera, LTexture* gDotTexture)
 {
     //Show the dot
-	gDotTexture->render( mBox.x - camera.x, mBox.y - camera.y );
+	gDotTexture->render( mBox.x - camera.x, mBox.y - camera.y, currentClip );
 }
 
 bool Dot::touchesWall( SDL_Rect box, Tile* tiles[] )

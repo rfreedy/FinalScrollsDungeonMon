@@ -36,6 +36,7 @@ class FSDMGame{
 		bool init();
 		void close();
 		bool loadMedia();
+		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:
 		FSDMLevel *loaded_level = NULL;
 		int current_level;

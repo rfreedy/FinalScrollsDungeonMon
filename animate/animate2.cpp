@@ -7,7 +7,8 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
-
+#include <stdlib.h>
+#include <unistd.h>
 //simple animation accross screen
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -106,7 +107,7 @@ bool LTexture::loadFromFile( std::string path )
 	else
 	{
 		//Color key image
-		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0x7b, 0x90, 0xab ) );
 
 		//Create texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface( gRenderer, loadedSurface );
@@ -244,62 +245,68 @@ bool loadMedia()
 {
 	//Loading success flag
 	bool success = true;
-
+	
 	//Load sprite sheet texture
-	if( !gSpriteSheetTexture.loadFromFile( "characters.png" ) )
+	if( !gSpriteSheetTexture.loadFromFile( "characters-2.png" ) )
 	{
 		printf( "Failed to load walking animation texture!\n" );
 		success = false;
 	}
+	//if( !gBackgroundTexture.loadFromFile( "background.png" ) )
+        //{
+         //       printf( "Failed to load background texture image!\n" );
+           //     success = false;
+       // }
+	
 	else
 	{
 		//Set top left sprite		FRONT
-		gRedMan[ 0 ].x =   10;
-		gRedMan[ 0 ].y =   0;
-		gRedMan[ 0 ].w = 50;
-		gRedMan[ 0 ].h = 50;
+		gRedMan[ 0 ].x = 362;
+		gRedMan[ 0 ].y = 105;
+		gRedMan[ 0 ].w = 20;
+		gRedMan[ 0 ].h = 20;
 
 		//Set top right sprite
-		gRedMan[ 1 ].x = 70;
-		gRedMan[ 1 ].y =   0;
-		gRedMan[ 1 ].w = 50;
-		gRedMan[ 1 ].h = 50;
+		gRedMan[ 1 ].x = 385;
+		gRedMan[ 1 ].y = 105;
+		gRedMan[ 1 ].w = 20;
+		gRedMan[ 1 ].h = 20;
 		
 		//Set bottom left sprite	BACK
-		gRedMan[ 2 ].x =   10;
-		gRedMan[ 2 ].y = 50;
-		gRedMan[ 2 ].w = 50;
-		gRedMan[ 2 ].h = 50;
+		gRedMan[ 2 ].x = 362;
+		gRedMan[ 2 ].y = 131;
+		gRedMan[ 2 ].w = 20;
+		gRedMan[ 2 ].h = 20;
 
 		//Set bottom right sprite
-		gRedMan[ 3 ].x = 70;
-		gRedMan[ 3 ].y = 50;
-		gRedMan[ 3 ].w = 50;
-		gRedMan[ 3 ].h = 50;
+		gRedMan[ 3 ].x = 385;
+		gRedMan[ 3 ].y = 131;
+		gRedMan[ 3 ].w = 20;
+		gRedMan[ 3 ].h = 20;
 
 		//Set bottom left sprite	RIGHT
-		gRedMan[ 4 ].x =   10;
-		gRedMan[ 4 ].y = 100;
-		gRedMan[ 4 ].w = 50;
-		gRedMan[ 4 ].h = 50;
+		gRedMan[ 4 ].x =  362;
+		gRedMan[ 4 ].y = 80;
+		gRedMan[ 4 ].w = 20;
+		gRedMan[ 4 ].h = 20;
 
 		//Set bottom right sprite
-		gRedMan[ 5 ].x = 70;
-		gRedMan[ 5 ].y = 100;
-		gRedMan[ 5 ].w = 50;
-		gRedMan[ 5 ].h = 50;
+		gRedMan[ 5 ].x = 385;
+		gRedMan[ 5 ].y = 80;
+		gRedMan[ 5 ].w = 20;
+		gRedMan[ 5 ].h = 20;
 
 		//Set bottom left sprite	LEFT
-		gRedMan[ 6 ].x =   10;
-		gRedMan[ 6 ].y = 150;
-		gRedMan[ 6 ].w = 50;
-		gRedMan[ 6 ].h = 50;
+		gRedMan[ 6 ].x = 362;
+		gRedMan[ 6 ].y = 154;
+		gRedMan[ 6 ].w = 20;
+		gRedMan[ 6 ].h = 20;
 
 		//Set bottom right sprite
-		gRedMan[ 7 ].x = 70;
-		gRedMan[ 7 ].y = 150;
-		gRedMan[ 7 ].w = 50;
-		gRedMan[ 7 ].h = 50;
+		gRedMan[ 7 ].x = 385;
+		gRedMan[ 7 ].y = 154;
+		gRedMan[ 7 ].w = 20;
+		gRedMan[ 7 ].h = 20;
 	}
 	
 	return success;
@@ -371,7 +378,7 @@ int main( int argc, char* args[] )
 						{
 							case SDLK_DOWN:
 								//printf( "up \n");
-								posY = posY +10;
+								posY = posY +20;
 								if(count%2 == 0){
 									currentClip = &gRedMan[ 0 ];
 								}
@@ -383,7 +390,7 @@ int main( int argc, char* args[] )
 							break;
 
 							case SDLK_UP:
-								posY = posY -10;
+								posY = posY -20;
 								if(count%2 == 0){
 									currentClip = &gRedMan[ 2 ];
 								}
@@ -395,7 +402,7 @@ int main( int argc, char* args[] )
 							break;
 
 							case SDLK_RIGHT:
-								posX = posX +10;
+								posX = posX +20;
 								if(count%2 == 0){
 									currentClip = &gRedMan[ 4 ];
 								}
@@ -407,7 +414,7 @@ int main( int argc, char* args[] )
 							break;
 
 							case SDLK_LEFT:
-								posX = posX -10;
+								posX = posX -20;
 								if(count%2 == 0){
 									currentClip = &gRedMan[ 6 ];
 								}
@@ -426,6 +433,7 @@ int main( int argc, char* args[] )
 								
 							break;
 						}
+			//	sleep(1);
 					}
 				}
 

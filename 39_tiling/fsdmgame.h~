@@ -14,7 +14,6 @@
 #include "Tile.h"
 #include "Dot.h"
 #include "fsdmlevel.h"
-#include "winrend.h"
 
 
 typedef struct Textures {
@@ -22,9 +21,6 @@ typedef struct Textures {
 	LTexture *gTileTexture = NULL;
 } Texture_type;
 
-
-SDL_Window* gWindow = NULL;
-SDL_Renderer* gRenderer = NULL;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -40,6 +36,7 @@ class FSDMGame{
 		bool init();
 		void close();
 		bool loadMedia();
+		SDL_Rect gRedMan[8];		//class for aninamted character
 	private:
 		FSDMLevel *loaded_level = NULL;
 		int current_level;

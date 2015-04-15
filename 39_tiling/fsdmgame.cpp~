@@ -8,10 +8,13 @@
 #include <string>
 #include <fstream>
 #include "fsdmgame.h"
+
+
 #include "winrend.h"
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
+SDL_Rect gRedMan[8];		//class for aninamted character
 
 void FSDMGame::start() {
 	if(!init()){
@@ -83,7 +86,7 @@ int FSDMGame::play(){
 			*/
 
 			//Render dot
-			dot.render( camera, *(textures.gDotTexture) );
+			dot.render( camera, textures.gDotTexture );
 
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -190,14 +193,64 @@ bool FSDMGame::loadMedia()
 	}
 
 	//Load dot texture - replace with character texture
-	if( !textures.gDotTexture->loadFromFile( "dot.bmp" ) )
+	if( !textures.gDotTexture->loadFromFile( "characters-2.png" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
 	}
+	else
+	{
+		//Set top left sprite		FRONT
+		gRedMan[ 0 ].x =   0;
+		gRedMan[ 0 ].y =   0;
+		gRedMan[ 0 ].w = 25;
+		gRedMan[ 0 ].h = 25;
+
+		//Set top right sprite
+		gRedMan[ 1 ].x = 22;
+		gRedMan[ 1 ].y =   0;
+		gRedMan[ 1 ].w = 25;
+		gRedMan[ 1 ].h = 25;
+		
+		//Set bottom left sprite	BACK
+		gRedMan[ 2 ].x =   0;
+		gRedMan[ 2 ].y = 25;
+		gRedMan[ 2 ].w = 25;
+		gRedMan[ 2 ].h = 25;
+
+		//Set bottom right sprite
+		gRedMan[ 3 ].x = 22;
+		gRedMan[ 3 ].y = 25;
+		gRedMan[ 3 ].w = 25;
+		gRedMan[ 3 ].h = 25;
+
+		//Set bottom left sprite	RIGHT
+		gRedMan[ 4 ].x = 44;
+		gRedMan[ 4 ].y = 0;
+		gRedMan[ 4 ].w = 20;
+		gRedMan[ 4 ].h = 25;
+
+		//Set bottom right sprite
+		gRedMan[ 5 ].x = 62;
+		gRedMan[ 5 ].y = 0;
+		gRedMan[ 5 ].w = 23;
+		gRedMan[ 5 ].h = 25;
+
+		//Set bottom left sprite	LEFT
+		gRedMan[ 6 ].x = 44;
+		gRedMan[ 6 ].y = 21;
+		gRedMan[ 6 ].w = 25;
+		gRedMan[ 6 ].h = 25;
+
+		//Set bottom right sprite
+		gRedMan[ 7 ].x = 66;
+		gRedMan[ 7 ].y = 23;
+		gRedMan[ 7 ].w = 25;
+		gRedMan[ 7 ].h = 25;
+	}
 
 	//Load tile texture - replace with our tile sprite sheet
-	if( !textures.gTileTexture->loadFromFile( "tiles.png" ) )
+	if( !textures.gTileTexture->loadFromFile( "tileSpritesSizeChange.png" ) )
 	{
 		printf( "Failed to load tile set texture!\n" );
 		success = false;
