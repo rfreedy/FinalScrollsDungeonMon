@@ -8,6 +8,10 @@
 #include <string>
 #include <fstream>
 #include "fsdmgame.h"
+#include "winrend.h"
+
+SDL_Window* gWindow = NULL;
+SDL_Renderer* gRenderer = NULL;
 
 void FSDMGame::start() {
 	if(!init()){
@@ -186,18 +190,20 @@ bool FSDMGame::loadMedia()
 	}
 
 	//Load dot texture - replace with character texture
-	if( !textures.gDotTexture->loadFromFile( "39_tiling/dot.bmp" ) )
+	if( !textures.gDotTexture->loadFromFile( "dot.bmp" ) )
 	{
 		printf( "Failed to load dot texture!\n" );
 		success = false;
 	}
 
 	//Load tile texture - replace with our tile sprite sheet
-	if( !textures.gTileTexture->loadFromFile( "39_tiling/tiles.png" ) )
+	if( !textures.gTileTexture->loadFromFile( "tiles.png" ) )
 	{
 		printf( "Failed to load tile set texture!\n" );
 		success = false;
 	}
+	
+	return success;
 }
 
 /*

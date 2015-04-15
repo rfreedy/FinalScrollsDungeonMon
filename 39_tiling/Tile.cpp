@@ -6,6 +6,7 @@
 #include <string>
 #include <fstream>
 #include "Tile.h"
+#include "winrend.h"
 
 Tile::Tile( int x, int y, int tileType)
 {

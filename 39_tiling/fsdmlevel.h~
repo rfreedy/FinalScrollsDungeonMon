@@ -11,6 +11,7 @@
 #include <string>
 #include "Tile.h"
 #include "LTexture.h"
+#include "winrend.h"
 
 //The dimensions of the level
 const int LEVEL_WIDTH = 1280;
@@ -41,7 +42,7 @@ class FSDMLevel{
 
 		void free();
 
-		void render( SDL_Rect& );
+		void render( SDL_Rect&, LTexture*);
 
 		bool constructed();
 

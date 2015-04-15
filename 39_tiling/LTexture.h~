@@ -8,11 +8,7 @@
 #include <stdio.h>
 #include <string>
 #include <fstream>
-
-
-SDL_Renderer* gRenderer = NULL;
-	
-SDL_Window* gWindow = NULL;
+#include "winrend.h"
 
 class LTexture
 {

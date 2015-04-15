@@ -10,6 +10,7 @@
 #include "Tile.h"
 #include "LTexture.h"
 
+
 class Dot
 {
     public:
@@ -33,7 +34,7 @@ class Dot
 		void setCamera( SDL_Rect& camera );
 
 		//Shows the dot on the screen
-		void render( SDL_Rect&, LTexture);
+		void render( SDL_Rect&, LTexture*);
 
 		bool touchesWall( SDL_Rect, Tile* [] );
 

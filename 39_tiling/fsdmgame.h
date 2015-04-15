@@ -28,8 +28,8 @@ const int SCREEN_HEIGHT = 480;
 
 class FSDMGame{
 	public:
-		FSDMGame();
-		~FSDMGame();
+		//FSDMGame();
+		//~FSDMGame();
 
 		void start();
 		int play();
@@ -41,11 +41,7 @@ class FSDMGame{
 		int current_level;
 		Texture_type textures;
 		//Character *player1 = NULL;
-
-		SDL_Renderer* gRenderer = NULL;
 	
-		SDL_Window* gWindow = NULL;
-
 };
 
 #endif

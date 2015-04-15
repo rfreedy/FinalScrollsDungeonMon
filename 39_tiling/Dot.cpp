@@ -7,6 +7,7 @@
 #include "Dot.h"
 #include "fsdmlevel.h"
 #include "fsdmgame.h"
+#include "winrend.h"
 
 Dot::Dot()
 {
@@ -97,10 +98,10 @@ void Dot::setCamera( SDL_Rect& camera )
 	}
 }
 
-void Dot::render( SDL_Rect& camera, LTexture gDotTexture)
+void Dot::render( SDL_Rect& camera, LTexture* gDotTexture)
 {
     //Show the dot
-	gDotTexture.render( mBox.x - camera.x, mBox.y - camera.y );
+	gDotTexture->render( mBox.x - camera.x, mBox.y - camera.y );
 }
 
 bool Dot::touchesWall( SDL_Rect box, Tile* tiles[] )

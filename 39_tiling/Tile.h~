@@ -9,6 +9,7 @@
 #include <string>
 #include <fstream>
 #include "LTexture.h"
+#include "winrend.h"
 
 const int TILE_WIDTH = 80;
 const int TILE_HEIGHT = 80;
@@ -20,7 +21,7 @@ class Tile
 		Tile( int x, int y, int tileType );
 
 		//Shows the tile
-		void render( SDL_Rect&, SDL_Rect*);
+		void render( SDL_Rect&, SDL_Rect*, LTexture*);
 
 		//Get the tile type
 		int getType();
