@@ -20,7 +20,7 @@ class Dot
 		static const int TILE_SIZE = 40;	//number of spaces charact moves
 
 		//Maximum axis velocity of the dot
-		static const int DOT_VEL = 10;
+		static const int DOT_VEL = 5;
 
 		//Initializes the variables
 		Dot();
