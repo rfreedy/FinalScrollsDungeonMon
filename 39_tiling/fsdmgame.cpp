@@ -197,7 +197,7 @@ bool FSDMGame::loadMedia()
 	}
 
 	//Load tile texture - replace with our tile sprite sheet
-	if( !textures.gTileTexture->loadFromFile( "tiles.png" ) )
+	if( !textures.gTileTexture->loadFromFile( "tileSpritesSizeChange.png" ) )
 	{
 		printf( "Failed to load tile set texture!\n" );
 		success = false;

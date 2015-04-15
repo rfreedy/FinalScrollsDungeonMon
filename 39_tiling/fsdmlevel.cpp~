@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string>
 #include "fsdmlevel.h"
+#include "winrend.h"
 
 FSDMLevel::FSDMLevel() {
 	
