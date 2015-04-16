@@ -225,15 +225,15 @@ bool FSDMGame::loadMedia()
 		gRedMan[ 3 ].h = 25*2;
 
 		//Set bottom left sprite	RIGHT
-		gRedMan[ 4 ].x = 44*2;
+		gRedMan[ 4 ].x = 45*2;
 		gRedMan[ 4 ].y = 0;
-		gRedMan[ 4 ].w = 18*2;
+		gRedMan[ 4 ].w = 25*2;
 		gRedMan[ 4 ].h = 25*2;
 
 		//Set bottom right sprite
-		gRedMan[ 5 ].x = 62*2;
+		gRedMan[ 5 ].x = 66*2;
 		gRedMan[ 5 ].y = 0;
-		gRedMan[ 5 ].w = 18*2;
+		gRedMan[ 5 ].w = 25*2;
 		gRedMan[ 5 ].h = 25*2;
 
 		//Set bottom left sprite	LEFT
