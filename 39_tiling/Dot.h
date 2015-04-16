@@ -40,7 +40,8 @@ class Dot
 		bool touchesWall( SDL_Rect, Tile* [] );
 
 		bool checkCollision( SDL_Rect, SDL_Rect);
-
+		int getVelx();
+		int getVely();
 		//friend class FSDMGame;
 
     private:

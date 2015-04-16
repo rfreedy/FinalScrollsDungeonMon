@@ -61,7 +61,7 @@ int FSDMGame::play(){
 				{
 					quit = true;
 				}
-
+				//if(dot.getVely() == 0 && dot.getVelx() == 0)
 				//Handle input for the dot
 				dot.handleEvent( e );
 			}
@@ -239,7 +239,7 @@ bool FSDMGame::loadMedia()
 		//Set bottom left sprite	LEFT
 		gRedMan[ 6 ].x = 44*2;
 		gRedMan[ 6 ].y = 21*2;
-		gRedMan[ 6 ].w = 25*2;
+		gRedMan[ 6 ].w = 24*2;
 		gRedMan[ 6 ].h = 25*2;
 
 		//Set bottom right sprite

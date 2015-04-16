@@ -31,13 +31,14 @@ Dot::Dot()
 
 void Dot::handleEvent( SDL_Event& e )
 {
+
     //If a key was pressed
-	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 )
-    {
+	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
            case SDLK_UP: 
+		if(down ==0 && left == 0 && right ==0){
 		up++;
 		down = 0; left = 0; right = 0;
 		//mBox.y = mBox.y - TILE_SIZE; 
@@ -49,15 +50,16 @@ void Dot::handleEvent( SDL_Event& e )
 			currentClip = &gRedMan[ 3 ];
 		}
 		//count++;
-		//printf("count: %f\n", count);
+		}
 		break;
+		
             case SDLK_DOWN:
+		if(up ==0 && left == 0 && right ==0){
 		down++;
 		up = 0;
 		left =0; right = 0;
 		//mBox.y = mBox.y + TILE_SIZE; 
 		mVelY += DOT_VEL;
-		//count += 1;
 		if(count%2 == 0){
 			currentClip = &gRedMan[ 0 ];
 		}
@@ -65,8 +67,10 @@ void Dot::handleEvent( SDL_Event& e )
 			currentClip = &gRedMan[ 1 ];
 		}
 		//count++;
+		}
 		break;
             case SDLK_LEFT:
+		if(down ==0 && up == 0 && right ==0){
 		right = 0;
 		up =0;
 		down = 0;
@@ -79,10 +83,10 @@ void Dot::handleEvent( SDL_Event& e )
 		else{
 			currentClip = &gRedMan[ 7 ];
 		}
-								//gSpriteSheetTexture.render( posX, posY, currentClip );
-		//count++;
+		}
 		break;
             case SDLK_RIGHT:
+		if(down ==0 && left == 0 && up ==0){
 		left = 0;
 		up = 0;
 		down = 0;
@@ -96,9 +100,14 @@ void Dot::handleEvent( SDL_Event& e )
 		else{
 			currentClip = &gRedMan[ 5 ];
 		}
-								//gSpriteSheetTexture.render( posX, posY, currentClip );
-		//count++;
+		}
 		break;
+
+	case SDLK_RSHIFT:
+		printf("up: %d\n", up);
+		printf("down: %d\n", down);
+		printf("left: %d\n", left);
+		printf("right: %d\n\n", right);
         }
     }
     //If a key was released
@@ -107,12 +116,19 @@ void Dot::handleEvent( SDL_Event& e )
         //Adjust the velocity
         switch( e.key.keysym.sym )
         {
-            case SDLK_UP: mVelY += DOT_VEL; up = 0; break;
-            case SDLK_DOWN: mVelY -= DOT_VEL; down = 0; break;
-            case SDLK_LEFT: mVelX += DOT_VEL; left = 0; break;
-            case SDLK_RIGHT: mVelX -= DOT_VEL; right = 0; break;
+            case SDLK_UP:if(down ==0 && left == 0 && right ==0){ mVelY =0; up = 0;} break;
+            case SDLK_DOWN: if(up ==0 && left == 0 && right ==0){ mVelY =0; down = 0;} break;
+            case SDLK_LEFT:if(down ==0 && up == 0 && right ==0){ mVelX =0; left = 0;} break;
+            case SDLK_RIGHT: if(down ==0 && left == 0 && up ==0){ mVelX =0; right = 0;} break;
         }
     }
+}
+
+int Dot::getVely(){
+	return mVelY;
+}
+int Dot::getVelx(){
+	return mVelX;
 }
 
 void Dot::move( Tile *tiles[] )
