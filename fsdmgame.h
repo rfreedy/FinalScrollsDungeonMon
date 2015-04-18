@@ -7,6 +7,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL/SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
@@ -23,6 +24,10 @@ typedef struct Textures {
 	LTexture *gDotTexture = NULL;
 	LTexture *gTileTexture = NULL;
 	LTexture *battleBackground = NULL;
+	LTexture *attackTextTexture = NULL;
+	LTexture *abilityTextTexture = NULL;
+	LTexture *escapeTextTexture = NULL;
+	LTexture *optionTextTexture = NULL;
 } Texture_type;
 
 

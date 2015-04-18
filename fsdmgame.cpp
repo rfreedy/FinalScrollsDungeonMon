@@ -4,6 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL/SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
@@ -17,6 +18,7 @@
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Rect gRedMan[8];		//class for aninamted character
+TTF_Font* gFont = NULL;
 
 void FSDMGame::start() {
 	if(!init()){
@@ -183,6 +185,7 @@ int FSDMGame::play(){
 				//render character/enemy stats
 
 				//render actions menu
+				textures.attackTextTexture->render(240, 240);
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -242,9 +245,9 @@ bool FSDMGame::init()
 					success = false;
 				}
 
-				if(TTF_init() == -1){
+				if(TTF_Init() == -1){
 					printf("SDL_ttf coould not initialize! SDL_ttf Error: %s\n", TTF_GetError());
-\					success = false;
+					success = false;
 				}
 			}
 		}
@@ -264,6 +267,11 @@ void FSDMGame::close()
 	//Free loaded images
 	textures.gDotTexture->free();
 	textures.gTileTexture->free();
+	textures.attackTextTexture->free();
+
+	//Free text
+	TTF_CloseFont(gFont);
+	gFont = NULL;
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -357,5 +365,19 @@ bool FSDMGame::loadMedia()
 		success = false;
 	}
 	
+	//open font
+	gFont = TTF_OpenFont("Xerox Sans Serif Narrow.ttf", 20);
+	if(gFont == NULL){
+		printf("Falied to load from font file! SDL_ttf Error: %s\n", TTF_GetError());
+		success = false;
+	}else{
+		//initialize text textures
+		SDL_Color textColor = {0, 0, 0};
+		if( !textures.attackTextTexture->loadFromRenderedText("Attack", textColor)){
+			printf("Falied to render attack text texture!\n");
+			success = false;
+		}
+	}
+
 	return success;
 }
