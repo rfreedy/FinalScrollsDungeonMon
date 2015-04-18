@@ -29,6 +29,12 @@ class Character: public Entity{
 		void levelUp();	
 		void fight(Enemy&);		
 
+		int getCurrentHealth();
+		int getCurrentStamina();
+		int getCurrentMana();
+		int speedCheck();
+
+
 		void replenish();
 		void refillStamina();
 		void refillMana();

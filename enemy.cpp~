@@ -77,6 +77,29 @@ void Enemy::refillStamina(){
 	stats.currentStamina = stats.maxStamina;
 }
 
+void Enemy::refillMana(){
+	stats.currentMana = stats.maxMana;
+}
+
+void Enemy::replenish(){
+	//stamina allowance
+	if((stats.currentStamina + 15) <= (stats.maxStamina)){
+		stats.currentStamina += 15;	
+	}else{
+		stats.currentStamina = stats.maxStamina;
+	}
+
+	//mana allowance
+	if((stats.currentMana + 20) <= (stats.maxMana)){
+		stats.currentMana += 20;	
+	}else{
+		stats.currentMana = stats.maxMana;
+	}
+
+	return;
+}
+
+
 void Enemy::defend(int base_damage){
 	
 	int damage = base_damage;	//base_damage could just be substituted, but this would make damage modification easier
@@ -119,7 +142,7 @@ int Enemy::attack(int move_number){
 	}
 	
 	//check if stamina/mana are sufficient to attack
-	if((stats.currentStamina >= stamina_cost) && (stats.currentMana >= mana_cost))
+	if((stats.currentStamina >= stamina_cost) && (stats.currentMana >= mana_cost)){
 		//check passed, decrement stamina/mana and attack		
 		stats.currentStamina -= stamina_cost;
 		stats.currentMana -= mana_cost;
@@ -140,7 +163,7 @@ int Enemy::getBestAttack(){
 
 	if(skills.offmage > highSkill){
 		atktype = 3;
-		highSkill = skills.offmage
+		highSkill = skills.offmage;
 	}
 	
 	return atktype;	//return indicator of best attack type

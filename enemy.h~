@@ -30,10 +30,12 @@ class Enemy: public Entity{
 
 		int speedCheck();
 
+		void replenish();
 		void refillStamina();
+		void refillMana();
 
 		void defend(int);	//take damage
-		int attack();		//calculate output damage
+		int attack(int);		//calculate output damage
 	private:
 		int getBestAttack(int);	//returns type of best attack; 1=slash, 2=blunt, 3=magic
 

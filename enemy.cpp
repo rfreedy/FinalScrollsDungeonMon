@@ -142,7 +142,7 @@ int Enemy::attack(int move_number){
 	}
 	
 	//check if stamina/mana are sufficient to attack
-	if((stats.currentStamina >= stamina_cost) && (stats.currentMana >= mana_cost))
+	if((stats.currentStamina >= stamina_cost) && (stats.currentMana >= mana_cost)){
 		//check passed, decrement stamina/mana and attack		
 		stats.currentStamina -= stamina_cost;
 		stats.currentMana -= mana_cost;
@@ -163,7 +163,7 @@ int Enemy::getBestAttack(){
 
 	if(skills.offmage > highSkill){
 		atktype = 3;
-		highSkill = skills.offmage
+		highSkill = skills.offmage;
 	}
 	
 	return atktype;	//return indicator of best attack type

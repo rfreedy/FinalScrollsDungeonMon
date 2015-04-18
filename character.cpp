@@ -17,7 +17,7 @@ Character::Character(): Entity(){
 
 	//initialize values in skills/stats structs	
 	skills.slashing = 10;
-	skills.blunt = 10;
+	skills.blunt = 50;
 	skills.speed = 10;
 	skills.sneak = 10;
 	skills.offmage = 10;
@@ -48,6 +48,11 @@ Character::~Character(){
 void Character::render(){
 	//TODO: draw player_texture to screen at coordinates
 }
+
+//draw stats panel in combat
+//void Character::renderStats(){
+
+//}
 
 void Character::toggleVisibility(){
 	setVisibility(!getVisibility());
@@ -130,6 +135,22 @@ int Character::getLevel(){
 	return stats.level;
 }
 
+int Character::getCurrentHealth(){
+	return stats.currentHealth;
+}
+
+int Character::getCurrentStamina(){
+	return stats.currentStamina;
+}
+
+int Character::getCurrentMana(){
+	return stats.currentMana;
+}
+
+int Character::speedCheck(){
+	return skills.speed;
+}
+
 //increase level, distribute skill points
 void Character::levelUp(){
 	stats.level++;	//level up!
@@ -157,36 +178,39 @@ void Character::fight(Enemy &opponent){
 	refillStamina();
 	opponent.refillStamina();
 
+	int movecount = 0;
+
 	//while enemy is alive
 	while((opponent.getCurrentHealth() > 0) && (stats.currentHealth > 0)){
-		
 
 		//check speed against enemy		
-		if(opponent.speedCheck > skills.speed){
+		if(opponent.speedCheck() > skills.speed){
 			//opponent is faster, enemy moves first
-			defend(opponent.attack());
+			defend(opponent.attack(movecount));
 
 			//check for death
 			if(stats.currentHealth <= 0){break;};
 			
 			//player move
-			opponent.defend(attack());
+			opponent.defend(attack(movecount));
 		
 		}else{
 			//character is faster, player moves first
-			opponent.defend(attack());
+			opponent.defend(attack(movecount));
 
 			//check for death
 			if(opponent.getCurrentHealth() <= 0){break;};
 			
 			//opponent move
-			defend(opponent.attack());
+			defend(opponent.attack(movecount));
 		}
 
 		
 		//give stamina/mana allowances
 		replenish();
 		opponent.replenish();
+
+		movecount++;
 	}
 
 	return;
@@ -263,7 +287,7 @@ int Character::attack(int move_number){
 	}
 	
 	//check if stamina/mana are sufficient to attack
-	if((stats.currentStamina >= stamina_cost) && (stats.currentMana >= mana_cost))
+	if((stats.currentStamina >= stamina_cost) && (stats.currentMana >= mana_cost)){
 		//check passed, decrement stamina/mana and attack		
 		stats.currentStamina -= stamina_cost;
 		stats.currentMana -= mana_cost;
@@ -284,7 +308,7 @@ int Character::getBestAttack(){
 
 	if(skills.offmage > highSkill){
 		atktype = 3;
-		highSkill = skills.offmage
+		highSkill = skills.offmage;
 	}
 	
 	return atktype;	//return indicator of best attack type

@@ -35,9 +35,9 @@ class Enemy: public Entity{
 		void refillMana();
 
 		void defend(int);	//take damage
-		int attack();		//calculate output damage
+		int attack(int);		//calculate output damage
 	private:
-		int getBestAttack(int);	//returns type of best attack; 1=slash, 2=blunt, 3=magic
+		int getBestAttack();	//returns type of best attack; 1=slash, 2=blunt, 3=magic
 
 		stat_type stats;	//creates structure for stats (health, mana,stamina)
 		skill_type skills;	//structure for skills (atk, def, power)

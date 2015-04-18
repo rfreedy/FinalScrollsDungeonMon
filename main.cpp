@@ -2,13 +2,21 @@
 //Driver for FSDM game
 //Lines commented #DEBUG# are for debugging and should be commented out for final release
 
-#include <iostream>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <stdio.h>
+#include <string>
+#include <fstream>
+#include "fsdmgame.h"
+#include "fsdmlevel.h"
+#include "Dot.h"
+#include "Tile.h"
+#include "LTexture.h"
 
 int main(){
-	FSDMGame fsdm1;
-	printf("Game instance created.");	//#DEBUG#
+	FSDMGame game1;
 
-	fsdm1.play();
+	game1.start();	
 
-	return 0; 
+	return 0;
 }
