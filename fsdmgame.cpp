@@ -366,7 +366,7 @@ bool FSDMGame::loadMedia()
 	}
 	
 	//open font
-	gFont = TTF_OpenFont("Xerox Sans Serif Narrow.ttf", 20);
+	gFont = TTF_OpenFont("Xerox_Sans_Serif_Narrow.ttf", 24);
 	if(gFont == NULL){
 		printf("Falied to load from font file! SDL_ttf Error: %s\n", TTF_GetError());
 		success = false;

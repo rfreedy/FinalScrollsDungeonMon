@@ -18,7 +18,7 @@
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Rect gRedMan[8];		//class for aninamted character
-//TTF_Font* gFont = NULL;
+TTF_Font* gFont = NULL;
 
 void FSDMGame::start() {
 	if(!init()){
@@ -366,7 +366,7 @@ bool FSDMGame::loadMedia()
 	}
 	
 	//open font
-	gFont = TTF_OpenFont("Xerox Sans Serif Narrow.ttf", 20);
+	gFont = TTF_OpenFont("Xerox_Sans_Serif_Narrow.ttf", 20);
 	if(gFont == NULL){
 		printf("Falied to load from font file! SDL_ttf Error: %s\n", TTF_GetError());
 		success = false;
