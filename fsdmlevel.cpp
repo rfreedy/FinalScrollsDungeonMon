@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdio.h>
+#include <iostream>
 #include <string>
 #include "fsdmlevel.h"
 #include "winrend.h"
@@ -60,7 +61,7 @@ SDL_Rect* FSDMLevel::getTileClip(int mtype){
 
 bool FSDMLevel::setTiles()
 {
-	printf("test");
+	std::cout << "test" << std::endl;
 	//Success flag
 	bool tilesLoaded = true;
 
@@ -68,7 +69,7 @@ bool FSDMLevel::setTiles()
     	int x = 0, y = 0;
 
     	//Open the map
-    	std::ifstream map( "test.map" );
+    	std::ifstream map( "test2.map" );
 
     	//If the map couldn't be loaded
     	if( map == NULL )
@@ -110,7 +111,7 @@ bool FSDMLevel::setTiles()
 
 			//Move to next tile spot
 			x += TILE_WIDTH;
-			printf("x= %s", x);
+			std::cout << "x= " << x << std::endl;
 			//If we've gone too far
 			if( x >= LEVEL_WIDTH )
 			{
@@ -120,8 +121,7 @@ bool FSDMLevel::setTiles()
 				//Move to the next row
 				y += TILE_HEIGHT;
 			}
-			printf("y= %s", y);
-			printf("Succes");
+			std::cout << "y= " << y << std::endl;
 		}
 		
 		//Clip the sprite sheet
@@ -162,8 +162,8 @@ bool FSDMLevel::setTiles()
 			gTileClips[ TILE_LAVA ].w = TILE_WIDTH;
 			gTileClips[ TILE_LAVA ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_SKINNYTREES ].x = 176*2;
-			gTileClips[ TILE_SKINNYTREES ].y = 160*2;
+			gTileClips[ TILE_SKINNYTREES ].x = 32*11;
+			gTileClips[ TILE_SKINNYTREES ].y = 32*10;
 			gTileClips[ TILE_SKINNYTREES ].w = TILE_WIDTH;
 			gTileClips[ TILE_SKINNYTREES ].h = TILE_HEIGHT;
 

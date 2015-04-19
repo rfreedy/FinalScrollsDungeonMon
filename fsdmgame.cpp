@@ -12,7 +12,7 @@
 #include "entity.h"
 #include "character.h"
 #include "enemy.h"
-
+#include <iostream>
 #include "winrend.h"
 
 SDL_Window* gWindow = NULL;
@@ -35,8 +35,9 @@ void FSDMGame::start() {
 }
 
 int FSDMGame::play(){
-	printf("running the play function");	
+	std::cout <<"running the play function" << std::endl;	
 	loaded_level = new FSDMLevel;
+	std::cout << "loaded level?" << std::endl;
 	if(!(*loaded_level).constructed())
 	{
 		printf("Level failed to load!\n");		
@@ -54,12 +55,12 @@ int FSDMGame::play(){
 
 		//Event handler
 		SDL_Event e;
-
+		std::cout << "about to load in character" << std::endl;
 		//player1
 		player1 = new Character;
-
+		std::cout << "loaded in character, about to load in enemy" << std::endl;
 		Enemy opponent;
-
+		std::cout << "loaded in enemy" << std::endl;
 		//The dot that will be moving around on the screen
 		//Dot dot;
 
@@ -97,9 +98,9 @@ int FSDMGame::play(){
 				
 	
 				//Render level
-				printf("will it render the level?");
+				std::cout << "will it render the level?" << std::endl;
 				loaded_level->render(camera, textures.gTileTexture);
-				printf("yes");
+				std::cout << "yes" << std::endl;
 				/*
 				//Render level
 				for( int i = 0; i < TOTAL_TILES; ++i )
@@ -110,7 +111,7 @@ int FSDMGame::play(){
 	
 				//Render dot
 				player1->render( camera, textures.gDotTexture );
-				printf("also rendered the player");
+				std::cout << "also rendered the player" << endl;
 			}else if(gamestate == 2){	//combat
 				
 				//initialize combat instance if first round
