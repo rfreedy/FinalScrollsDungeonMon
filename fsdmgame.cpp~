@@ -81,21 +81,21 @@ int FSDMGame::play(){
 					{
 						quit = true;
 					}
-					//if(dot.getVely() == 0 && dot.getVelx() == 0)
+					if(dot.getVely() == 0 && dot.getVelx() == 0)
 					//Handle input for the dot
-					//dot.handleEvent( e );
+					dot.handleEvent( e );
 				}
 
 			
 
 				//Move the dot
-				/*
+				
 				dot.move( loaded_level->getTileSet() );
 				dot.setCamera( camera );
-				*/
+				
 	
 				//Render level
-				//loaded_level->render(camera, textures.gTileTexture);
+				loaded_level->render(camera, textures.gTileTexture);
 
 				/*
 				//Render level
@@ -106,7 +106,7 @@ int FSDMGame::play(){
 				*/
 	
 				//Render dot
-				//dot.render( camera, textures.gDotTexture );
+				dot.render( camera, textures.gDotTexture );
 
 			}else if(gamestate = 2){	//combat
 				

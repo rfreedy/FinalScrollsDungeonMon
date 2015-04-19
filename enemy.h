@@ -20,7 +20,7 @@ class Enemy: public Entity{
 		Enemy();	//constructor
 		~Enemy();	//deconstructor
 
-		virtual void render();	//implementation of pure virtual
+		virtual void render( SDL_Rect&, LTexture*);	//implementation of pure virtual
 		virtual void toggleVisibility();
 		virtual int isVisible();
 
