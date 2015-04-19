@@ -45,7 +45,7 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		int gamestate = 2;		//1: walking, 2: battle
+		gamestate = 2;		//1: walking, 2: battle
 		int firstround = 1;
 		int combatround = 0;
 		arrowState = 0;
@@ -198,7 +198,13 @@ int FSDMGame::play(){
 				}else if(combat_menu_state == 1){
 					//TODO: Notifications
 				}else if(combat_menu_state == 2){
-					
+					/*
+					textures.abil1TextTexture->render(345, 305);
+					textures.abil2TextTexture->render(345, 370);
+					textures.abil3TextTexture->render(480, 305);
+					textures.abil4TextTexture->render(480, 370);
+					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
+					*/				
 				}
 			}
 			//Update screen
