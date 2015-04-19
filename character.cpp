@@ -38,7 +38,6 @@ Character::Character(): Entity(){
 	level_coordinates_x = -1;
 	level_coordinates_y = -1;
 
-	//TODO: init player_texture
 	   //Initialize the collision box
     mBox.x = 0;
     mBox.y = 0;
@@ -60,6 +59,7 @@ Character::Character(): Entity(){
 //deconstructor
 Character::~Character(){
 	//TODO: free/delete player_texture
+	//FIXED: Deallocation of texture occurs in fsdgame.cpp
 }
 
 //draw stats panel in combat
