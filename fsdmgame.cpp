@@ -81,7 +81,6 @@ int FSDMGame::play(){
 					{
 						quit = true;
 					}
-					if(dot.getVely() == 0 && dot.getVelx() == 0)
 					//Handle input for the dot
 					dot.handleEvent( e );
 				}
