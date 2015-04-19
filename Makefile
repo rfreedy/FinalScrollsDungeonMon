@@ -1,5 +1,5 @@
 all: main.o fsdmgame.o fsdmlevel.o Tile.o Dot.o LTexture.o entity.o character.o enemy.o
-	g++ main.o fsdmgame.o fsdmlevel.o Tile.o Dot.o LTexture.o entity.o character.o enemy.o -w -lSDL2 -lSDL2_image -lSDL_ttf -o FSDM
+	g++ main.o fsdmgame.o fsdmlevel.o Tile.o Dot.o LTexture.o entity.o character.o enemy.o -w -lSDL2 -lSDL2_image -o FSDM
 
 main.o: main.cpp
 	g++ -c main.cpp

@@ -4,7 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include <SDL/SDL_ttf.h>
+//#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
@@ -18,7 +18,7 @@
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Rect gRedMan[8];		//class for aninamted character
-TTF_Font* gFont = NULL;
+//TTF_Font* gFont = NULL;
 
 void FSDMGame::start() {
 	if(!init()){
@@ -45,7 +45,7 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		int gamestate = 2;
+		int gamestate = 1;
 		int firstround = 1;
 		int combatround = 0;
 
@@ -58,7 +58,7 @@ int FSDMGame::play(){
 		Enemy opponent;
 
 		//The dot that will be moving around on the screen
-		//Dot dot;
+		Dot dot;
 
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
@@ -185,7 +185,7 @@ int FSDMGame::play(){
 				//render character/enemy stats
 
 				//render actions menu
-				textures.attackTextTexture->render(240, 240);
+				//textures.attackTextTexture->render(240, 240);
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -244,11 +244,13 @@ bool FSDMGame::init()
 					printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
 					success = false;
 				}
-
+				
+				/*
 				if(TTF_Init() == -1){
 					printf("SDL_ttf coould not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 					success = false;
 				}
+				*/
 			}
 		}
 	}
@@ -267,11 +269,11 @@ void FSDMGame::close()
 	//Free loaded images
 	textures.gDotTexture->free();
 	textures.gTileTexture->free();
-	textures.attackTextTexture->free();
+	//textures.attackTextTexture->free();
 
 	//Free text
-	TTF_CloseFont(gFont);
-	gFont = NULL;
+	//TTF_CloseFont(gFont);
+	//gFont = NULL;
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -365,8 +367,9 @@ bool FSDMGame::loadMedia()
 		success = false;
 	}
 	
-	//open font
-	gFont = TTF_OpenFont("Xerox_Sans_Serif_Narrow.ttf", 20);
+	/*
+	//open font Xerox_Sans_Serif_Narrow
+	gFont = TTF_OpenFont("lazy.ttf", 24);
 	if(gFont == NULL){
 		printf("Falied to load from font file! SDL_ttf Error: %s\n", TTF_GetError());
 		success = false;
@@ -378,6 +381,7 @@ bool FSDMGame::loadMedia()
 			success = false;
 		}
 	}
+	*/
 
 	return success;
 }
