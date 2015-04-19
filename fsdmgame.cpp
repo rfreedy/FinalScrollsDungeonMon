@@ -35,7 +35,7 @@ void FSDMGame::start() {
 }
 
 int FSDMGame::play(){
-	
+	printf("running the play function");	
 	loaded_level = new FSDMLevel;
 	if(!(*loaded_level).constructed())
 	{
@@ -45,7 +45,7 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		gamestate = 2;		//1: walking, 2: battle
+		gamestate = 1;		//1: walking, 2: battle
 		int firstround = 1;
 		int combatround = 0;
 		arrowState = 0;
@@ -61,7 +61,7 @@ int FSDMGame::play(){
 		Enemy opponent;
 
 		//The dot that will be moving around on the screen
-		Dot dot;
+		//Dot dot;
 
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
@@ -85,20 +85,21 @@ int FSDMGame::play(){
 						quit = true;
 					}
 					//Handle input for the dot
-					dot.handleEvent( e );
+					player1->handleEvent( e );
 				}
 
 			
 
 				//Move the dot
 				
-				dot.move( loaded_level->getTileSet() );
-				dot.setCamera( camera );
+				player1->move( loaded_level->getTileSet() );
+				player1->setCamera( camera );
 				
 	
 				//Render level
+				printf("will it render the level?");
 				loaded_level->render(camera, textures.gTileTexture);
-
+				printf("yes");
 				/*
 				//Render level
 				for( int i = 0; i < TOTAL_TILES; ++i )
@@ -108,9 +109,9 @@ int FSDMGame::play(){
 				*/
 	
 				//Render dot
-				dot.render( camera, textures.gDotTexture );
-
-			}else if(gamestate = 2){	//combat
+				player1->render( camera, textures.gDotTexture );
+				printf("also rendered the player");
+			}else if(gamestate == 2){	//combat
 				
 				//initialize combat instance if first round
 				if(firstround){

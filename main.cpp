@@ -15,6 +15,7 @@
 #include "LTexture.h"
 
 int main(){
+	printf("start");
 	FSDMGame game1;
 
 	game1.start();	

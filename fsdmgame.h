@@ -34,8 +34,8 @@ typedef struct Textures {
 
 	LTexture *abil1TextTexture = NULL;
 	LTexture *abil2TextTexture = NULL;
-	LTexture *abil2TextTexture = NULL;
-	LTexture *abil2TextTexture = NULL;
+	LTexture *abil3TextTexture = NULL;
+	LTexture *abil4TextTexture = NULL;
 
 	LTexture *arrowTexture = NULL;
 } Texture_type;
