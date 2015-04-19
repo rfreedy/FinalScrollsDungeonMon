@@ -28,6 +28,7 @@ typedef struct Textures {
 	LTexture *abilityTextTexture = NULL;
 	LTexture *escapeTextTexture = NULL;
 	LTexture *optionTextTexture = NULL;
+	LTexture *arrowTexture = NULL;
 } Texture_type;
 
 
@@ -45,13 +46,18 @@ class FSDMGame{
 		bool init();
 		void close();
 		bool loadMedia();
+	
+		void handleCombatEvent( SDL_Event& );
+
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:
 		FSDMLevel *loaded_level = NULL;
-		int current_level;
 		Texture_type textures;
 		Character *player1 = NULL;
 	
+		int current_level;
+		int arrowState;
+		int combat_menu_state;		//0: top level, 1: notification, 2: abilities
 };
 
 #endif

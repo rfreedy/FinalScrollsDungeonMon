@@ -45,9 +45,12 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		int gamestate = 1;
+		int gamestate = 2;		//1: walking, 2: battle
 		int firstround = 1;
 		int combatround = 0;
+		arrowState = 0;
+		combat_menu_state = 0;
+		int arrowPos[2][4] = {{330, 460, 330, 460}, {310, 310, 375, 375}};
 
 		//Event handler
 		SDL_Event e;
@@ -129,7 +132,8 @@ int FSDMGame::play(){
 						quit = true;
 					}
 
-					//character.handleCombatEvent();
+					//handle combat event
+					handleCombatEvent( e );
 				}
 
 				//perform combat round				
@@ -168,7 +172,7 @@ int FSDMGame::play(){
 
 					combatround++;
 				}else{
-					printf("Battle over\n");
+					//printf("Battle over\n");
 					if(player1->getCurrentHealth() <= 0){
 						//gameover
 					}
@@ -180,11 +184,22 @@ int FSDMGame::play(){
 
 				//---render screen objects---
 				//render battle scene
+				textures.battleBackground->render(0, 0);				
 
 				//render character/enemy stats
 
 				//render actions menu
-				//textures.attackTextTexture->render(240, 240);
+				if(combat_menu_state == 0){
+					textures.attackTextTexture->render(345, 305);
+					textures.abilityTextTexture->render(345, 370);
+					textures.optionTextTexture->render(480, 305);
+					textures.escapeTextTexture->render(480, 370);
+					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
+				}else if(combat_menu_state == 1){
+					//TODO: Notifications
+				}else if(combat_menu_state == 2){
+					
+				}
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -267,8 +282,36 @@ void FSDMGame::close()
 
 	//Free loaded images
 	textures.gDotTexture->free();
+	delete textures.gDotTexture;
+	textures.gDotTexture = NULL;
+
 	textures.gTileTexture->free();
-	//textures.attackTextTexture->free();
+	delete textures.gTileTexture;
+	textures.gTileTexture = NULL;
+
+	textures.battleBackground->free();
+	delete textures.battleBackground;
+	textures.battleBackground = NULL;
+
+	textures.attackTextTexture->free();
+	delete textures.attackTextTexture;
+	textures.attackTextTexture = NULL;
+
+	textures.abilityTextTexture->free();
+	delete textures.abilityTextTexture;
+	textures.abilityTextTexture = NULL;
+
+	textures.escapeTextTexture->free();
+	delete textures.escapeTextTexture;
+	textures.escapeTextTexture = NULL;
+
+	textures.optionTextTexture->free();
+	delete textures.optionTextTexture;
+	textures.optionTextTexture = NULL;
+
+	textures.arrowTexture->free();
+	delete textures.arrowTexture;
+	textures.arrowTexture = NULL;	
 
 	//Free text
 	//TTF_CloseFont(gFont);
@@ -299,6 +342,42 @@ bool FSDMGame::loadMedia()
 	textures.gTileTexture = new LTexture;
 	if(textures.gTileTexture == NULL){
 		printf("Failed to allocate gTileTexture!\n");
+		success = false;
+	}
+
+	textures.battleBackground = new LTexture;
+	if(textures.battleBackground == NULL){
+		printf("Failed to allocate battleBackground!\n");
+		success = false;
+	}
+
+	textures.attackTextTexture = new LTexture;
+	if(textures.attackTextTexture == NULL){
+		printf("Failed to allocate attackTextTexture!\n");
+		success = false;
+	}
+
+	textures.abilityTextTexture = new LTexture;
+	if(textures.abilityTextTexture == NULL){
+		printf("Failed to allocate abilityTextTexture!\n");
+		success = false;
+	}
+
+	textures.escapeTextTexture = new LTexture;
+	if(textures.escapeTextTexture == NULL){
+		printf("Failed to allocate escapeTextTexture!\n");
+		success = false;
+	}
+
+	textures.optionTextTexture = new LTexture;
+	if(textures.optionTextTexture == NULL){
+		printf("Failed to allocate optionTextTexture!\n");
+		success = false;
+	}
+
+	textures.arrowTexture = new LTexture;
+	if(textures.arrowTexture == NULL){
+		printf("Failed to allocate arrowTexture!\n");
 		success = false;
 	}
 
@@ -365,7 +444,46 @@ bool FSDMGame::loadMedia()
 		printf( "Failed to load tile set texture!\n" );
 		success = false;
 	}
+
 	
+	if( !textures.battleBackground->loadFromFile( "combatscreenfull.png" ) )
+	{
+		printf( "Failed to combat state texture!\n" );
+		success = false;
+	}
+
+	
+	if( !textures.attackTextTexture->loadFromFile( "attack.png" ) )
+	{
+		printf( "Failed to attack text texture!\n" );
+		success = false;
+	}
+	
+	if( !textures.abilityTextTexture->loadFromFile( "ability.png" ) )
+	{
+		printf( "Failed to ability text texture!\n" );
+		success = false;
+	}
+
+	if( !textures.escapeTextTexture->loadFromFile( "escape.png" ) )
+	{
+		printf( "Failed to escape text texture!\n" );
+		success = false;
+	}
+
+	if( !textures.optionTextTexture->loadFromFile( "option.png" ) )
+	{
+		printf( "Failed to option text texture!\n" );
+		success = false;
+	}
+	
+	if( !textures.arrowTexture->loadFromFile( "arrow.png" ) )
+	{
+		printf( "Failed to escape text texture!\n" );
+		success = false;
+	}
+	
+
 	/*
 	//open font Xerox_Sans_Serif_Narrow
 	gFont = TTF_OpenFont("lazy.ttf", 24);
@@ -383,4 +501,37 @@ bool FSDMGame::loadMedia()
 	*/
 
 	return success;
+}
+
+void FSDMGame::handleCombatEvent( SDL_Event& e )
+{
+	int entered = 0;
+	//If a key was pressed
+	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+		//change arrow location
+		switch( e.key.keysym.sym ){
+			case SDLK_UP:
+				if(arrowState > 1){
+					arrowState -= 2;
+				}
+				break;
+			case SDLK_DOWN:
+				if(arrowState < 2){
+					arrowState += 2;
+				}
+				break;
+			case SDLK_LEFT:
+				if((arrowState == 1) || (arrowState == 3)){
+					arrowState--;
+				}
+				break;
+			case SDLK_RIGHT:
+				if((arrowState == 0) || (arrowState == 2)){
+					arrowState++;
+				}
+				break;
+			default:
+				break;
+		}
+	}
 }
