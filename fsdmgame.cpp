@@ -12,7 +12,7 @@
 #include "entity.h"
 #include "character.h"
 #include "enemy.h"
-
+#include <iostream>
 #include "winrend.h"
 
 SDL_Window* gWindow = NULL;
@@ -35,8 +35,9 @@ void FSDMGame::start() {
 }
 
 int FSDMGame::play(){
-	
+	std::cout <<"running the play function" << std::endl;	
 	loaded_level = new FSDMLevel;
+	std::cout << "loaded level?" << std::endl;
 	if(!(*loaded_level).constructed())
 	{
 		printf("Level failed to load!\n");		
@@ -45,7 +46,7 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		int gamestate = 2;		//1: walking, 2: battle
+		gamestate = 1;		//1: walking, 2: battle
 		int firstround = 1;
 		int combatround = 0;
 		arrowState = 0;
@@ -54,14 +55,14 @@ int FSDMGame::play(){
 
 		//Event handler
 		SDL_Event e;
-
+		std::cout << "about to load in character" << std::endl;
 		//player1
 		player1 = new Character;
-
+		std::cout << "loaded in character, about to load in enemy" << std::endl;
 		Enemy opponent;
-
+		std::cout << "loaded in enemy" << std::endl;
 		//The dot that will be moving around on the screen
-		Dot dot;
+		//Dot dot;
 
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
@@ -85,20 +86,21 @@ int FSDMGame::play(){
 						quit = true;
 					}
 					//Handle input for the dot
-					dot.handleEvent( e );
+					player1->handleEvent( e );
 				}
 
 			
 
 				//Move the dot
 				
-				dot.move( loaded_level->getTileSet() );
-				dot.setCamera( camera );
+				player1->move( loaded_level->getTileSet() );
+				player1->setCamera( camera );
 				
 	
 				//Render level
+				std::cout << "will it render the level?" << std::endl;
 				loaded_level->render(camera, textures.gTileTexture);
-
+				std::cout << "yes" << std::endl;
 				/*
 				//Render level
 				for( int i = 0; i < TOTAL_TILES; ++i )
@@ -108,9 +110,9 @@ int FSDMGame::play(){
 				*/
 	
 				//Render dot
-				dot.render( camera, textures.gDotTexture );
-
-			}else if(gamestate = 2){	//combat
+				player1->render( camera, textures.gDotTexture );
+				std::cout << "also rendered the player" << endl;
+			}else if(gamestate == 2){	//combat
 				
 				//initialize combat instance if first round
 				if(firstround){
@@ -198,7 +200,13 @@ int FSDMGame::play(){
 				}else if(combat_menu_state == 1){
 					//TODO: Notifications
 				}else if(combat_menu_state == 2){
-					
+					/*
+					textures.abil1TextTexture->render(345, 305);
+					textures.abil2TextTexture->render(345, 370);
+					textures.abil3TextTexture->render(480, 305);
+					textures.abil4TextTexture->render(480, 370);
+					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
+					*/				
 				}
 			}
 			//Update screen

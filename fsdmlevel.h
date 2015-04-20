@@ -13,10 +13,10 @@
 #include "LTexture.h"
 
 //The dimensions of the level
-const int LEVEL_WIDTH = 1920;
-const int LEVEL_HEIGHT = 1280;
+const int LEVEL_WIDTH = 1504;
+const int LEVEL_HEIGHT = 1088;
 
-const int TOTAL_TILES = 2400;
+const int TOTAL_TILES = 1598;
 const int TOTAL_TILE_SPRITES = 12;
 
 //The different tile sprites- Definitely needs to be changed for our sprite map

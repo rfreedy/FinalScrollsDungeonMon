@@ -39,8 +39,8 @@ Character::Character(): Entity(){
 	level_coordinates_y = -1;
 
 	   //Initialize the collision box
-    mBox.x = 0;
-    mBox.y = 0;
+    mBox.x = 250;
+    mBox.y = 250;
 	mBox.w = DOT_WIDTH;
 	mBox.h = DOT_HEIGHT;
 
