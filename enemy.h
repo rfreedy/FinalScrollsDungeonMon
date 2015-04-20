@@ -46,6 +46,10 @@ class Enemy: public Entity{
 		int level_coordinates_y;
 		
 		//LTexture unit_texture;		
+		SDL_Rect mBox;	//Collision box of the dot
+		//The velocity of the dot
+		int mVelX, mVelY;
+		SDL_Rect* currentClip;	
 };
 
 #endif

@@ -37,6 +37,16 @@ Enemy::Enemy(): Entity(){
 	level_coordinates_y = -2;
 
 	//TODO: init unit_texture
+	    mBox.x = 0;
+    mBox.y = 0;
+	mBox.w = DOT_WIDTH;
+	mBox.h = DOT_HEIGHT;
+
+    //Initialize the velocity
+    mVelX = 0;
+    mVelY = 0;
+
+	currentClip = &gRedMan[ 0 ];
 }
 
 //deconstructor

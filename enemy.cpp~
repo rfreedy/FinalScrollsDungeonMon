@@ -45,7 +45,7 @@ Enemy::~Enemy(){
 }
 
 //virtual render function, common to entities
-void Enemy::render(){
+void Enemy::render( SDL_Rect&, LTexture*){
 	//TODO: draw unit_texture to screen at coordinates
 }
 

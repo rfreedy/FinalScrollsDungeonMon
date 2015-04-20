@@ -13,7 +13,6 @@ using namespace std;
 #include "character.h"
 #include "fsdmlevel.h"
 #include "fsdmgame.h"
-#include "winrend.h"
 
 //default constructor
 Character::Character(): Entity(){
@@ -39,7 +38,6 @@ Character::Character(): Entity(){
 	level_coordinates_x = -1;
 	level_coordinates_y = -1;
 
-	//TODO: init player_texture
 	   //Initialize the collision box
     mBox.x = 0;
     mBox.y = 0;
