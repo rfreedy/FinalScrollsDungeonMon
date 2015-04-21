@@ -24,6 +24,7 @@ typedef struct Textures {
 	LTexture *gDotTexture = NULL;
 	LTexture *gTileTexture = NULL;		//terrain sprite sheet
 	LTexture *gDragonTexture = NULL;
+	LTexture *gBossTexture = NULL;
 
 	//For battle screen
 	LTexture *battleBackground = NULL;
@@ -57,7 +58,7 @@ class FSDMGame{
 		void close();
 		bool loadMedia();
 	
-		void handleCombatEvent( SDL_Event& );
+		int handleCombatEvent( SDL_Event& );
 
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:

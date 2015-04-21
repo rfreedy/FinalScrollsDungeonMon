@@ -58,7 +58,7 @@ class FSDMGame{
 		void close();
 		bool loadMedia();
 	
-		void handleCombatEvent( SDL_Event& , int);
+		int handleCombatEvent( SDL_Event& );
 
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:
@@ -70,6 +70,7 @@ class FSDMGame{
 		int current_level;
 		int arrowState;
 		int combat_menu_state;		//0: top level, 1: notification, 2: abilities
+		int combat_action;		//0: nothing, 1: attack
 };
 
 #endif

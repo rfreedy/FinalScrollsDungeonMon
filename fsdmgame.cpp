@@ -52,6 +52,7 @@ int FSDMGame::play(){
 		int combatround = 0;
 		arrowState = 0;
 		combat_menu_state = 0;
+		combat_action = 0;
 		int arrowPos[2][4] = {{330, 460, 330, 460}, {310, 310, 375, 375}};
 
 		//Event handler
@@ -528,10 +529,10 @@ bool FSDMGame::loadMedia()
 	return success;
 }
 
-void FSDMGame::handleCombatEvent( SDL_Event& e , int menustate)
+int FSDMGame::handleCombatEvent( SDL_Event& e)
 {
-	switch(menustate){
-		case 1:		
+	switch(combat_menu_state){
+		case 0:		
 			//If a key was pressed
 			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
 				//change arrow location
@@ -556,11 +557,46 @@ void FSDMGame::handleCombatEvent( SDL_Event& e , int menustate)
 							arrowState++;
 						}
 						break;
+					case SDLK_RETURN:
+						if(arrowState == 0){
+							combat_action = 1;
+						}else if(arrowState == 2){
+							combat_menu_state = 2;
+						}
 					default:
 						break;
 				}
 			}
 			break;
+
+		case 1:
+			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+				switch(e.key.ksysym.sym){
+					case SDLK_ENTER:
+						//dismiss notification
+						break;
+					default:
+						break;
+				}
+			}
+			break;
+		
+		case 2:
+			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+				switch(e.key.ksysym.sym){
+					case SDLK_ENTER:
+						//activate ability
+						break;
+					case SDLK_ESCAPE:
+						//return to previous menu
+						combat_menu_state = 0;
+						break;
+					default:
+						break;
+				}
+			}
+			break;
+
 		default:
 			break;
 	}
