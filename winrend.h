@@ -8,3 +8,5 @@ extern SDL_Renderer* gRenderer;
 extern SDL_Rect gRedMan[8];		//class for aninamted character
 //extern TTF_Font* gFont;
 extern SDL_Rect gDragon[1];
+extern SDL_Rect gBoss[1];	//need to be implemented
+//for enemies: add SDL_Rect in winrend, Ltexture in fsdmgame.h, and picture in fsdmgame.cpp

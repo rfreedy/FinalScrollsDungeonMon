@@ -64,7 +64,7 @@ class FSDMGame{
 		FSDMLevel *loaded_level = NULL;
 		Texture_type textures;
 		Character *player1 = NULL;
-	
+		Enemy *opponent = NULL;
 		int gamestate;
 		int current_level;
 		int arrowState;

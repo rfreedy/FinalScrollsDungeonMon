@@ -60,7 +60,7 @@ int FSDMGame::play(){
 		//player1
 		player1 = new Character;
 		std::cout << "loaded in character, about to load in enemy" << std::endl;
-		opponent = new Enemy;
+		opponent = new Enemy(11 12 13 12 123 343 200 12 13 14 15 34 15 23, 200 200, &gDragon[0]);
 		std::cout << "loaded in enemy" << std::endl;
 		//The dot that will be moving around on the screen
 		//Dot dot;
@@ -110,7 +110,7 @@ int FSDMGame::play(){
 				*/
 
 				opponent->render(camera, textures.gDragonTexture);	//render dragon
-				opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
+				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
 
 				//Render dot
 				player1->render( camera, textures.gDotTexture );
@@ -416,7 +416,7 @@ bool FSDMGame::loadMedia()
 		gRedMan[ 0 ].w = 25*2;
 		gRedMan[ 0 ].h = 25*2;
 
-		//Set top right sprite
+		//Set top right spriten
 		gRedMan[ 1 ].x = 22*2;
 		gRedMan[ 1 ].y =   0;
 		gRedMan[ 1 ].w = 25*2;
