@@ -4,7 +4,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-//#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
@@ -19,7 +19,7 @@ SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Rect gRedMan[8];		//class for aninamted character
 SDL_Rect gDragon[1];
-//TTF_Font* gFont = NULL;
+TTF_Font* gFont = NULL;
 
 void FSDMGame::start() {
 	if(!init()){
@@ -47,7 +47,7 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		gamestate = 1;		//1: walking, 2: battle
+		gamestate = 2;		//1: walking, 2: battle
 		int firstround = 1;
 		int combatround = 0;
 		arrowState = 0;
@@ -197,7 +197,7 @@ int FSDMGame::play(){
 				if(combat_menu_state == 0){
 					textures.attackTextTexture->render(345, 305);
 					textures.abilityTextTexture->render(345, 370);
-					textures.optionTextTexture->render(480, 305);
+					//textures.optionTextTexture->render(480, 305);
 					textures.escapeTextTexture->render(480, 370);
 					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
 				}else if(combat_menu_state == 1){
@@ -270,12 +270,12 @@ bool FSDMGame::init()
 					success = false;
 				}
 				
-				/*
+				
 				if(TTF_Init() == -1){
 					printf("SDL_ttf coould not initialize! SDL_ttf Error: %s\n", TTF_GetError());
 					success = false;
 				}
-				*/
+				
 			}
 		}
 	}
@@ -329,8 +329,8 @@ void FSDMGame::close()
 	textures.gDragonTexture = NULL;
 
 	//Free text
-	//TTF_CloseFont(gFont);
-	//gFont = NULL;
+	TTF_CloseFont(gFont);
+	gFont = NULL;
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -487,30 +487,6 @@ bool FSDMGame::loadMedia()
 	}
 
 	
-	if( !textures.attackTextTexture->loadFromFile( "attack.png" ) )
-	{
-		printf( "Failed to attack text texture!\n" );
-		success = false;
-	}
-	
-	if( !textures.abilityTextTexture->loadFromFile( "ability.png" ) )
-	{
-		printf( "Failed to ability text texture!\n" );
-		success = false;
-	}
-
-	if( !textures.escapeTextTexture->loadFromFile( "escape.png" ) )
-	{
-		printf( "Failed to escape text texture!\n" );
-		success = false;
-	}
-
-	if( !textures.optionTextTexture->loadFromFile( "option.png" ) )
-	{
-		printf( "Failed to option text texture!\n" );
-		success = false;
-	}
-	
 	if( !textures.arrowTexture->loadFromFile( "arrow.png" ) )
 	{
 		printf( "Failed to escape text texture!\n" );
@@ -518,9 +494,9 @@ bool FSDMGame::loadMedia()
 	}
 	
 
-	/*
+	
 	//open font Xerox_Sans_Serif_Narrow
-	gFont = TTF_OpenFont("lazy.ttf", 24);
+	gFont = TTF_OpenFont("Xerox_Sans_Serif_Narrow.ttf", 24);
 	if(gFont == NULL){
 		printf("Falied to load from font file! SDL_ttf Error: %s\n", TTF_GetError());
 		success = false;
@@ -531,41 +507,61 @@ bool FSDMGame::loadMedia()
 			printf("Falied to render attack text texture!\n");
 			success = false;
 		}
+
+		if( !textures.abilityTextTexture->loadFromRenderedText("Ability", textColor)){
+			printf("Falied to render attack text texture!\n");
+			success = false;
+		}
+
+		if( !textures.escapeTextTexture->loadFromRenderedText("Escape", textColor)){
+			printf("Falied to render attack text texture!\n");
+			success = false;
+		}
+
+		if( !textures.optionTextTexture->loadFromRenderedText("Option", textColor)){
+			printf("Falied to render attack text texture!\n");
+			success = false;
+		}
 	}
-	*/
+	
 
 	return success;
 }
 
-void FSDMGame::handleCombatEvent( SDL_Event& e )
+void FSDMGame::handleCombatEvent( SDL_Event& e , int menustate)
 {
-	int entered = 0;
-	//If a key was pressed
-	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
-		//change arrow location
-		switch( e.key.keysym.sym ){
-			case SDLK_UP:
-				if(arrowState > 1){
-					arrowState -= 2;
+	switch(menustate){
+		case 1:		
+			//If a key was pressed
+			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+				//change arrow location
+				switch( e.key.keysym.sym ){
+					case SDLK_UP:
+						if(arrowState == 2){
+							arrowState -= 2;
+						}
+						break;
+					case SDLK_DOWN:
+						if(arrowState < 2){
+							arrowState += 2;
+						}
+						break;
+					case SDLK_LEFT:
+						if((arrowState == 3)){
+							arrowState--;
+						}
+						break;
+					case SDLK_RIGHT:
+						if((arrowState == 2)){
+							arrowState++;
+						}
+						break;
+					default:
+						break;
 				}
-				break;
-			case SDLK_DOWN:
-				if(arrowState < 2){
-					arrowState += 2;
-				}
-				break;
-			case SDLK_LEFT:
-				if((arrowState == 1) || (arrowState == 3)){
-					arrowState--;
-				}
-				break;
-			case SDLK_RIGHT:
-				if((arrowState == 0) || (arrowState == 2)){
-					arrowState++;
-				}
-				break;
-			default:
-				break;
-		}
+			}
+			break;
+		default:
+			break;
 	}
 }

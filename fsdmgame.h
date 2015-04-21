@@ -7,7 +7,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-//#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
@@ -57,7 +57,7 @@ class FSDMGame{
 		void close();
 		bool loadMedia();
 	
-		void handleCombatEvent( SDL_Event& );
+		void handleCombatEvent( SDL_Event& , int);
 
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:

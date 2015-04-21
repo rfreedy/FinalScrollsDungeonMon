@@ -7,7 +7,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-//#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
@@ -64,7 +64,7 @@ class FSDMGame{
 		FSDMLevel *loaded_level = NULL;
 		Texture_type textures;
 		Character *player1 = NULL;
-	
+		Enemy *opponent = NULL;
 		int gamestate;
 		int current_level;
 		int arrowState;
