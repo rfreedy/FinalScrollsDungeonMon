@@ -70,8 +70,8 @@ bool FSDMLevel::setTiles(int maplevel)
     	//The tile offsets
     	int x = 0, y = 0;
 	// map names 
-	std::string overworld = "test2.map";
-	std::string dungeon1 = "test4.map";
+	std::string overworld = "overworld.map";
+	std::string dungeon1 = "dungeon1.map";
 	//declare map variable
 	std::ifstream map; 
 	std::cout << "map level value: " << maplevel << std::endl;
@@ -224,6 +224,17 @@ bool FSDMLevel::setTiles(int maplevel)
 			gTileClips[ TILE_STAIR_1 ].y = 32*15;
 			gTileClips[ TILE_STAIR_1 ].w = TILE_WIDTH;
 			gTileClips[ TILE_STAIR_1 ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_BRICKS_WALKING].x = 32*15;
+                        gTileClips[ TILE_BRICKS_WALKING ].y = 32*4;
+                        gTileClips[ TILE_BRICKS_WALKING].w = TILE_WIDTH;
+                        gTileClips[ TILE_BRICKS_WALKING ].h = TILE_HEIGHT;
+
+                        gTileClips[ TILE_LAVA_BRIDGE ].x = 32*17;
+                        gTileClips[ TILE_LAVA_BRIDGE ].y = 32*15;
+                        gTileClips[ TILE_LAVA_BRIDGE].w = TILE_WIDTH;
+                        gTileClips[ TILE_LAVA_BRIDGE].h = TILE_HEIGHT;
+
 
 
 					}

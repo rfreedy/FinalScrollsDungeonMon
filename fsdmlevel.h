@@ -37,7 +37,8 @@ const int TILE_SNOW_TREES = 12;
 const int TILE_SNOW_MOUNTAINS = 13;
 const int TILE_SNOW = 14;
 const int TILE_STAIR_1 = 15;
-
+const int TILE_BRICKS_WALKING = 16;
+const int TILE_LAVA_BRIDGE = 15;
 class FSDMLevel{
 	public:
 		FSDMLevel(int = 1);
