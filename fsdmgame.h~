@@ -84,6 +84,11 @@ class FSDMGame{
 		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
 		string notification_message;		//0: nothing, 1: attack
+
+		Enemy *enemyList[10];
+		/*for(int j = 0; j < 10; j++){	
+			enemyList[j] = NULL;
+		}*/
 };
 
 #endif

@@ -47,9 +47,9 @@ Enemy::Enemy(int s1, int s2,int s3,int s4,int s5,int s6,int s7,int s8,int s9,int
 }
 
 //deconstructor
-Enemy::~Enemy(){
+/*Enemy::~Enemy(){
 	//TODO: free/delete unit_texture
-}
+}*/
 
 //virtual render function, common to entities
 void Enemy::render( SDL_Rect& camera, LTexture* gDragonTexture){

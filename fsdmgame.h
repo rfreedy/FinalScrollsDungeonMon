@@ -85,8 +85,10 @@ class FSDMGame{
 		int combat_action;		//0: nothing, 1: attack
 		string notification_message;		//0: nothing, 1: attack
 
-		typedef Enemy* enemyPtr;
-		enemyPtr * enemyList;
+		Enemy *enemyList[10];
+		/*for(int j = 0; j < 10; j++){	
+			enemyList[j] = NULL;
+		}*/
 };
 
 #endif

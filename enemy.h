@@ -18,7 +18,7 @@ using namespace std;
 class Enemy: public Entity{
 	public:
 		Enemy(int, int,int,int,int,int,int,int,int,int,int,int,int,int,int,int, SDL_Rect*);	//constructor
-		~Enemy();	//deconstructor
+		//~Enemy();	//deconstructor
 
 		virtual void render( SDL_Rect&, LTexture*);	//implementation of pure virtual
 		virtual void toggleVisibility();
