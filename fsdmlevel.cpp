@@ -176,7 +176,7 @@ bool FSDMLevel::setTiles(int maplevel)
 			gTileClips[ TILE_MOUNTAINS ].h = TILE_HEIGHT;
 
 			gTileClips[ TILE_LAVA ].x = 32;
-			gTileClips[ TILE_LAVA ].y = 32*8;
+			gTileClips[ TILE_LAVA ].y = 32*7;
 			gTileClips[ TILE_LAVA ].w = TILE_WIDTH;
 			gTileClips[ TILE_LAVA ].h = TILE_HEIGHT;
 
