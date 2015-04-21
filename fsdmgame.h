@@ -84,6 +84,9 @@ class FSDMGame{
 		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
 		string notification_message;		//0: nothing, 1: attack
+
+		typedef Enemy* enemyPtr;
+		enemyPtr * enemyList;
 };
 
 #endif

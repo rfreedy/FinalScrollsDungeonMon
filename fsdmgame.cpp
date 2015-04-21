@@ -17,6 +17,7 @@ using namespace std;
 #include "character.h"
 #include "enemy.h"
 #include "winrend.h"
+#include <vector>
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
@@ -25,6 +26,7 @@ SDL_Rect gDragon[1];
 TTF_Font* gFont = NULL;
 
 void FSDMGame::start() {
+	enemyList = new enemyPtr[5];
 	if(!init()){
 		
 		printf("Initialization failed!\n");
@@ -68,8 +70,42 @@ int FSDMGame::play(){
 		player1 = new Character;		
 		std::cout << "Success!" << std::endl;
 
+		
 		cout << "Loading Enemy..." << endl;
-		opponent = new Enemy(11, 12, 13, 12, 123, 343, 200, 1, 13, 14, 15, 34, 15, 23, 200, 200, &gDragon[0]);
+		//opponent = new Enemy(11, 12, 13, 12, 123, 343, 200, 1, 13, 14, 15, 34, 15, 23, 200, 200, &gDragon[0]);
+		int count = 0;
+		int num;
+		int j = 0;
+		vector<int> stats;
+		int monsterPicCount = 0;
+		SDL_Rect pic=gDragon[0];;
+		ifstream myfile;
+		myfile.open ("enemyLoad.dat");
+		while(myfile>>num){
+			stats.push_back(num);
+			count++;
+			if(count >=16){	//after 16 numbers are read
+				/*monsterPicCount++;
+				cout<<"monster count: "<<monsterPicCount<<endl;
+				switch (monsterPicCount){
+					case 1:	pic = gDragon[0]; break;
+					case 2:	pic = gDragon[0]; break;
+					//default: pic = gDragon[0]; break;
+				}*/
+				count = 0;	//reset count
+				//for(int i=j; i<5; i++){
+				//cout <<"pic: "<<endl;
+				enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], &pic);
+				j++;
+				//}
+				//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
+    				//	cout << *i << ' ';
+				//cout<<stats[15];
+				stats.clear();
+				//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
+    				//	cout << *i << ' ';
+			}
+		}
 		std::cout << "Success!" << std::endl;
 
 		//Level camera
@@ -126,8 +162,11 @@ int FSDMGame::play(){
 					(*(loaded_level).getTileSet())[ i ]->render( camera );
 				}
 				*/
-				
-				opponent->render(camera, textures.gDragonTexture);	//render dragon
+				enemyList[0]->render(camera, textures.gDragonTexture);	//render dragon
+				enemyList[1]->render(camera, textures.gDragonTexture);
+				enemyList[2]->render(camera, textures.gDragonTexture);
+				enemyList[3]->render(camera, textures.gDragonTexture);
+				//opponent->render(camera, textures.gDragonTexture);	//render dragon
 				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
 
 				//Render dot
