@@ -17,7 +17,7 @@ using namespace std;
 #include "Dot.h"
 class Enemy: public Entity{
 	public:
-		Enemy();	//constructor
+		Enemy(int, int,int,int,int,int,int,int,int,int,int,int,int,int,int,int, SDL_Rect*);	//constructor
 		~Enemy();	//deconstructor
 
 		virtual void render( SDL_Rect&, LTexture*);	//implementation of pure virtual

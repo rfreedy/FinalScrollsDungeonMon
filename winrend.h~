@@ -8,3 +8,7 @@ extern SDL_Renderer* gRenderer;
 extern SDL_Rect gRedMan[8];		//class for aninamted character
 //extern TTF_Font* gFont;
 extern SDL_Rect gDragon[1];
+<<<<<<< HEAD
+=======
+extern SDL_Rect gBoss[1];	//need to be implemented 
+>>>>>>> 052d8cd58d09438005fe39d112d314d26b396ea1

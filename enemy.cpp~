@@ -13,28 +13,28 @@ using namespace std;
 #include "character.h"
 
 //default constructor
-Enemy::Enemy(): Entity(){
+Enemy::Enemy(int s1, int s2,int s3,int s4,int s5,int s6,int s7,int s8,int s9,int s10,int s11,int s12,int s13,int s14,int c1,int c2,SDL_Rect p1): Entity(){
 
 	//initialize values in skills/stats structs	
-	skills.slashing = 10;
-	skills.blunt = 10;
-	skills.speed = 10;
-	skills.sneak = 10;
-	skills.offmage = 10;
-	skills.defmage = 10;
+	skills.slashing = s1;
+	skills.blunt = s2;
+	skills.speed = s3;
+	skills.sneak = s4;
+	skills.offmage = s5;
+	skills.defmage = s6;
 
-	stats.type = 0;
-	stats.level = 1;
-	stats.currentHealth = 100;
-	stats.maxHealth = 100;
-	stats.currentStamina = 100;
-	stats.maxStamina = 100;
-	stats.currentMana = 100;
-	stats.maxMana = 100;
+	stats.type = s7;
+	stats.level = s8;
+	stats.currentHealth = s9;
+	stats.maxHealth = s10;
+	stats.currentStamina = s11;
+	stats.maxStamina = s12;
+	stats.currentMana = s13;
+	stats.maxMana = s14;
 
 	//initialize coordinates to impossible position, indicator of uninitialized level
-	level_coordinates_x = 200;
-	level_coordinates_y = 200;
+	level_coordinates_x = c1;
+	level_coordinates_y = c2;
 
 	//TODO: init unit_texture
 	    mBox.x = 200;
@@ -46,7 +46,7 @@ Enemy::Enemy(): Entity(){
     mVelX = 0;
     mVelY = 0;
 
-	currentClip = &gDragon[ 0 ];
+	currentClip = p1;
 }
 
 //deconstructor
@@ -57,7 +57,7 @@ Enemy::~Enemy(){
 //virtual render function, common to entities
 void Enemy::render( SDL_Rect& camera, LTexture* gDragonTexture){
 	//TODO: draw unit_texture to screen at coordinates
-	gDragonTexture->render( level_coordinates_x - camera, level_coordinates_y - camera, currentClip );
+	gDragonTexture->render( mBox.x - camera.x, mBox.y - camera.y, currentClip );
 }
 
 void Enemy::toggleVisibility(){

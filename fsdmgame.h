@@ -24,6 +24,7 @@ typedef struct Textures {
 	LTexture *gDotTexture = NULL;
 	LTexture *gTileTexture = NULL;		//terrain sprite sheet
 	LTexture *gDragonTexture = NULL;
+	LTexture *gBossTexture = NULL;
 
 	//For battle screen
 	LTexture *battleBackground = NULL;
