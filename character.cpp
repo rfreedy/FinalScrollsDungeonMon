@@ -160,6 +160,18 @@ int Character::getCurrentMana(){
 	return stats.currentMana;
 }
 
+int Character::getMaxHealth(){
+	return stats.maxHealth;
+}
+
+int Character::getMaxStamina(){
+	return stats.maxStamina;
+}
+
+int Character::getMaxMana(){
+	return stats.maxMana;
+}
+
 int Character::speedCheck(){
 	return skills.speed;
 }

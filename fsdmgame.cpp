@@ -2,17 +2,20 @@
 //Game Instance for FSDM game
 //Lines commented #DEBUG# are for debugging and should be commented out for final release
 
+#include <stdio.h>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include <iostream>
+using namespace std;
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include <stdio.h>
-#include <string>
-#include <fstream>
 #include "fsdmgame.h"
 #include "entity.h"
 #include "character.h"
 #include "enemy.h"
-#include <iostream>
 #include "winrend.h"
 
 SDL_Window* gWindow = NULL;
@@ -53,7 +56,9 @@ int FSDMGame::play(){
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
-		int arrowPos[2][4] = {{330, 460, 330, 460}, {310, 310, 375, 375}};
+		int menuPos[2][4] = {{345, 475, 345, 475}, {310, 310, 375, 375}};
+		int statPos[2][3] = {{100, 100, 100}, {150, 175, 200}};
+		int arrowPos[2][4] = {{330, 460, 330, 460}, {315, 315, 380, 380}};
 
 		//Event handler
 		SDL_Event e;
@@ -193,24 +198,26 @@ int FSDMGame::play(){
 				textures.battleBackground->render(0, 0);				
 
 				//render character/enemy stats
+				updateCharStats();
+				textures.player1health->render(statPos[0][0], statPos[1][0]);
+				textures.player1stamina->render(statPos[0][1], statPos[1][1]);
+				textures.player1mana->render(statPos[0][2], statPos[1][2]);			
 
 				//render actions menu
 				if(combat_menu_state == 0){
-					textures.attackTextTexture->render(345, 305);
-					textures.abilityTextTexture->render(345, 370);
+					textures.attackTextTexture->render(menuPos[0][0], menuPos[1][0]);
+					textures.abilityTextTexture->render(menuPos[0][2], menuPos[1][2]);
 					//textures.optionTextTexture->render(480, 305);
-					textures.escapeTextTexture->render(480, 370);
+					textures.escapeTextTexture->render(menuPos[0][1], menuPos[1][1]);
 					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
 				}else if(combat_menu_state == 1){
-					//TODO: Notifications
-				}else if(combat_menu_state == 2){
-					/*
-					textures.abil1TextTexture->render(345, 305);
-					textures.abil2TextTexture->render(345, 370);
-					textures.abil3TextTexture->render(480, 305);
-					textures.abil4TextTexture->render(480, 370);
+					textures.abil0TextTexture->render(menuPos[0][0], menuPos[1][0]);
+					textures.abil1TextTexture->render(menuPos[0][1], menuPos[1][1]);
+					textures.abil2TextTexture->render(menuPos[0][2], menuPos[1][2]);
+					textures.abil3TextTexture->render(menuPos[0][3], menuPos[1][3]);
 					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
-					*/				
+				}else if(combat_menu_state == 2){
+					//notification
 				}
 			}
 			//Update screen
@@ -349,6 +356,8 @@ bool FSDMGame::loadMedia()
 	//Loading success flag
 	bool success = true;
 
+	//-------Character Textures-------
+	//character texture
 	textures.gDotTexture = new LTexture;
 	if(textures.gDotTexture == NULL){
 		printf("Failed to allocate gDotTexture!\n");
@@ -361,15 +370,42 @@ bool FSDMGame::loadMedia()
 		success = false;
 	}
 
+	
+	//-------Map Textures-------
+	//tile sprite sheet
 	textures.gTileTexture = new LTexture;
 	if(textures.gTileTexture == NULL){
 		printf("Failed to allocate gTileTexture!\n");
 		success = false;
 	}
 
+
+	//-------Battle Scene Textures-------
+	//Panel outlines, displayed in background
 	textures.battleBackground = new LTexture;
 	if(textures.battleBackground == NULL){
 		printf("Failed to allocate battleBackground!\n");
+		success = false;
+	}
+
+
+	//-------Text Textures-------	
+
+	textures.player1health = new LTexture;
+	if(textures.player1health == NULL){
+		printf("Failed to allocate player1health!\n");
+		success = false;
+	}
+
+	textures.player1stamina = new LTexture;
+	if(textures.player1stamina == NULL){
+		printf("Failed to allocate player1stamina!\n");
+		success = false;
+	}
+
+	textures.player1mana = new LTexture;
+	if(textures.player1mana == NULL){
+		printf("Failed to allocate player1mana!\n");
 		success = false;
 	}
 
@@ -397,11 +433,38 @@ bool FSDMGame::loadMedia()
 		success = false;
 	}
 
+	textures.abil0TextTexture = new LTexture;
+	if(textures.abil0TextTexture == NULL){
+		printf("Failed to allocate abil0TextTexture!\n");
+		success = false;
+	}
+
+	textures.abil1TextTexture = new LTexture;
+	if(textures.abil1TextTexture == NULL){
+		printf("Failed to allocate abil1TextTexture!\n");
+		success = false;
+	}
+
+	textures.abil2TextTexture = new LTexture;
+	if(textures.abil2TextTexture == NULL){
+		printf("Failed to allocate abil2TextTexture!\n");
+		success = false;
+	}
+
+	textures.abil3TextTexture = new LTexture;
+	if(textures.abil1TextTexture == NULL){
+		printf("Failed to allocate abil3TextTexture!\n");
+		success = false;
+	}
+
 	textures.arrowTexture = new LTexture;
 	if(textures.arrowTexture == NULL){
 		printf("Failed to allocate arrowTexture!\n");
 		success = false;
 	}
+
+
+	//-------***Load Textures***-------
 
 	//Load dot texture - replace with character texture
 	if( !textures.gDotTexture->loadFromFile( "characters-2sizeChange.png" ) )
@@ -510,17 +573,37 @@ bool FSDMGame::loadMedia()
 		}
 
 		if( !textures.abilityTextTexture->loadFromRenderedText("Ability", textColor)){
-			printf("Falied to render attack text texture!\n");
+			printf("Falied to render ability text texture!\n");
 			success = false;
 		}
 
 		if( !textures.escapeTextTexture->loadFromRenderedText("Escape", textColor)){
-			printf("Falied to render attack text texture!\n");
+			printf("Falied to render escape text texture!\n");
 			success = false;
 		}
 
 		if( !textures.optionTextTexture->loadFromRenderedText("Option", textColor)){
-			printf("Falied to render attack text texture!\n");
+			printf("Falied to render option text texture!\n");
+			success = false;
+		}
+
+		if( !textures.abil0TextTexture->loadFromRenderedText("Heal", textColor)){
+			printf("Falied to render abil0 text texture!\n");
+			success = false;
+		}
+
+		if( !textures.abil1TextTexture->loadFromRenderedText("Shield", textColor)){
+			printf("Falied to render abil1 text texture!\n");
+			success = false;
+		}
+
+		if( !textures.abil2TextTexture->loadFromRenderedText("Debuff", textColor)){
+			printf("Falied to render abil2 text texture!\n");
+			success = false;
+		}
+
+		if( !textures.abil3TextTexture->loadFromRenderedText("Spell Thing", textColor)){
+			printf("Falied to render abil3 text texture!\n");
 			success = false;
 		}
 	}
@@ -543,17 +626,17 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 						}
 						break;
 					case SDLK_DOWN:
-						if(arrowState < 2){
+						if(arrowState == 0){
 							arrowState += 2;
 						}
 						break;
 					case SDLK_LEFT:
-						if((arrowState == 3)){
+						if((arrowState == 1)){
 							arrowState--;
 						}
 						break;
 					case SDLK_RIGHT:
-						if((arrowState == 2)){
+						if((arrowState == 0)){
 							arrowState++;
 						}
 						break;
@@ -571,9 +654,29 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 
 		case 1:
 			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
-				switch(e.key.ksysym.sym){
-					case SDLK_ENTER:
-						//dismiss notification
+				switch(e.key.keysym.sym){
+					case SDLK_UP:
+						if(arrowState > 1){
+							arrowState -= 2;
+						}
+						break;
+					case SDLK_DOWN:
+						if(arrowState < 2){
+							arrowState += 2;
+						}
+						break;
+					case SDLK_LEFT:
+						if((arrowState == 1) || (arrowState == 3)){
+							arrowState--;
+						}
+						break;
+					case SDLK_RIGHT:
+						if((arrowState == 0) || (arrowState == 2)){
+							arrowState++;
+						}
+						break;
+					case SDLK_RETURN:
+						//activate ability
 						break;
 					default:
 						break;
@@ -583,8 +686,8 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 		
 		case 2:
 			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
-				switch(e.key.ksysym.sym){
-					case SDLK_ENTER:
+				switch(e.key.keysym.sym){
+					case SDLK_RETURN:
 						//activate ability
 						break;
 					case SDLK_ESCAPE:
@@ -599,5 +702,43 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 
 		default:
 			break;
+	}
+}
+
+//rebuild character stat textures
+void FSDMGame::updateCharStats(){
+	bool success = true;
+
+	stringstream convert1;
+	stringstream convert2;
+	stringstream convert3;
+
+	string player1health_text;
+	string player1stamina_text;
+	string player1mana_text;
+
+	convert1 << "Health: " << (player1->getCurrentHealth()) << "/" << (player1->getMaxHealth());
+	player1health_text = convert1.str();
+
+	convert2 << "Stamina: " << (player1->getCurrentStamina()) << "/" << (player1->getMaxStamina());
+	player1stamina_text = convert2.str();
+
+	convert3 << "Mana: " << (player1->getCurrentMana()) << "/" << (player1->getMaxMana());
+	player1mana_text = convert3.str();
+
+	SDL_Color textColor = {0, 0, 0};
+	if( !textures.player1health->loadFromRenderedText(player1health_text, textColor)){
+		printf("Falied to render player 1 health text texture!\n");
+		success = false;
+	}
+
+	if( !textures.player1stamina->loadFromRenderedText(player1stamina_text, textColor)){
+		printf("Falied to render player 1 stamina text texture!\n");
+		success = false;
+	}
+
+	if( !textures.player1mana->loadFromRenderedText(player1mana_text, textColor)){
+		printf("Falied to render player 1 mana text texture!\n");
+		success = false;
 	}
 }

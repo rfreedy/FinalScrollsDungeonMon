@@ -5,12 +5,14 @@
 #ifndef FSDMGAME_H
 #define FSDMGAME_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <fstream>
+using namespace std;
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include "LTexture.h"
 #include "Tile.h"
 #include "Dot.h"
@@ -29,15 +31,19 @@ typedef struct Textures {
 	//For battle screen
 	LTexture *battleBackground = NULL;
 	
+	LTexture *player1health = NULL;
+	LTexture *player1stamina = NULL;
+	LTexture *player1mana = NULL;
+
 	LTexture *attackTextTexture = NULL;
 	LTexture *abilityTextTexture = NULL;
 	LTexture *escapeTextTexture = NULL;
 	LTexture *optionTextTexture = NULL;
 
+	LTexture *abil0TextTexture = NULL;
 	LTexture *abil1TextTexture = NULL;
 	LTexture *abil2TextTexture = NULL;
 	LTexture *abil3TextTexture = NULL;
-	LTexture *abil4TextTexture = NULL;
 
 	LTexture *arrowTexture = NULL;
 } Texture_type;
@@ -60,6 +66,8 @@ class FSDMGame{
 	
 		int handleCombatEvent( SDL_Event& );
 
+		void updateCharStats();
+
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:
 		FSDMLevel *loaded_level = NULL;
@@ -69,7 +77,7 @@ class FSDMGame{
 		int gamestate;
 		int current_level;
 		int arrowState;
-		int combat_menu_state;		//0: top level, 1: notification, 2: abilities
+		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
 };
 

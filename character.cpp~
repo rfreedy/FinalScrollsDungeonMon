@@ -39,8 +39,8 @@ Character::Character(): Entity(){
 	level_coordinates_y = -1;
 
 	   //Initialize the collision box
-    mBox.x = 0;
-    mBox.y = 0;
+    mBox.x = 250;
+    mBox.y = 250;
 	mBox.w = DOT_WIDTH;
 	mBox.h = DOT_HEIGHT;
 
@@ -59,6 +59,7 @@ Character::Character(): Entity(){
 //deconstructor
 Character::~Character(){
 	//TODO: free/delete player_texture
+	//FIXED: Deallocation of texture occurs in fsdgame.cpp
 }
 
 //draw stats panel in combat
@@ -157,6 +158,18 @@ int Character::getCurrentStamina(){
 
 int Character::getCurrentMana(){
 	return stats.currentMana;
+}
+
+int Character::getMaxHealth(){
+	return stats.maxHealth;
+}
+
+int Character::getMaxStamina(){
+	return stats.maxStamina;
+}
+
+int Character::getMaxMana(){
+	return stats.maxMana;
 }
 
 int Character::speedCheck(){

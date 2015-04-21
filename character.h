@@ -40,6 +40,11 @@ class Character: public Entity{
 		int getCurrentHealth();
 		int getCurrentStamina();
 		int getCurrentMana();
+
+		int getMaxHealth();
+		int getMaxStamina();
+		int getMaxMana();
+	
 		int speedCheck();
 
 
