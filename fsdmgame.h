@@ -71,6 +71,7 @@ class FSDMGame{
 		int handleCombatEvent( SDL_Event& );
 
 		void updateStatText();
+		void loadEnemies();
 
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:
@@ -86,9 +87,6 @@ class FSDMGame{
 		string notification_message;		//0: nothing, 1: attack
 
 		Enemy *enemyList[10];
-		/*for(int j = 0; j < 10; j++){	
-			enemyList[j] = NULL;
-		}*/
 };
 
 #endif

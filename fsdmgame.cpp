@@ -31,37 +31,37 @@ void FSDMGame::start() {
 	}
 
 	if(!init()){
-		
 		printf("Initialization failed!\n");
 	}else{
 		if(!loadMedia()){
 			printf("Media loading failed!\n");
 		}else{
 			play();
-			//cout << "Done playing." << endl;	
+			//cout << "Done playing." << endl;	//#DEBUG#	
 		}
 	}
 	return;
 }
 
 int FSDMGame::play(){
-	std::cout <<"Playing..." << std::endl;	
+	//cout <<"Playing..." << endl;		//#DEBUG#	
 	loaded_level = new FSDMLevel;
-	std::cout << "Level Created..." << std::endl;
+	//cout << "Level Created..." << endl;	//#DEBUG#
 	if(!loaded_level->constructed())
 	{
 		printf("Level failed to load!\n");		
 		return 1;
 	}else{
-		//Main loop flag
-		bool quit = false;
-
-		gamestate = 2;		//1: walking, 2: battle
+		//Game State Variables
+		bool quit = false;	//Main loop flag
+		gamestate = 1;		//1: walking, 2: battle
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
 		int firstround = 1;
 		int combatround = 0;
+
+		//Render Location Variables		
 		int menuPos[2][4] = {{345, 475, 345, 475}, {310, 310, 375, 375}};
 		int playerStatPos[2][3] = {{50, 50, 50}, {300, 350, 400}};
 		int opponentStatPos[2][3] = {{150, 150, 150}, {50, 75, 100}};
@@ -69,47 +69,16 @@ int FSDMGame::play(){
 
 		//Event handler
 		SDL_Event e;
-		std::cout << "Creating character..." << std::endl;
+
+		//Create Default Character
+		//cout << "Creating character..." << endl;	//#DEBUG#
 		player1 = new Character;		
-		std::cout << "Success!" << std::endl;
+		//cout << "Success!" << endl;			//#DEBUG#
 
 		
-		cout << "Loading Enemy..." << endl;
-		//opponent = new Enemy(11, 12, 13, 12, 123, 343, 200, 1, 13, 14, 15, 34, 15, 23, 200, 200, &gDragon[0]);
-		int count = 0;
-		int num;
-		int j = 0;
-		vector<int> stats;
-		int monsterPicCount = 0;
-		SDL_Rect pic=gDragon[0];;
-		ifstream myfile;
-		myfile.open ("enemyLoad.dat");
-		while(myfile>>num){
-			stats.push_back(num);
-			count++;
-			if(count >=16){	//after 16 numbers are read
-				/*monsterPicCount++;
-				cout<<"monster count: "<<monsterPicCount<<endl;
-				switch (monsterPicCount){
-					case 1:	pic = gDragon[0]; break;
-					case 2:	pic = gDragon[0]; break;
-					//default: pic = gDragon[0]; break;
-				}*/
-				count = 0;	//reset count
-				//for(int i=j; i<5; i++){
-				//cout <<"pic: "<<endl;
-				enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], &pic);
-				j++;
-				//}
-				//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
-    				//	cout << *i << ' ';
-				//cout<<stats[15];
-				stats.clear();
-				//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
-    				//	cout << *i << ' ';
-			}
-		}
-		std::cout << "Success!" << std::endl;
+		//Allocate and Load Enemies
+		//cout << "Loading Enemy..." << endl;		//#DEBUG#
+		loadEnemies();
 
 		opponent = enemyList[1];
 
@@ -651,7 +620,7 @@ bool FSDMGame::loadMedia()
 		//Set bottom left sprite	LEFT
 		gRedMan[ 6 ].x = 44*2;
 		gRedMan[ 6 ].y = 21*2;
-		gRedMan[ 6 ].w = 24*2;
+		gRedMan[ 6 ].w = 25*2;
 		gRedMan[ 6 ].h = 25*2;
 
 		//Set bottom right sprite
@@ -915,4 +884,44 @@ void FSDMGame::updateStatText(){
 			success = false;
 		}
 	}
+}
+
+void FSDMGame::loadEnemies(){
+	int count = 0;
+	int num;
+	int j = 0;
+	
+	vector<int> stats;
+	int monsterPicCount = 0;
+	SDL_Rect pic=gDragon[0];
+		
+	ifstream myfile;			//data file for enemy input
+	myfile.open ("enemyLoad.dat");
+		
+	while(myfile>>num){
+		stats.push_back(num);
+		count++;
+		if(count >=16){	//after 16 numbers are read
+			/*monsterPicCount++;
+			cout<<"monster count: "<<monsterPicCount<<endl;
+			switch (monsterPicCount){
+				case 1:	pic = gDragon[0]; break;
+				case 2:	pic = gDragon[0]; break;
+				//default: pic = gDragon[0]; break;
+			}*/
+			count = 0;	//reset count
+			//for(int i=j; i<5; i++){
+			//cout <<"pic: "<<endl;
+			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], &pic);
+			j++;
+			//}
+			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
+    			//	cout << *i << ' ';
+			//cout<<stats[15];
+			stats.clear();
+			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
+    			//	cout << *i << ' ';
+		}
+	}
+	std::cout << "Success!" << std::endl;
 }
