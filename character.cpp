@@ -8,6 +8,7 @@ using namespace std;
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <iostream>
 
 #include "entity.h"
 #include "character.h"
@@ -40,7 +41,7 @@ Character::Character(): Entity(){
 
 	   //Initialize the collision box
     mBox.x = 250;
-    mBox.y = 250;
+    mBox.y = 350;
 	mBox.w = DOT_WIDTH;
 	mBox.h = DOT_HEIGHT;
 
@@ -546,8 +547,7 @@ void Character::move( Tile *tiles[] )
 		}
 	}
 
-
-
+	//std::cout << "The total number of tiles is " << TOTAL_TILES << std::endl;
     mBox.x += mVelX;
     //If the dot went too far to the left or right or touched a wall
     if( ( mBox.x < 0 ) || ( mBox.x + DOT_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, tiles ) )

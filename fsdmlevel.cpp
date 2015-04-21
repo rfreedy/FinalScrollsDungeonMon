@@ -69,7 +69,7 @@ bool FSDMLevel::setTiles()
     	int x = 0, y = 0;
 
     	//Open the map
-    	std::ifstream map( "test2.map" );
+    	std::ifstream map( "test4.map" );
 
     	//If the map couldn't be loaded
     	if( map == NULL )
@@ -98,6 +98,7 @@ bool FSDMLevel::setTiles()
 			//If the number is a valid tile number
 			if( ( tileType >= 0 ) && ( tileType < TOTAL_TILE_SPRITES ) )
 			{
+				//std::cout << "Single Tile loaded" << std::endl;
 				tileSet[ i ] = new Tile( x, y, tileType );
 			}
 			//If we don't recognize the tile type
@@ -111,7 +112,7 @@ bool FSDMLevel::setTiles()
 
 			//Move to next tile spot
 			x += TILE_WIDTH;
-			std::cout << "x= " << x << std::endl;
+			//std::cout << "x= " << x << std::endl;
 			//If we've gone too far
 			if( x >= LEVEL_WIDTH )
 			{
@@ -121,7 +122,7 @@ bool FSDMLevel::setTiles()
 				//Move to the next row
 				y += TILE_HEIGHT;
 			}
-			std::cout << "y= " << y << std::endl;
+			//std::cout << "y= " << y << std::endl;
 		}
 		
 		//Clip the sprite sheet
@@ -157,8 +158,8 @@ bool FSDMLevel::setTiles()
 			gTileClips[ TILE_MOUNTAINS ].w = TILE_WIDTH;
 			gTileClips[ TILE_MOUNTAINS ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_LAVA ].x = 128*2;
-			gTileClips[ TILE_LAVA ].y = 0;
+			gTileClips[ TILE_LAVA ].x = 32;
+			gTileClips[ TILE_LAVA ].y = 32*7;
 			gTileClips[ TILE_LAVA ].w = TILE_WIDTH;
 			gTileClips[ TILE_LAVA ].h = TILE_HEIGHT;
 
@@ -167,8 +168,8 @@ bool FSDMLevel::setTiles()
 			gTileClips[ TILE_SKINNYTREES ].w = TILE_WIDTH;
 			gTileClips[ TILE_SKINNYTREES ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_BRICKS ].x = 176*2;
-			gTileClips[ TILE_BRICKS ].y = 112*2;
+			gTileClips[ TILE_BRICKS ].x = 16*32;
+			gTileClips[ TILE_BRICKS ].y = 2*32;
 			gTileClips[ TILE_BRICKS ].w = TILE_WIDTH;
 			gTileClips[ TILE_BRICKS ].h = TILE_HEIGHT;
 
@@ -186,6 +187,16 @@ bool FSDMLevel::setTiles()
 			gTileClips[ TILE_BOULDERS ].y = 160*2;
 			gTileClips[ TILE_BOULDERS ].w = TILE_WIDTH;
 			gTileClips[ TILE_BOULDERS ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_BRICKS_WALKING ].x = 15*32;
+			gTileClips[ TILE_BRICKS_WALKING ].y = 4*32;
+			gTileClips[ TILE_BRICKS_WALKING ].w = TILE_WIDTH;
+			gTileClips[ TILE_BRICKS_WALKING ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_LAVA_BRIDGE ].x = 32*17;
+			gTileClips[ TILE_LAVA_BRIDGE ].y = 32*15;
+			gTileClips[ TILE_LAVA_BRIDGE ].w = TILE_WIDTH;
+			gTileClips[ TILE_LAVA_BRIDGE ].h = TILE_HEIGHT;
 		}
 	}
 

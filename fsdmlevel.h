@@ -13,11 +13,11 @@
 #include "LTexture.h"
 
 //The dimensions of the level
-const int LEVEL_WIDTH = 1504;
-const int LEVEL_HEIGHT = 1088;
+const int LEVEL_WIDTH = 1632;
+const int LEVEL_HEIGHT = 1248;
 
-const int TOTAL_TILES = 1598;
-const int TOTAL_TILE_SPRITES = 12;
+const int TOTAL_TILES = 1989;
+const int TOTAL_TILE_SPRITES = 14;
 
 //The different tile sprites- Definitely needs to be changed for our sprite map
 //The different tile sprites
@@ -33,6 +33,8 @@ const int TILE_BRICKS = 8;
 const int TILE_MOUNTAINS = 9;
 const int TILE_TREES = 10;
 const int TILE_WATER = 11;
+const int TILE_BRICKS_WALKING = 12;
+const int TILE_LAVA_BRIDGE =13;
 
 class FSDMLevel{
 	public:

@@ -50,7 +50,7 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		gamestate = 2;		//1: walking, 2: battle
+		gamestate = 1;		//1: walking, 2: battle
 		int firstround = 1;
 		int combatround = 0;
 		arrowState = 0;
@@ -80,7 +80,7 @@ int FSDMGame::play(){
 			//Clear screen
 			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 			SDL_RenderClear( gRenderer );
-	
+			std::cout << "It's not the rendering" << std::endl;
 			//run current gamestate
 			if(gamestate == 1){		//movement			
 				//Handle events on queue
@@ -98,8 +98,9 @@ int FSDMGame::play(){
 			
 
 				//Move the dot
-				
+				std::cout << "Starting the player1 move function" << std::endl;
 				player1->move( loaded_level->getTileSet() );
+				std::cout << "The movement is fine" << std::endl;
 				player1->setCamera( camera );
 				
 	
@@ -653,6 +654,11 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 			break;
 
 		case 1:
+			/*if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+				switch(e.key.ksysym.sym){
+					case SDLK_ENTER:
+						//dismiss notification
+=======
 			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
 				switch(e.key.keysym.sym){
 					case SDLK_UP:
@@ -677,17 +683,23 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 						break;
 					case SDLK_RETURN:
 						//activate ability
+>>>>>>> 5fa43f15b8a93fb7b2603d92e57e544c8ac10e29
 						break;
 					default:
 						break;
 				}
-			}
+			}*/
 			break;
 		
 		case 2:
+			/*if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+				switch(e.key.ksysym.sym){
+					case SDLK_ENTER:
+=======
 			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
 				switch(e.key.keysym.sym){
 					case SDLK_RETURN:
+>>>>>>> 5fa43f15b8a93fb7b2603d92e57e544c8ac10e29
 						//activate ability
 						break;
 					case SDLK_ESCAPE:
@@ -697,7 +709,7 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 					default:
 						break;
 				}
-			}
+			}*/
 			break;
 
 		default:
