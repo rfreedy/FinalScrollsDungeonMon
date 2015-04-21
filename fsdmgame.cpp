@@ -56,7 +56,7 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		gamestate = 1;		//1: walking, 2: battle
+		gamestate = 2;		//1: walking, 2: battle
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
@@ -110,6 +110,8 @@ int FSDMGame::play(){
 			}
 		}
 		std::cout << "Success!" << std::endl;
+
+		opponent = enemyList[1];
 
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };

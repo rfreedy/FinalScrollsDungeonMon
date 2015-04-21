@@ -56,7 +56,7 @@ int FSDMGame::play(){
 		//Main loop flag
 		bool quit = false;
 
-		gamestate = 1;		//1: walking, 2: battle
+		gamestate = 2;		//1: walking, 2: battle
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
@@ -174,10 +174,14 @@ int FSDMGame::play(){
 					(*(loaded_level).getTileSet())[ i ]->render( camera );
 				}
 				*/
-				enemyList[0]->render(camera, textures.gDragonTexture);	//render dragon
-				enemyList[1]->render(camera, textures.gDragonTexture);
-				enemyList[2]->render(camera, textures.gDragonTexture);
-				enemyList[3]->render(camera, textures.gDragonTexture);
+				if(enemyList[0] != NULL)
+					enemyList[0]->render(camera, textures.gDragonTexture);	//render dragon
+				if(enemyList[1] != NULL)
+					enemyList[1]->render(camera, textures.gDragonTexture);
+				if(enemyList[2] != NULL)
+					enemyList[2]->render(camera, textures.gDragonTexture);
+				if(enemyList[3] != NULL)
+					enemyList[3]->render(camera, textures.gDragonTexture);
 				//opponent->render(camera, textures.gDragonTexture);	//render dragon
 				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
 
