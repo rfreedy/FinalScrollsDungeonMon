@@ -19,11 +19,11 @@ using namespace std;
 #include "LTexture.h"
 
 class Character: public Entity{
-	public:
+	public:/*
 		static const int DOT_WIDTH = 40;	//height and width
 		static const int DOT_HEIGHT = 40;
-		static const int TILE_SIZE = 40;	//number of spaces charact moves
-		static const int DOT_VEL = 5;
+		static const int TILE_SIZE = 40;	//number of spaces charact moves*/
+		static const int DOT_VEL = 20;
 
 		Character();
 		~Character();		

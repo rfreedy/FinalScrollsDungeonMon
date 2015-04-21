@@ -18,6 +18,7 @@
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Rect gRedMan[8];		//class for aninamted character
+SDL_Rect gDragon[1];
 //TTF_Font* gFont = NULL;
 
 void FSDMGame::start() {
@@ -59,7 +60,7 @@ int FSDMGame::play(){
 		//player1
 		player1 = new Character;
 		std::cout << "loaded in character, about to load in enemy" << std::endl;
-		Enemy opponent;
+		opponent = new Enemy;
 		std::cout << "loaded in enemy" << std::endl;
 		//The dot that will be moving around on the screen
 		//Dot dot;
@@ -76,7 +77,6 @@ int FSDMGame::play(){
 	
 			//run current gamestate
 			if(gamestate == 1){		//movement			
-
 				//Handle events on queue
 				while( SDL_PollEvent( &e ) != 0 )
 				{
@@ -108,7 +108,10 @@ int FSDMGame::play(){
 					(*(loaded_level).getTileSet())[ i ]->render( camera );
 				}
 				*/
-	
+
+				opponent->render(camera, textures.gDragonTexture);	//render dragon
+				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
+
 				//Render dot
 				player1->render( camera, textures.gDotTexture );
 				std::cout << "also rendered the player" << endl;
@@ -118,7 +121,7 @@ int FSDMGame::play(){
 				if(firstround){
 					//start both combatants off with full stamina
 					player1->refillStamina();
-					opponent.refillStamina();
+					opponent->refillStamina();
 					firstround = 0;
 					combatround = 0;
 				}
@@ -142,35 +145,35 @@ int FSDMGame::play(){
 				
 				
 				//while enemy is alive
-				if((opponent.getCurrentHealth() > 0) && (player1->getCurrentHealth() > 0)){
-		
+				if((opponent->getCurrentHealth() > 0) && (player1->getCurrentHealth() > 0)){
+				
 	
 					//check speed against enemy		
-					if(opponent.speedCheck() > player1->speedCheck()){
+					if(opponent->speedCheck() > player1->speedCheck()){
 						//opponent is faster, enemy moves first
-						player1->defend(opponent.attack(combatround));
+						player1->defend(opponent->attack(combatround));
 	
 						//check for death
 						if(player1->getCurrentHealth() <= 0){continue;};
 				
 						//player move
-						opponent.defend(player1->attack(combatround));
+						opponent->defend(player1->attack(combatround));
 		
 					}else{
 						//character is faster, player moves first
-						opponent.defend(player1->attack(combatround));
+						opponent->defend(player1->attack(combatround));
 		
 						//check for death
-						if(opponent.getCurrentHealth() <= 0){continue;};
+						if(opponent->getCurrentHealth() <= 0){continue;};
 			
 						//opponent move
-						player1->defend(opponent.attack(combatround));
+						player1->defend(opponent->attack(combatround));
 					}
 	
 		
 					//give stamina/mana allowances
 					player1->replenish();
-					opponent.replenish();
+					opponent->replenish();
 
 					combatround++;
 				}else{
@@ -321,6 +324,10 @@ void FSDMGame::close()
 	delete textures.arrowTexture;
 	textures.arrowTexture = NULL;	
 
+	textures.gDragonTexture->free();
+	delete textures.gDragonTexture;
+	textures.gDragonTexture = NULL;
+
 	//Free text
 	//TTF_CloseFont(gFont);
 	//gFont = NULL;
@@ -344,6 +351,12 @@ bool FSDMGame::loadMedia()
 	textures.gDotTexture = new LTexture;
 	if(textures.gDotTexture == NULL){
 		printf("Failed to allocate gDotTexture!\n");
+		success = false;
+	}
+
+	textures.gDragonTexture = new LTexture;
+	if(textures.gDragonTexture == NULL){
+		printf("Failed to allocate gDragonTexture!\n");
 		success = false;
 	}
 
@@ -446,6 +459,19 @@ bool FSDMGame::loadMedia()
 		gRedMan[ 7 ].h = 25*2;
 	}
 
+	if( !textures.gDragonTexture->loadFromFile( "characters-2sizeChange.png" ) )
+	{
+		printf( "Failed to load dot texture!\n" );
+		success = false;
+	}
+	else
+	{
+		gDragon[0].x = 412*2;
+		gDragon[0].y = 100*2;
+		gDragon[0].w = 25*2;
+		gDragon[0].h = 25*2;
+		
+	}
 	//Load tile texture - replace with our tile sprite sheet
 	if( !textures.gTileTexture->loadFromFile( "tileSpritesSizeChange.png" ) )
 	{

@@ -22,9 +22,10 @@
 
 typedef struct Textures {
 	LTexture *gDotTexture = NULL;
-	LTexture *gTileTexture = NULL;
+	LTexture *gTileTexture = NULL;		//terrain sprite sheet
+	LTexture *gDragonTexture = NULL;
 
-	//For battle screen	
+	//For battle screen
 	LTexture *battleBackground = NULL;
 	
 	LTexture *attackTextTexture = NULL;
@@ -34,8 +35,8 @@ typedef struct Textures {
 
 	LTexture *abil1TextTexture = NULL;
 	LTexture *abil2TextTexture = NULL;
-	LTexture *abil2TextTexture = NULL;
-	LTexture *abil2TextTexture = NULL;
+	LTexture *abil3TextTexture = NULL;
+	LTexture *abil4TextTexture = NULL;
 
 	LTexture *arrowTexture = NULL;
 } Texture_type;

@@ -33,12 +33,12 @@ Enemy::Enemy(): Entity(){
 	stats.maxMana = 100;
 
 	//initialize coordinates to impossible position, indicator of uninitialized level
-	level_coordinates_x = -2;
-	level_coordinates_y = -2;
+	level_coordinates_x = 200;
+	level_coordinates_y = 200;
 
 	//TODO: init unit_texture
-	    mBox.x = 0;
-    mBox.y = 0;
+	    mBox.x = 200;
+   	    mBox.y = 200;
 	mBox.w = DOT_WIDTH;
 	mBox.h = DOT_HEIGHT;
 
@@ -46,7 +46,7 @@ Enemy::Enemy(): Entity(){
     mVelX = 0;
     mVelY = 0;
 
-	currentClip = &gRedMan[ 0 ];
+	currentClip = &gDragon[ 0 ];
 }
 
 //deconstructor
@@ -55,8 +55,9 @@ Enemy::~Enemy(){
 }
 
 //virtual render function, common to entities
-void Enemy::render( SDL_Rect&, LTexture*){
+void Enemy::render( SDL_Rect& camera, LTexture* gDragonTexture){
 	//TODO: draw unit_texture to screen at coordinates
+	gDragonTexture->render( level_coordinates_x - camera.x, level_coordinates_y - camera.y, currentClip );
 }
 
 void Enemy::toggleVisibility(){

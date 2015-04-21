@@ -23,8 +23,9 @@
 typedef struct Textures {
 	LTexture *gDotTexture = NULL;
 	LTexture *gTileTexture = NULL;		//terrain sprite sheet
+	LTexture *gDragonTexture = NULL;
 
-	//For battle screen	
+	//For battle screen
 	LTexture *battleBackground = NULL;
 	
 	LTexture *attackTextTexture = NULL;
@@ -63,7 +64,7 @@ class FSDMGame{
 		FSDMLevel *loaded_level = NULL;
 		Texture_type textures;
 		Character *player1 = NULL;
-	
+		Enemy *opponent = NULL;
 		int gamestate;
 		int current_level;
 		int arrowState;

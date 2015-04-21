@@ -37,6 +37,9 @@ typedef struct stats{
 
 class Entity{
 	public:
+		static const int DOT_WIDTH = 40;
+		static const int DOT_HEIGHT = 40;
+		static const int TILE_SIZE = 40;	//number of spaces charact moves
 		Entity();			//default constructor
 		~Entity();			//deconstructor
 		virtual void render( SDL_Rect&, LTexture*) = 0;		//all entities must be renderable		

@@ -14,7 +14,7 @@ using namespace std;
 
 #include "entity.h"
 #include "character.h"
-
+#include "Dot.h"
 class Enemy: public Entity{
 	public:
 		Enemy();	//constructor
@@ -27,6 +27,7 @@ class Enemy: public Entity{
 		int getCurrentHealth();
 		int getCurrentStamina();
 		int getCurrentMana();
+		//void render( SDL_Rect&, LTexture*);
 
 		int speedCheck();
 
