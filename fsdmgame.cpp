@@ -73,14 +73,14 @@ int FSDMGame::play(){
 
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-
+		std::cout << "loaded camera" << std::endl;
 		//While application is running
 		while( !quit )
 		{
 			//Clear screen
 			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 			SDL_RenderClear( gRenderer );
-			std::cout << "It's not the rendering" << std::endl;
+			std::cout << "loaded renderers" << std::endl;
 			//run current gamestate
 			if(gamestate == 1){		//movement			
 				//Handle events on queue
@@ -95,19 +95,29 @@ int FSDMGame::play(){
 					player1->handleEvent( e );
 				}
 
-			
+				std::cout << "poll events good" << std::endl;	
 
 				//Move the dot
-				std::cout << "Starting the player1 move function" << std::endl;
-				player1->move( loaded_level->getTileSet() );
-				std::cout << "The movement is fine" << std::endl;
-				player1->setCamera( camera );
 				
+				if (player1->move( loaded_level->getTileSet() ) == 1) {
+				// this means player1 is on the first staircase and a new level needs to be created
+						delete loaded_level;
+						loaded_level = new FSDMLevel(2); // this will create the first dungeon
+			//			std::cout << "loaded level?" << std::endl;
+						if(!(*loaded_level).constructed())
+							{
+			//				printf("Level failed to load!\n");		
+								return 1;
+							}
+				}
+				std::cout << "Move function worked " << std::endl;
+				player1->setCamera( camera );
+				std::cout << "camer worked " << std::endl;
 	
 				//Render level
-				std::cout << "will it render the level?" << std::endl;
+			//	std::cout << "will it render the level?" << std::endl;
 				loaded_level->render(camera, textures.gTileTexture);
-				std::cout << "yes" << std::endl;
+			//	std::cout << "yes" << std::endl;
 				/*
 				//Render level
 				for( int i = 0; i < TOTAL_TILES; ++i )
@@ -115,13 +125,13 @@ int FSDMGame::play(){
 					(*(loaded_level).getTileSet())[ i ]->render( camera );
 				}
 				*/
-
+				
 				opponent->render(camera, textures.gDragonTexture);	//render dragon
 				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
 
 				//Render dot
 				player1->render( camera, textures.gDotTexture );
-				std::cout << "also rendered the player" << endl;
+			//	std::cout << "also rendered the player" << endl;
 			}else if(gamestate == 2){	//combat
 				
 				//initialize combat instance if first round
@@ -654,7 +664,8 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 			break;
 
 		case 1:
-			/*if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+//<<<<<<< HEAD
+		/*	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
 				switch(e.key.ksysym.sym){
 					case SDLK_ENTER:
 						//dismiss notification
@@ -692,6 +703,7 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 			break;
 		
 		case 2:
+//<<<<<<< HEAD
 			/*if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
 				switch(e.key.ksysym.sym){
 					case SDLK_ENTER:

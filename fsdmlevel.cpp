@@ -7,15 +7,17 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <cstring>
+
 #include "fsdmlevel.h"
 #include "winrend.h"
 
-FSDMLevel::FSDMLevel() {
+FSDMLevel::FSDMLevel(int map) {
 	
 	construct_success = true;
 
 	//Load tile map
-	if( !setTiles() )
+	if( !setTiles(map) )
 	{
 		printf( "Failed to load tile set!\n" );
 		construct_success = false;
@@ -59,7 +61,7 @@ SDL_Rect* FSDMLevel::getTileClip(int mtype){
 	return &(gTileClips[mtype]);
 }
 
-bool FSDMLevel::setTiles()
+bool FSDMLevel::setTiles(int maplevel)
 {
 	std::cout << "test" << std::endl;
 	//Success flag
@@ -67,19 +69,34 @@ bool FSDMLevel::setTiles()
 
     	//The tile offsets
     	int x = 0, y = 0;
-
+	// map names 
+	std::string overworld = "test2.map";
+	std::string dungeon1 = "test4.map";
+	//declare map variable
+	std::ifstream map; 
+	std::cout << "map level value: " << maplevel << std::endl;
     	//Open the map
-    	std::ifstream map( "test4.map" );
-
+    	switch(maplevel) {
+		case 1: { 
+			map.open( overworld.c_str(), std::ifstream::in );
+			break;
+			}
+		case 2: {
+			 map.open( dungeon1.c_str(), std::ifstream::in );
+			break;
+			}
+	}
     	//If the map couldn't be loaded
     	if( map == NULL )
     	{
 		printf( "Unable to load map file!\n" );
 		tilesLoaded = false;
     	}else{
+		std::cout << "total tiles is: " << TOTAL_TILES << std::endl;
 		//Initialize the tiles
 		for( int i = 0; i < TOTAL_TILES; ++i )
 		{
+		
 			//Determines what kind of tile will be made
 			int tileType = -1;
 
@@ -98,7 +115,6 @@ bool FSDMLevel::setTiles()
 			//If the number is a valid tile number
 			if( ( tileType >= 0 ) && ( tileType < TOTAL_TILE_SPRITES ) )
 			{
-				//std::cout << "Single Tile loaded" << std::endl;
 				tileSet[ i ] = new Tile( x, y, tileType );
 			}
 			//If we don't recognize the tile type
@@ -112,7 +128,7 @@ bool FSDMLevel::setTiles()
 
 			//Move to next tile spot
 			x += TILE_WIDTH;
-			//std::cout << "x= " << x << std::endl;
+	//		std::cout << "x= " << x << std::endl;
 			//If we've gone too far
 			if( x >= LEVEL_WIDTH )
 			{
@@ -122,12 +138,13 @@ bool FSDMLevel::setTiles()
 				//Move to the next row
 				y += TILE_HEIGHT;
 			}
-			//std::cout << "y= " << y << std::endl;
+	//		std::cout << "y= " << y << std::endl;
 		}
 		
 		//Clip the sprite sheet
 		if( tilesLoaded )
-		{
+		{	
+			//std::cout << "tiles loaded successfully" << std::endl;
 			gTileClips[ TILE_GRASS ].x = 0;
 			gTileClips[ TILE_GRASS ].y = 160*2;
 			gTileClips[ TILE_GRASS ].w = TILE_WIDTH;
@@ -159,7 +176,7 @@ bool FSDMLevel::setTiles()
 			gTileClips[ TILE_MOUNTAINS ].h = TILE_HEIGHT;
 
 			gTileClips[ TILE_LAVA ].x = 32;
-			gTileClips[ TILE_LAVA ].y = 32*7;
+			gTileClips[ TILE_LAVA ].y = 32*8;
 			gTileClips[ TILE_LAVA ].w = TILE_WIDTH;
 			gTileClips[ TILE_LAVA ].h = TILE_HEIGHT;
 
@@ -168,8 +185,8 @@ bool FSDMLevel::setTiles()
 			gTileClips[ TILE_SKINNYTREES ].w = TILE_WIDTH;
 			gTileClips[ TILE_SKINNYTREES ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_BRICKS ].x = 16*32;
-			gTileClips[ TILE_BRICKS ].y = 2*32;
+			gTileClips[ TILE_BRICKS ].x = 176*2;
+			gTileClips[ TILE_BRICKS ].y = 112*2;
 			gTileClips[ TILE_BRICKS ].w = TILE_WIDTH;
 			gTileClips[ TILE_BRICKS ].h = TILE_HEIGHT;
 
@@ -188,16 +205,28 @@ bool FSDMLevel::setTiles()
 			gTileClips[ TILE_BOULDERS ].w = TILE_WIDTH;
 			gTileClips[ TILE_BOULDERS ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_BRICKS_WALKING ].x = 15*32;
-			gTileClips[ TILE_BRICKS_WALKING ].y = 4*32;
-			gTileClips[ TILE_BRICKS_WALKING ].w = TILE_WIDTH;
-			gTileClips[ TILE_BRICKS_WALKING ].h = TILE_HEIGHT;
+			gTileClips[ TILE_SNOW ].x = 32*13;
+			gTileClips[ TILE_SNOW ].y = 32*9;
+			gTileClips[ TILE_SNOW ].w = TILE_WIDTH;
+			gTileClips[ TILE_SNOW ].h = TILE_HEIGHT;
+	
+			gTileClips[ TILE_SNOW_TREES ].x = 32*13;
+			gTileClips[ TILE_SNOW_TREES ].y = 32*10;
+			gTileClips[ TILE_SNOW_TREES ].w = TILE_WIDTH;
+			gTileClips[ TILE_SNOW_TREES ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_LAVA_BRIDGE ].x = 32*17;
-			gTileClips[ TILE_LAVA_BRIDGE ].y = 32*15;
-			gTileClips[ TILE_LAVA_BRIDGE ].w = TILE_WIDTH;
-			gTileClips[ TILE_LAVA_BRIDGE ].h = TILE_HEIGHT;
-		}
+			gTileClips[ TILE_SNOW_MOUNTAINS ].x = 32*16;
+			gTileClips[ TILE_SNOW_MOUNTAINS ].y = 32*10;
+			gTileClips[ TILE_SNOW_MOUNTAINS ].w = TILE_WIDTH;
+			gTileClips[ TILE_SNOW_MOUNTAINS ].h = TILE_HEIGHT;
+
+			gTileClips[ TILE_STAIR_1 ].x = 32*15;
+			gTileClips[ TILE_STAIR_1 ].y = 32*15;
+			gTileClips[ TILE_STAIR_1 ].w = TILE_WIDTH;
+			gTileClips[ TILE_STAIR_1 ].h = TILE_HEIGHT;
+
+
+					}
 	}
 
     //Close the file

@@ -17,7 +17,7 @@ const int LEVEL_WIDTH = 1632;
 const int LEVEL_HEIGHT = 1248;
 
 const int TOTAL_TILES = 1989;
-const int TOTAL_TILE_SPRITES = 14;
+const int TOTAL_TILE_SPRITES = 16;
 
 //The different tile sprites- Definitely needs to be changed for our sprite map
 //The different tile sprites
@@ -33,12 +33,14 @@ const int TILE_BRICKS = 8;
 const int TILE_MOUNTAINS = 9;
 const int TILE_TREES = 10;
 const int TILE_WATER = 11;
-const int TILE_BRICKS_WALKING = 12;
-const int TILE_LAVA_BRIDGE =13;
+const int TILE_SNOW_TREES = 12;
+const int TILE_SNOW_MOUNTAINS = 13;
+const int TILE_SNOW = 14;
+const int TILE_STAIR_1 = 15;
 
 class FSDMLevel{
 	public:
-		FSDMLevel();
+		FSDMLevel(int = 1);
 		~FSDMLevel();
 
 		void free();
@@ -47,7 +49,7 @@ class FSDMLevel{
 
 		bool constructed();
 
-		bool setTiles();
+		bool setTiles(int);
 	
 		Tile** getTileSet();
 
