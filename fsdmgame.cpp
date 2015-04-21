@@ -32,17 +32,18 @@ void FSDMGame::start() {
 		if(!loadMedia()){
 			printf("Media loading failed!\n");
 		}else{
-			play();		
+			play();
+			//cout << "Done playing." << endl;	
 		}
 	}
 	return;
 }
 
 int FSDMGame::play(){
-	std::cout <<"running the play function" << std::endl;	
+	std::cout <<"Playing..." << std::endl;	
 	loaded_level = new FSDMLevel;
-	std::cout << "loaded level?" << std::endl;
-	if(!(*loaded_level).constructed())
+	std::cout << "Level Created..." << std::endl;
+	if(!loaded_level->constructed())
 	{
 		printf("Level failed to load!\n");		
 		return 1;
@@ -51,36 +52,37 @@ int FSDMGame::play(){
 		bool quit = false;
 
 		gamestate = 1;		//1: walking, 2: battle
-		int firstround = 1;
-		int combatround = 0;
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
+		int firstround = 1;
+		int combatround = 0;
 		int menuPos[2][4] = {{345, 475, 345, 475}, {310, 310, 375, 375}};
-		int statPos[2][3] = {{100, 100, 100}, {150, 175, 200}};
+		int playerStatPos[2][3] = {{50, 50, 50}, {300, 350, 400}};
+		int opponentStatPos[2][3] = {{150, 150, 150}, {50, 75, 100}};
 		int arrowPos[2][4] = {{330, 460, 330, 460}, {315, 315, 380, 380}};
 
 		//Event handler
 		SDL_Event e;
-		std::cout << "about to load in character" << std::endl;
-		//player1
-		player1 = new Character;
-		std::cout << "loaded in character, about to load in enemy" << std::endl;
-		opponent = new Enemy(11, 12, 13, 12, 123, 343, 200, 12, 13, 14, 15, 34, 15, 23, 200, 200, &gDragon[0]);
-		std::cout << "loaded in enemy" << std::endl;
-		//The dot that will be moving around on the screen
-		//Dot dot;
+		std::cout << "Creating character..." << std::endl;
+		player1 = new Character;		
+		std::cout << "Success!" << std::endl;
+
+		cout << "Loading Enemy..." << endl;
+		opponent = new Enemy(11, 12, 13, 12, 123, 343, 200, 1, 13, 14, 15, 34, 15, 23, 200, 200, &gDragon[0]);
+		std::cout << "Success!" << std::endl;
 
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-		std::cout << "loaded camera" << std::endl;
+		std::cout << "Camera created..." << std::endl;
+		
 		//While application is running
 		while( !quit )
 		{
 			//Clear screen
 			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 			SDL_RenderClear( gRenderer );
-			std::cout << "loaded renderers" << std::endl;
+			std::cout << "Renderer cleared..." << std::endl;
 			//run current gamestate
 			if(gamestate == 1){		//movement			
 				//Handle events on queue
@@ -95,10 +97,9 @@ int FSDMGame::play(){
 					player1->handleEvent( e );
 				}
 
-				std::cout << "poll events good" << std::endl;	
+				std::cout << "Event queue polled..." << std::endl;	
 
-				//Move the dot
-				
+				//Move the player
 				if (player1->move( loaded_level->getTileSet() ) == 1) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						delete loaded_level;
@@ -138,7 +139,7 @@ int FSDMGame::play(){
 				if(firstround){
 					//start both combatants off with full stamina
 					player1->refillStamina();
-					opponent->refillStamina();
+					//opponent->refillStamina();
 					firstround = 0;
 					combatround = 0;
 				}
@@ -162,41 +163,44 @@ int FSDMGame::play(){
 				
 				
 				//while enemy is alive
+				
 				if((opponent->getCurrentHealth() > 0) && (player1->getCurrentHealth() > 0)){
 				
-	
-					//check speed against enemy		
-					if(opponent->speedCheck() > player1->speedCheck()){
-						//opponent is faster, enemy moves first
-						player1->defend(opponent->attack(combatround));
-	
-						//check for death
-						if(player1->getCurrentHealth() <= 0){continue;};
-				
-						//player move
-						opponent->defend(player1->attack(combatround));
+					if(combat_action){
+						//check speed against enemy		
+						if(opponent->speedCheck() > player1->speedCheck()){
+							//opponent is faster, enemy moves first
+							player1->defend(opponent->attack(combatround));
 		
-					}else{
-						//character is faster, player moves first
-						opponent->defend(player1->attack(combatround));
-		
-						//check for death
-						if(opponent->getCurrentHealth() <= 0){continue;};
+							//check for death
+							if(player1->getCurrentHealth() <= 0){continue;};
+					
+							//player move
+							opponent->defend(player1->attack(combatround));
 			
-						//opponent move
-						player1->defend(opponent->attack(combatround));
-					}
-	
+						}else{
+							//character is faster, player moves first
+							opponent->defend(player1->attack(combatround));
+			
+							//check for death
+							if(opponent->getCurrentHealth() <= 0){continue;};
+				
+							//opponent move
+							player1->defend(opponent->attack(combatround));
+						}
 		
-					//give stamina/mana allowances
-					player1->replenish();
-					opponent->replenish();
+						//give stamina/mana allowances
+						player1->replenish();
+						opponent->replenish();
 
-					combatround++;
+						combatround++;
+						combat_action = 0;
+					}
 				}else{
 					//printf("Battle over\n");
 					if(player1->getCurrentHealth() <= 0){
-						//gameover
+						//combat_menu_state = 2;
+						//notification_message = "You defeated the enemy!";
 					}
 					//delete opponent
 
@@ -206,19 +210,22 @@ int FSDMGame::play(){
 
 				//---render screen objects---
 				//render battle scene
-				textures.battleBackground->render(0, 0);				
+				textures.battleBackground->render(0, 0);
+				
+				//render character/enemy stats	
+				updateStatText();
+				textures.player1health->render(playerStatPos[0][0], playerStatPos[1][0]);
+				textures.player1stamina->render(playerStatPos[0][1], playerStatPos[1][1]);
+				textures.player1mana->render(playerStatPos[0][2], playerStatPos[1][2]);			
 
-				//render character/enemy stats
-				updateCharStats();
-				textures.player1health->render(statPos[0][0], statPos[1][0]);
-				textures.player1stamina->render(statPos[0][1], statPos[1][1]);
-				textures.player1mana->render(statPos[0][2], statPos[1][2]);			
-
+				textures.opponenthealth->render(opponentStatPos[0][0], opponentStatPos[1][0]);
+				textures.opponentstamina->render(opponentStatPos[0][1], opponentStatPos[1][1]);
+				textures.opponentmana->render(opponentStatPos[0][2], opponentStatPos[1][2]);	
+				
 				//render actions menu
 				if(combat_menu_state == 0){
 					textures.attackTextTexture->render(menuPos[0][0], menuPos[1][0]);
 					textures.abilityTextTexture->render(menuPos[0][2], menuPos[1][2]);
-					//textures.optionTextTexture->render(480, 305);
 					textures.escapeTextTexture->render(menuPos[0][1], menuPos[1][1]);
 					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
 				}else if(combat_menu_state == 1){
@@ -229,7 +236,9 @@ int FSDMGame::play(){
 					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
 				}else if(combat_menu_state == 2){
 					//notification
+					//updateNotificationText();
 				}
+				
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -237,6 +246,7 @@ int FSDMGame::play(){
 		
 		//Free resources and close SDL
 		close();
+		cout << "Program Done!" << endl;
 		return 0;
 	}
 }
@@ -306,11 +316,14 @@ bool FSDMGame::init()
 
 void FSDMGame::close()
 {
+	cout << "Closing..." << endl;
+
 	loaded_level->free();
 	delete loaded_level;	
 	loaded_level = NULL;	
 
 	//Free loaded images
+	
 	textures.gDotTexture->free();
 	delete textures.gDotTexture;
 	textures.gDotTexture = NULL;
@@ -318,6 +331,30 @@ void FSDMGame::close()
 	textures.gTileTexture->free();
 	delete textures.gTileTexture;
 	textures.gTileTexture = NULL;
+
+	textures.player1health->free();
+	delete textures.player1health;
+	textures.player1health = NULL;
+
+	textures.player1stamina->free();
+	delete textures.player1stamina;
+	textures.player1stamina = NULL;
+
+	textures.player1mana->free();
+	delete textures.player1mana;
+	textures.player1mana = NULL;
+
+	textures.opponenthealth->free();
+	delete textures.opponenthealth;
+	textures.opponenthealth = NULL;
+
+	textures.opponentstamina->free();
+	delete textures.opponentstamina;
+	textures.opponentstamina = NULL;
+
+	textures.opponentmana->free();
+	delete textures.opponentmana;
+	textures.opponentmana = NULL;
 
 	textures.battleBackground->free();
 	delete textures.battleBackground;
@@ -346,10 +383,15 @@ void FSDMGame::close()
 	textures.gDragonTexture->free();
 	delete textures.gDragonTexture;
 	textures.gDragonTexture = NULL;
+	
+
+	cout << "Textures freed..." << endl;
 
 	//Free text
 	TTF_CloseFont(gFont);
 	gFont = NULL;
+
+	cout << "Font closed..." << endl;
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -357,9 +399,13 @@ void FSDMGame::close()
 	gWindow = NULL;
 	gRenderer = NULL;
 
+	cout << "Renderer and Window Destroyed..." << endl;
+
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
+	
+	cout << "Returning close function..." << endl;
 }
 
 bool FSDMGame::loadMedia()
@@ -378,6 +424,12 @@ bool FSDMGame::loadMedia()
 	textures.gDragonTexture = new LTexture;
 	if(textures.gDragonTexture == NULL){
 		printf("Failed to allocate gDragonTexture!\n");
+		success = false;
+	}
+
+	textures.gBossTexture = new LTexture;
+	if(textures.gBossTexture == NULL){
+		printf("Failed to allocate gBossTexture!\n");
 		success = false;
 	}
 
@@ -417,6 +469,24 @@ bool FSDMGame::loadMedia()
 	textures.player1mana = new LTexture;
 	if(textures.player1mana == NULL){
 		printf("Failed to allocate player1mana!\n");
+		success = false;
+	}
+
+	textures.opponenthealth = new LTexture;
+	if(textures.opponenthealth == NULL){
+		printf("Failed to allocate opponenthealth!\n");
+		success = false;
+	}
+
+	textures.opponentstamina = new LTexture;
+	if(textures.opponentstamina == NULL){
+		printf("Failed to allocate opponentstamina!\n");
+		success = false;
+	}
+
+	textures.opponentmana = new LTexture;
+	if(textures.opponentmana == NULL){
+		printf("Failed to allocate opponentmana!\n");
 		success = false;
 	}
 
@@ -655,7 +725,7 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 						if(arrowState == 0){
 							combat_action = 1;
 						}else if(arrowState == 2){
-							combat_menu_state = 2;
+							combat_menu_state = 1;
 						}
 					default:
 						break;
@@ -664,12 +734,6 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 			break;
 
 		case 1:
-//<<<<<<< HEAD
-		/*	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
-				switch(e.key.ksysym.sym){
-					case SDLK_ENTER:
-						//dismiss notification
-=======
 			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
 				switch(e.key.keysym.sym){
 					case SDLK_UP:
@@ -694,34 +758,26 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 						break;
 					case SDLK_RETURN:
 						//activate ability
->>>>>>> 5fa43f15b8a93fb7b2603d92e57e544c8ac10e29
-						break;
-					default:
-						break;
-				}
-			}*/
-			break;
-		
-		case 2:
-//<<<<<<< HEAD
-			/*if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
-				switch(e.key.ksysym.sym){
-					case SDLK_ENTER:
-=======
-			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
-				switch(e.key.keysym.sym){
-					case SDLK_RETURN:
->>>>>>> 5fa43f15b8a93fb7b2603d92e57e544c8ac10e29
-						//activate ability
 						break;
 					case SDLK_ESCAPE:
 						//return to previous menu
 						combat_menu_state = 0;
+					default:
+						break;
+				}
+			}
+			break;
+		
+		case 2:
+			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+				switch(e.key.keysym.sym){
+					case SDLK_RETURN:
+						//activate ability
 						break;
 					default:
 						break;
 				}
-			}*/
+			}
 			break;
 
 		default:
@@ -729,10 +785,12 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 	}
 }
 
-//rebuild character stat textures
-void FSDMGame::updateCharStats(){
+//rebuild character and enemy stat textures
+
+void FSDMGame::updateStatText(){
 	bool success = true;
 
+	//---Update player Stat Textures	
 	stringstream convert1;
 	stringstream convert2;
 	stringstream convert3;
@@ -764,5 +822,40 @@ void FSDMGame::updateCharStats(){
 	if( !textures.player1mana->loadFromRenderedText(player1mana_text, textColor)){
 		printf("Falied to render player 1 mana text texture!\n");
 		success = false;
+	}
+
+	//---Update Opponent Stat Textures
+	if(opponent != NULL){
+		stringstream convert4;
+		stringstream convert5;
+		stringstream convert6;
+
+		string opponenthealth_text;
+		string opponentstamina_text;
+		string opponentmana_text;
+
+		convert4 << "Health: " << (opponent->getCurrentHealth()) << "/" << (opponent->getMaxHealth());
+		opponenthealth_text = convert4.str();
+
+		convert5 << "Stamina: " << (opponent->getCurrentStamina()) << "/" << (opponent->getMaxStamina());
+		opponentstamina_text = convert5.str();
+
+		convert6 << "Mana: " << (opponent->getCurrentMana()) << "/" << (opponent->getMaxMana());
+		opponentmana_text = convert6.str();
+
+		if( !textures.opponenthealth->loadFromRenderedText(opponenthealth_text, textColor)){
+			printf("Falied to render opponent health text texture!\n");
+			success = false;
+		}
+	
+		if( !textures.opponentstamina->loadFromRenderedText(opponentstamina_text, textColor)){
+			printf("Falied to render opponent stamina text texture!\n");
+			success = false;
+		}
+	
+		if( !textures.opponentmana->loadFromRenderedText(opponentmana_text, textColor)){
+			printf("Falied to render opponent mana text texture!\n");
+			success = false;
+		}
 	}
 }

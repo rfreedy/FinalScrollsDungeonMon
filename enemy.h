@@ -29,6 +29,10 @@ class Enemy: public Entity{
 		int getCurrentMana();
 		//void render( SDL_Rect&, LTexture*);
 
+		int getMaxHealth();
+		int getMaxStamina();
+		int getMaxMana();
+
 		int speedCheck();
 
 		void replenish();

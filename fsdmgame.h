@@ -35,6 +35,10 @@ typedef struct Textures {
 	LTexture *player1stamina = NULL;
 	LTexture *player1mana = NULL;
 
+	LTexture *opponenthealth = NULL;
+	LTexture *opponentstamina = NULL;
+	LTexture *opponentmana = NULL;
+
 	LTexture *attackTextTexture = NULL;
 	LTexture *abilityTextTexture = NULL;
 	LTexture *escapeTextTexture = NULL;
@@ -66,7 +70,7 @@ class FSDMGame{
 	
 		int handleCombatEvent( SDL_Event& );
 
-		void updateCharStats();
+		void updateStatText();
 
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:
@@ -79,6 +83,7 @@ class FSDMGame{
 		int arrowState;
 		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
+		string notification_message;		//0: nothing, 1: attack
 };
 
 #endif

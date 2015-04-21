@@ -80,6 +80,18 @@ int Enemy::getCurrentMana(){
 	return stats.currentMana;
 }
 
+int Enemy::getMaxHealth(){
+	return stats.maxHealth;
+}
+
+int Enemy::getMaxStamina(){
+	return stats.maxStamina;
+}
+
+int Enemy::getMaxMana(){
+	return stats.maxMana;
+}
+
 int Enemy::speedCheck(){
 	return skills.speed;
 }
