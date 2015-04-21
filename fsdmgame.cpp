@@ -104,10 +104,10 @@ int FSDMGame::play(){
 				// this means player1 is on the first staircase and a new level needs to be created
 						delete loaded_level;
 						loaded_level = new FSDMLevel(2); // this will create the first dungeon
-			//			std::cout << "loaded level?" << std::endl;
+						//std::cout << "loaded level?" << std::endl;
 						if(!(*loaded_level).constructed())
 							{
-			//				printf("Level failed to load!\n");		
+								//printf("Level failed to load!\n");		
 								return 1;
 							}
 				}
