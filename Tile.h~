@@ -25,12 +25,6 @@ class Tile
 		//Get the tile type
 		int getType();
 
-		//Get Locations
-		int getX();
-		
-		int getY();
-		
-
 		//Get the collision box
 		SDL_Rect getBox();
 	

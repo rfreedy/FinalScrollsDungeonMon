@@ -582,52 +582,53 @@ bool FSDMGame::loadMedia()
 	else
 	{
 		//Set top left sprite		FRONT
-		gRedMan[ 0 ].x =   0;
-		gRedMan[ 0 ].y =   0;
-		gRedMan[ 0 ].w = 25*2;
-		gRedMan[ 0 ].h = 25*2;
+		gRedMan[ 0 ].x =   196;
+		gRedMan[ 0 ].y =   107;
+		gRedMan[ 0 ].w = 35;
+		gRedMan[ 0 ].h = 40;
 
 		//Set top right spriten
-		gRedMan[ 1 ].x = 22*2;
-		gRedMan[ 1 ].y =   0;
-		gRedMan[ 1 ].w = 25*2;
-		gRedMan[ 1 ].h = 25*2;
+		gRedMan[ 1 ].x =  239;
+		gRedMan[ 1 ].y =  107;
+		gRedMan[ 1 ].w =  35;
+		gRedMan[ 1 ].h =  40;
 		
 		//Set bottom left sprite	BACK
-		gRedMan[ 2 ].x =   0;
-		gRedMan[ 2 ].y = 25*2;
-		gRedMan[ 2 ].w = 25*2;
-		gRedMan[ 2 ].h = 25*2;
+		gRedMan[ 2 ].x =   196;
+		gRedMan[ 2 ].y =   160;
+		gRedMan[ 2 ].w =    35;
+		gRedMan[ 2 ].h =    40;
 
 		//Set bottom right sprite
-		gRedMan[ 3 ].x = 22*2;
-		gRedMan[ 3 ].y = 25*2;
-		gRedMan[ 3 ].w = 25*2;
-		gRedMan[ 3 ].h = 25*2;
+		gRedMan[ 3 ].x = 235;
+		gRedMan[ 3 ].y = 160;
+		gRedMan[ 3 ].w = 35;
+		gRedMan[ 3 ].h = 40;
 
 		//Set bottom left sprite	RIGHT
-		gRedMan[ 4 ].x = 45*2;
-		gRedMan[ 4 ].y = 0;
-		gRedMan[ 4 ].w = 25*2;
-		gRedMan[ 4 ].h = 25*2;
+		gRedMan[ 4 ].x = 283;
+		gRedMan[ 4 ].y = 105;
+		gRedMan[ 4 ].w = 35;
+		gRedMan[ 4 ].h = 40;
 
 		//Set bottom right sprite
-		gRedMan[ 5 ].x = 66*2;
-		gRedMan[ 5 ].y = 0;
-		gRedMan[ 5 ].w = 25*2;
-		gRedMan[ 5 ].h = 25*2;
+		gRedMan[ 5 ].x = 328;
+		gRedMan[ 5 ].y = 105;
+		gRedMan[ 5 ].w = 35;
+		gRedMan[ 5 ].h = 40;
 
 		//Set bottom left sprite	LEFT
-		gRedMan[ 6 ].x = 44*2;
-		gRedMan[ 6 ].y = 21*2;
-		gRedMan[ 6 ].w = 25*2;
-		gRedMan[ 6 ].h = 25*2;
+
+		gRedMan[ 6 ].x = 282;
+		gRedMan[ 6 ].y = 158;
+		gRedMan[ 6 ].w = 30;
+		gRedMan[ 6 ].h = 40;
 
 		//Set bottom right sprite
-		gRedMan[ 7 ].x = 66*2;
-		gRedMan[ 7 ].y = 23*2;
-		gRedMan[ 7 ].w = 25*2;
-		gRedMan[ 7 ].h = 25*2;
+		gRedMan[ 7 ].x = 323;
+		gRedMan[ 7 ].y = 158;
+		gRedMan[ 7 ].w = 30;
+		gRedMan[ 7 ].h = 40;
 	}
 
 	if( !textures.gDragonTexture->loadFromFile( "characters-2sizeChange.png" ) )

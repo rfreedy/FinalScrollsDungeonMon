@@ -569,11 +569,14 @@ int Character::move( Tile *tiles[] )
         mBox.y -= mVelY;
 	//mBox.y = mBox.y + TILE_SIZE;
     }
-	
-   if (touchesWall(mBox, tiles) == 2) {
-	returnVal = 1;
+    	
+   if (touchesWall(mBox, tiles) == DUNGEON1) {
+	returnVal = DUNGEON1;
 	}
-	std::cout<< "returnVal is: " << returnVal<< endl;
+   if (touchesWall(mBox, tiles) == DUNGEON2) {
+	returnVal = DUNGEON2;
+	}
+   
    return returnVal;
 }
 
@@ -628,12 +631,25 @@ int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
                 return 1; //used to be true
             }
         }
-	if( tiles[i]->getType() == TILE_STAIR_1) {
+/*	if( tiles[i]->getType() == TILE_STAIR_1) {
 		//if the collision box touches the stair tile
 	    if (checkCollision (box, tiles[i]->getBox() ) ) {
 		return 2; //to change floors
 	    }
+	}*/
+	//check for stair down and location of stair to know which map to switch to
+	if( (tiles[i]->getType() == TILE_STAIR_1)  && (tiles[i]->getX() == 32*12) && (tiles[i]->getY() == 32*23) ) {
+		//if the collision box touches the stair tile
+	    if (checkCollision (box, tiles[i]->getBox() ) ) {
+		return DUNGEON1; //to change floors to dungeon 1
+	    }
 	}
+	if( (tiles[i]->getType() == TILE_STAIR_1) && (tiles[i]->getX() == 32*37) && (tiles[i]->getY() == 32*13) ) {
+		//if the collision box touches the stair tile
+	    if (checkCollision (box, tiles[i]->getBox() ) ) {
+		return DUNGEON2; //to change floors to dungeon 1
+	    }
+	}	
     }
 
     //If no wall tiles were touched

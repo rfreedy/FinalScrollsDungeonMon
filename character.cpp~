@@ -8,7 +8,7 @@ using namespace std;
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-
+#include <iostream>
 #include "entity.h"
 #include "character.h"
 #include "fsdmlevel.h"
@@ -508,11 +508,12 @@ void Character::handleEvent( SDL_Event& e )
     }
 }
 
-void Character::move( Tile *tiles[] )
+int Character::move( Tile *tiles[] )
 {
     //Move the dot left or right
 	//left =0;
 	count++;		//increment count in move (continuous
+	int returnVal =0;
 	if (right > 0){		//update SDL_ract in move
 		if(count%2 == 0){
 			currentClip = &gRedMan[ 4 ];
@@ -550,9 +551,10 @@ void Character::move( Tile *tiles[] )
 
     mBox.x += mVelX;
     //If the dot went too far to the left or right or touched a wall
-    if( ( mBox.x < 0 ) || ( mBox.x + DOT_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, tiles ) )
+    if( ( mBox.x < 0 ) || ( mBox.x + DOT_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, tiles ) == 1)
     {
         //move back
+//        std::cout << "character thinks level width is: " << LEVEL_WIDTH << std::endl;
         mBox.x -= mVelX;
 	//mBox.x = mBox.x - TILE_SIZE;
     }
@@ -561,12 +563,18 @@ void Character::move( Tile *tiles[] )
     mBox.y += mVelY;
 
     //If the dot went too far up or down or touched a wall
-    if( ( mBox.y < 0 ) || ( mBox.y + DOT_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, tiles ) )
+    if( ( mBox.y < 0 ) || ( mBox.y + DOT_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, tiles ) == 1 )
     {
         //move back
         mBox.y -= mVelY;
 	//mBox.y = mBox.y + TILE_SIZE;
     }
+	
+   if (touchesWall(mBox, tiles) == 2) {
+	returnVal = 1;
+	}
+	std::cout<< "returnVal is: " << returnVal<< endl;
+   return returnVal;
 }
 
 void Character::setCamera( SDL_Rect& camera )
@@ -605,24 +613,31 @@ void Character::render(){
 	//TODO: draw player_texture to screen at coordinates
 }
 */
-bool Character::touchesWall( SDL_Rect box, Tile* tiles[] )
+int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
 {
     //Go through the tiles
     for( int i = 0; i < TOTAL_TILES; ++i )
     {
+	std::cout << "character thinks total tiles is : " << TOTAL_TILES << std::endl;
         //If the tile is a wall type tile
         if( ( tiles[ i ]->getType() >= TILE_SKINNYTREES ) && ( tiles[ i ]->getType() <= TILE_WATER ) )
         {
             //If the collision box touches the wall tile
             if( checkCollision( box, tiles[ i ]->getBox() ) )
             {
-                return true;
+                return 1; //used to be true
             }
         }
+	if( tiles[i]->getType() == TILE_STAIR_1) {
+		//if the collision box touches the stair tile
+	    if (checkCollision (box, tiles[i]->getBox() ) ) {
+		return 2; //to change floors
+	    }
+	}
     }
 
     //If no wall tiles were touched
-    return false;
+    return 0; // used to be false
 }
 
 bool Character::checkCollision( SDL_Rect a, SDL_Rect b )

@@ -39,9 +39,15 @@ const int TILE_SNOW = 14;
 const int TILE_STAIR_1 = 15;
 const int TILE_BRICKS_WALKING = 16;
 const int TILE_LAVA_BRIDGE = 17;
+
+//declare dungeon map constants
+const int OVERWORLD = 2; 
+const int DUNGEON1 = 3;
+const int DUNGEON2 = 4;
+
 class FSDMLevel{
 	public:
-		FSDMLevel(int = 1);
+		FSDMLevel(int = OVERWORLD);
 		~FSDMLevel();
 
 		void free();

@@ -37,14 +37,7 @@ int Tile::getType()
 {
     return mType;
 }
-int Tile::getX() 
-{
-	return mBox.x;
-}
-int Tile::getY() 
-{
-	return mBox.y;
-}
+
 SDL_Rect Tile::getBox()
 {
     return mBox;

@@ -54,7 +54,7 @@ int FSDMGame::play(){
 	}else{
 		//Game State Variables
 		bool quit = false;	//Main loop flag
-		gamestate = 1;		//1: walking, 2: battle
+		gamestate = 2;		//1: walking, 2: battle
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
@@ -110,7 +110,7 @@ int FSDMGame::play(){
 				std::cout << "Event queue polled..." << std::endl;	
 
 				//Move the player
-				if (player1->move( loaded_level->getTileSet() ) == 1) {
+				if (player1->move( loaded_level->getTileSet() ) == DUNGEON1) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						cout<<"check1"<<endl;
 						delete loaded_level;
@@ -122,7 +122,25 @@ int FSDMGame::play(){
 								enemyList[i] = NULL;
 							//}
 						}
-						loaded_level = new FSDMLevel(2); // this will create the first dungeon
+						loaded_level = new FSDMLevel(DUNGEON1); // this will create the first dungeon
+						//std::cout << "loaded level?" << std::endl;
+						if(!(*loaded_level).constructed())
+							{
+								//printf("Level failed to load!\n");		
+								return 1;
+							}
+				}
+				if (player1->move( loaded_level->getTileSet() ) == DUNGEON2) {
+				// this means player1 is on the first staircase and a new level needs to be created
+						delete loaded_level;				
+						for(int i=0; i<5; i++){
+							//if(enemyList[i] != NULL){
+							cout<<"check3"<<endl;
+								delete enemyList[i];
+								enemyList[i] = NULL;
+							//}
+						}
+						loaded_level = new FSDMLevel(DUNGEON2); // this will create the first dungeon
 						//std::cout << "loaded level?" << std::endl;
 						if(!(*loaded_level).constructed())
 							{

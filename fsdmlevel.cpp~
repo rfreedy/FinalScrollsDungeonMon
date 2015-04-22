@@ -72,24 +72,19 @@ bool FSDMLevel::setTiles(int maplevel)
 	// map names 
 	std::string overworld = "overworld.map";
 	std::string dungeon1 = "dungeon1.map";
-	std::string dungeon2 = "dungeon2.map";
 	//declare map variable
 	std::ifstream map; 
 	std::cout << "map level value: " << maplevel << std::endl;
     	//Open the map
     	switch(maplevel) {
-		case OVERWORLD: { 
+		case 1: { 
 			map.open( overworld.c_str(), std::ifstream::in );
 			break;
 			}
-		case DUNGEON1: {
+		case 2: {
 			 map.open( dungeon1.c_str(), std::ifstream::in );
 			break;
 			}
-		case DUNGEON2: {
-			 map.open( dungeon2.c_str(), std::ifstream::in );
-			break;
-			}	
 	}
     	//If the map couldn't be loaded
     	if( map == NULL )
