@@ -433,7 +433,7 @@ void Character::handleEvent( SDL_Event& e )
 		else{
 			currentClip = &gRedMan[ 3 ];
 		}
-		//count++;
+		count++;
 		}
 		break;
 		
@@ -450,7 +450,7 @@ void Character::handleEvent( SDL_Event& e )
 		else{
 			currentClip = &gRedMan[ 1 ];
 		}
-		//count++;
+		count++;
 		}
 		break;
             case SDLK_LEFT:
@@ -621,7 +621,7 @@ int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
     //Go through the tiles
     for( int i = 0; i < TOTAL_TILES; ++i )
     {
-	std::cout << "character thinks total tiles is : " << TOTAL_TILES << std::endl;
+	//std::cout << "character thinks total tiles is : " << TOTAL_TILES << std::endl;
         //If the tile is a wall type tile
         if( ( tiles[ i ]->getType() >= TILE_SKINNYTREES ) && ( tiles[ i ]->getType() <= TILE_WATER ) )
         {

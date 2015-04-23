@@ -433,7 +433,7 @@ void Character::handleEvent( SDL_Event& e )
 		else{
 			currentClip = &gRedMan[ 3 ];
 		}
-		//count++;
+		count++;
 		}
 		break;
 		
@@ -450,7 +450,7 @@ void Character::handleEvent( SDL_Event& e )
 		else{
 			currentClip = &gRedMan[ 1 ];
 		}
-		//count++;
+		count++;
 		}
 		break;
             case SDLK_LEFT:
@@ -510,6 +510,7 @@ void Character::handleEvent( SDL_Event& e )
 
 int Character::move( Tile *tiles[] )
 {
+	
     //Move the dot left or right
 	//left =0;
 	count++;		//increment count in move (continuous
@@ -569,11 +570,14 @@ int Character::move( Tile *tiles[] )
         mBox.y -= mVelY;
 	//mBox.y = mBox.y + TILE_SIZE;
     }
-	
-   if (touchesWall(mBox, tiles) == 2) {
-	returnVal = 1;
+    	
+   if (touchesWall(mBox, tiles) == DUNGEON1) {
+	returnVal = DUNGEON1;
 	}
-	std::cout<< "returnVal is: " << returnVal<< endl;
+   if (touchesWall(mBox, tiles) == DUNGEON2) {
+	returnVal = DUNGEON2;
+	}
+   
    return returnVal;
 }
 
@@ -618,7 +622,7 @@ int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
     //Go through the tiles
     for( int i = 0; i < TOTAL_TILES; ++i )
     {
-	std::cout << "character thinks total tiles is : " << TOTAL_TILES << std::endl;
+	//std::cout << "character thinks total tiles is : " << TOTAL_TILES << std::endl;
         //If the tile is a wall type tile
         if( ( tiles[ i ]->getType() >= TILE_SKINNYTREES ) && ( tiles[ i ]->getType() <= TILE_WATER ) )
         {
@@ -628,12 +632,25 @@ int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
                 return 1; //used to be true
             }
         }
-	if( tiles[i]->getType() == TILE_STAIR_1) {
+/*	if( tiles[i]->getType() == TILE_STAIR_1) {
 		//if the collision box touches the stair tile
 	    if (checkCollision (box, tiles[i]->getBox() ) ) {
 		return 2; //to change floors
 	    }
+	}*/
+	//check for stair down and location of stair to know which map to switch to
+	if( (tiles[i]->getType() == TILE_STAIR_1)  && (tiles[i]->getX() == 32*12) && (tiles[i]->getY() == 32*23) ) {
+		//if the collision box touches the stair tile
+	    if (checkCollision (box, tiles[i]->getBox() ) ) {
+		return DUNGEON1; //to change floors to dungeon 1
+	    }
 	}
+	if( (tiles[i]->getType() == TILE_STAIR_1) && (tiles[i]->getX() == 32*37) && (tiles[i]->getY() == 32*13) ) {
+		//if the collision box touches the stair tile
+	    if (checkCollision (box, tiles[i]->getBox() ) ) {
+		return DUNGEON2; //to change floors to dungeon 1
+	    }
+	}	
     }
 
     //If no wall tiles were touched

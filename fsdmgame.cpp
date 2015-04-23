@@ -54,7 +54,7 @@ int FSDMGame::play(){
 	}else{
 		//Game State Variables
 		bool quit = false;	//Main loop flag
-		gamestate = 2;		//1: walking, 2: battle
+		gamestate = 1;		//1: walking, 2: battle
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
@@ -148,6 +148,7 @@ int FSDMGame::play(){
 								return 1;
 							}
 				}
+				player1->move( loaded_level->getTileSet() );	//odd number of move functions
 				std::cout << "Move function worked " << std::endl;
 				player1->setCamera( camera );
 				std::cout << "camer worked " << std::endl;

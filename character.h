@@ -23,7 +23,7 @@ class Character: public Entity{
 		static const int DOT_WIDTH = 40;	//height and width
 		static const int DOT_HEIGHT = 40;
 		static const int TILE_SIZE = 40;	//number of spaces charact moves*/
-		static const int DOT_VEL = 20;
+		static const int DOT_VEL = 10;
 
 		Character();
 		~Character();		
