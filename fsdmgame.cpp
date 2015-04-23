@@ -150,7 +150,7 @@ int FSDMGame::play(){
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
 					gamestate = 2;
 				}
-				if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
+				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						cout<<"check1"<<endl;
 						delete loaded_level;
@@ -170,7 +170,7 @@ int FSDMGame::play(){
 								return 1;
 							}
 				}
-				if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON2) {
+				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON2) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						delete loaded_level;				
 						for(int i=0; i<5; i++){
@@ -188,7 +188,7 @@ int FSDMGame::play(){
 								return 1;
 							}
 				}
-				if (player1->move( loaded_level->getTileSet(), enemyList ) == OVERWORLD) {
+				else if (player1->move( loaded_level->getTileSet(), enemyList ) == OVERWORLD) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						delete loaded_level;				
 						for(int i=0; i<5; i++){

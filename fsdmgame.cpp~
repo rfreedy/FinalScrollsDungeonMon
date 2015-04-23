@@ -506,7 +506,6 @@ void FSDMGame::close()
 
 	//Quit SDL subsystems
 	IMG_Quit();
-	cout << "test"<<endl;
 	SDL_Quit();
 	
 	cout << "Returning close function..." << endl;

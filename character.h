@@ -23,7 +23,7 @@ class Character: public Entity{
 		static const int DOT_WIDTH = 40;	//height and width
 		static const int DOT_HEIGHT = 40;
 		static const int TILE_SIZE = 40;	//number of spaces charact moves*/
-		static const int DOT_VEL = 10;
+		static const int DOT_VEL = 5;
 
 		Character();
 		~Character();		
@@ -65,7 +65,7 @@ class Character: public Entity{
 		//Shows the dot on the screen
 		//void render( SDL_Rect&, LTexture*);
 		int touchesWall( SDL_Rect, Tile* [] );
-		int touchesEnemy(SDL_Rect, SDL_Rect);
+		int touchesEnemy(SDL_Rect, Enemy* enemyList[]);
 		bool checkCollision( SDL_Rect, SDL_Rect);
 	
 	private:

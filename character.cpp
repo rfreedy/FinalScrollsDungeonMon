@@ -551,10 +551,14 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
 
     mBox.x += mVelX;
     //If the dot went too far to the left or right or touched a wall
-    if( ( mBox.x < 0 ) || ( mBox.x + DOT_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, tiles ) == 1)
+    if( ( mBox.x < 0 ) || ( mBox.x + DOT_WIDTH > LEVEL_WIDTH ) || touchesWall( mBox, tiles ) == 1 || touchesEnemy(mBox,enemyList) == 1)
     {
         //move back
 //        std::cout << "character thinks level width is: " << LEVEL_WIDTH << std::endl;
+	if(touchesEnemy(mBox, enemyList) == 1){
+		cout<<"battle!"<<endl;
+		returnVal = 1;
+	}
         mBox.x -= mVelX;
 	//mBox.x = mBox.x - TILE_SIZE;
     }
@@ -563,18 +567,18 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
     mBox.y += mVelY;
 
     //If the dot went too far up or down or touched a wall
-    if( ( mBox.y < 0 ) || ( mBox.y + DOT_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, tiles ) == 1 )
+    if( ( mBox.y < 0 ) || ( mBox.y + DOT_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, tiles ) == 1 || touchesEnemy(mBox,enemyList) == 1)
     {
+	if(touchesEnemy(mBox, enemyList) == 1){
+		cout<<"battle!"<<endl;
+		returnVal = 1;
+	}
         //move back
         mBox.y -= mVelY;
 	//mBox.y = mBox.y + TILE_SIZE;
     }
-   	for(int i=0; i<10; i++){
-		if(enemyList[i] != NULL){
-			if(touchesEnemy(mBox, enemyList[i]->getMBox()) == 1)
-				returnVal = 1;
-		}
-	}
+   
+	
    if (touchesWall(mBox, tiles) == DUNGEON1) {
 	returnVal = DUNGEON1;
 	}
@@ -669,14 +673,17 @@ int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
     return 0; // used to be false
 }
 
-int Character::touchesEnemy(SDL_Rect box, SDL_Rect enemy){
+int Character::touchesEnemy(SDL_Rect box, Enemy* enemyList[]){
 	
-	if(checkCollision(box, enemy) ){
-		cout<<"collision"<<endl;
-		return 1;
+	for(int i=0; i<10; i++){
+		if(enemyList[i] != NULL){
+			if(checkCollision(box, enemyList[i]->getMBox()) ){
+				cout<<"collision"<<endl;
+				return 1;
+			}
+		}
 	}
-	else
-		return 0;
+	return 0;
 }
 
 bool Character::checkCollision( SDL_Rect a, SDL_Rect b )
