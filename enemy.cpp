@@ -93,6 +93,10 @@ int Enemy::speedCheck(){
 	return skills.speed;
 }
 
+SDL_Rect Enemy::getMBox(){
+	return mBox;
+}
+
 void Enemy::refillStamina(){
 	stats.currentStamina = stats.maxStamina;
 }

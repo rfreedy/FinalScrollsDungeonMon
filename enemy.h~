@@ -18,7 +18,7 @@ using namespace std;
 class Enemy: public Entity{
 	public:
 		Enemy(int, int,int,int,int,int,int,int,int,int,int,int,int,int,int,int, SDL_Rect*);	//constructor
-		~Enemy();	//deconstructor
+		//~Enemy();	//deconstructor
 
 		virtual void render( SDL_Rect&, LTexture*);	//implementation of pure virtual
 		virtual void toggleVisibility();
@@ -38,7 +38,7 @@ class Enemy: public Entity{
 		void replenish();
 		void refillStamina();
 		void refillMana();
-
+		int getMBox();
 		void defend(int);	//take damage
 		int attack(int);		//calculate output damage
 	private:
@@ -49,7 +49,6 @@ class Enemy: public Entity{
 
 		int level_coordinates_x;
 		int level_coordinates_y;
-		
 		//LTexture unit_texture;		
 		SDL_Rect mBox;	//Collision box of the dot
 		//The velocity of the dot

@@ -508,7 +508,7 @@ void Character::handleEvent( SDL_Event& e )
     }
 }
 
-int Character::move( Tile *tiles[] )
+int Character::move( Tile *tiles[], Enemy *enemyList[] )
 {
     //Move the dot left or right
 	//left =0;
@@ -569,7 +569,12 @@ int Character::move( Tile *tiles[] )
         mBox.y -= mVelY;
 	//mBox.y = mBox.y + TILE_SIZE;
     }
-    	
+   	for(int i=0; i<10; i++){
+		if(enemyList[i] != NULL){
+			if(touchesEnemy(mBox, enemyList[i]->getMBox()) == 1)
+				returnVal = 1;
+		}
+	}
    if (touchesWall(mBox, tiles) == DUNGEON1) {
 	returnVal = DUNGEON1;
 	}
@@ -609,15 +614,9 @@ void Character::setCamera( SDL_Rect& camera )
 
 void Character::render( SDL_Rect& camera, LTexture* gDotTexture)
 {
-    //Show the dot
 	gDotTexture->render( mBox.x - camera.x, mBox.y - camera.y, currentClip );
 }
-/*
-//virtual render function, common to entities
-void Character::render(){
-	//TODO: draw player_texture to screen at coordinates
-}
-*/
+
 int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
 {
     //Go through the tiles
@@ -668,6 +667,16 @@ int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
 
     //If no wall tiles were touched
     return 0; // used to be false
+}
+
+int Character::touchesEnemy(SDL_Rect box, SDL_Rect enemy){
+	
+	if(checkCollision(box, enemy) ){
+		cout<<"collision"<<endl;
+		return 1;
+	}
+	else
+		return 0;
 }
 
 bool Character::checkCollision( SDL_Rect a, SDL_Rect b )

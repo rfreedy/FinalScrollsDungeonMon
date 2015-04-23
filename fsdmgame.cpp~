@@ -78,7 +78,44 @@ int FSDMGame::play(){
 		
 		//Allocate and Load Enemies
 		//cout << "Loading Enemy..." << endl;		//#DEBUG#
-		loadEnemies();
+		//loadEnemies();
+		int count = 0;
+		int num;
+		int j = 0;
+	
+	vector<int> stats;
+	int monsterPicCount = 0;
+	SDL_Rect pic=gDragon[0];
+		
+	ifstream myfile;			//data file for enemy input
+	myfile.open ("enemyLoad.dat");
+		
+	while(myfile>>num){
+		stats.push_back(num);
+		count++;
+		if(count >=16){	//after 16 numbers are read
+			/*monsterPicCount++;
+			cout<<"monster count: "<<monsterPicCount<<endl;
+			switch (monsterPicCount){
+				case 1:	pic = gDragon[0]; break;
+				case 2:	pic = gDragon[0]; break;
+				//default: pic = gDragon[0]; break;
+			}*/
+			count = 0;	//reset count
+			//for(int i=j; i<5; i++){
+			//cout <<"pic: "<<endl;
+			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], &pic);
+			j++;
+			//cout<<"enemy health: "<<enemyList[j]->getCurrentHealth()<<endl;
+			//}
+			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
+    			//	cout << *i << ' ';
+			//cout<<stats[15];
+			stats.clear();
+			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
+    			//	cout << *i << ' ';
+		}
+	}
 
 		opponent = enemyList[1];
 
@@ -110,7 +147,10 @@ int FSDMGame::play(){
 				std::cout << "Event queue polled..." << std::endl;	
 
 				//Move the player
-				if (player1->move( loaded_level->getTileSet() ) == DUNGEON1) {
+				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
+					gamestate = 2;
+				}
+				if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						cout<<"check1"<<endl;
 						delete loaded_level;
@@ -130,7 +170,7 @@ int FSDMGame::play(){
 								return 1;
 							}
 				}
-				if (player1->move( loaded_level->getTileSet() ) == DUNGEON2) {
+				if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON2) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						delete loaded_level;				
 						for(int i=0; i<5; i++){
@@ -148,7 +188,25 @@ int FSDMGame::play(){
 								return 1;
 							}
 				}
-				player1->move( loaded_level->getTileSet() );	//odd number of move functions
+				if (player1->move( loaded_level->getTileSet(), enemyList ) == OVERWORLD) {
+				// this means player1 is on the first staircase and a new level needs to be created
+						delete loaded_level;				
+						for(int i=0; i<5; i++){
+							//if(enemyList[i] != NULL){
+							cout<<"check3"<<endl;
+								delete enemyList[i];
+								enemyList[i] = NULL;
+							//}
+						}
+						loaded_level = new FSDMLevel(OVERWORLD); // this will create the first dungeon
+						//std::cout << "loaded level?" << std::endl;
+						if(!(*loaded_level).constructed())
+							{
+								//printf("Level failed to load!\n");		
+								return 1;
+							}
+				}
+				player1->move( loaded_level->getTileSet(), enemyList );	//odd number of move functions
 				std::cout << "Move function worked " << std::endl;
 				player1->setCamera( camera );
 				std::cout << "camer worked " << std::endl;
@@ -448,6 +506,7 @@ void FSDMGame::close()
 
 	//Quit SDL subsystems
 	IMG_Quit();
+	cout << "test"<<endl;
 	SDL_Quit();
 	
 	cout << "Returning close function..." << endl;
@@ -934,7 +993,7 @@ void FSDMGame::loadEnemies(){
 			//cout <<"pic: "<<endl;
 			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], &pic);
 			j++;
-			cout<<"enemy health: "<<enemyList[j]->getCurrentHealth()<<endl;
+			//cout<<"enemy health: "<<enemyList[j]->getCurrentHealth()<<endl;
 			//}
 			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
     			//	cout << *i << ' ';

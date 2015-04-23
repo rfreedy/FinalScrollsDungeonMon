@@ -38,7 +38,7 @@ class Enemy: public Entity{
 		void replenish();
 		void refillStamina();
 		void refillMana();
-
+		SDL_Rect getMBox();
 		void defend(int);	//take damage
 		int attack(int);		//calculate output damage
 	private:
@@ -49,7 +49,6 @@ class Enemy: public Entity{
 
 		int level_coordinates_x;
 		int level_coordinates_y;
-		
 		//LTexture unit_texture;		
 		SDL_Rect mBox;	//Collision box of the dot
 		//The velocity of the dot

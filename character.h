@@ -59,12 +59,13 @@ class Character: public Entity{
 		//Takes key presses and adjusts the dot's velocity
 		void handleEvent( SDL_Event& e );
 		//Moves the dot and check collision against tiles
-		int  move( Tile *tiles[] );
+		int  move( Tile *tiles[], Enemy *enemyList[] );
 		//Centers the camera over the dot
 		void setCamera( SDL_Rect& camera );
 		//Shows the dot on the screen
 		//void render( SDL_Rect&, LTexture*);
 		int touchesWall( SDL_Rect, Tile* [] );
+		int touchesEnemy(SDL_Rect, SDL_Rect);
 		bool checkCollision( SDL_Rect, SDL_Rect);
 	
 	private:
