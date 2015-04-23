@@ -934,6 +934,7 @@ void FSDMGame::loadEnemies(){
 			//cout <<"pic: "<<endl;
 			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], &pic);
 			j++;
+			//cout<<"enemy health: "<<enemyList[j]->getCurrentHealth()<<endl;
 			//}
 			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
     			//	cout << *i << ' ';
