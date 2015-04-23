@@ -148,7 +148,25 @@ int FSDMGame::play(){
 								return 1;
 							}
 				}
-				player1->move( loaded_level->getTileSet() );	//odd number of move functions
+				if (player1->move( loaded_level->getTileSet() ) == OVERWORLD) {
+				// this means player1 is on the first staircase and a new level needs to be created
+						delete loaded_level;				
+						for(int i=0; i<5; i++){
+							//if(enemyList[i] != NULL){
+							cout<<"check3"<<endl;
+								delete enemyList[i];
+								enemyList[i] = NULL;
+							//}
+						}
+						loaded_level = new FSDMLevel(OVERWORLD); // this will create the first dungeon
+						//std::cout << "loaded level?" << std::endl;
+						if(!(*loaded_level).constructed())
+							{
+								//printf("Level failed to load!\n");		
+								return 1;
+							}
+				}
+				//player1->move( loaded_level->getTileSet() );	//odd number of move functions
 				std::cout << "Move function worked " << std::endl;
 				player1->setCamera( camera );
 				std::cout << "camer worked " << std::endl;

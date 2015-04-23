@@ -576,7 +576,9 @@ int Character::move( Tile *tiles[] )
    if (touchesWall(mBox, tiles) == DUNGEON2) {
 	returnVal = DUNGEON2;
 	}
-   
+    if (touchesWall(mBox, tiles) == OVERWORLD) {
+	returnVal = OVERWORLD;
+	}
    return returnVal;
 }
 
@@ -650,6 +652,18 @@ int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
 		return DUNGEON2; //to change floors to dungeon 1
 	    }
 	}	
+	if( (tiles[i]->getType() == TILE_STAIR_UP) && (tiles[i]->getX() == 32*13) && (tiles[i]->getY() == 32*25) ) {
+		//if the collision box touches the stair tile
+	    if (checkCollision (box, tiles[i]->getBox() ) ) {
+		return OVERWORLD; //to change floors to dungeon 1
+	    }
+	}
+	if( (tiles[i]->getType() == TILE_STAIR_UP) && (tiles[i]->getX() == 32*37) && (tiles[i]->getY() == 32*12) ) {
+		//if the collision box touches the stair tile
+	    if (checkCollision (box, tiles[i]->getBox() ) ) {
+		return DUNGEON1; //to change floors to dungeon 1
+	    }
+	}
     }
 
     //If no wall tiles were touched
