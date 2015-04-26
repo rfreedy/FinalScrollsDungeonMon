@@ -47,8 +47,10 @@ class Character: public Entity{
 		int getMaxMana();
 	
 		int speedCheck();
-
-
+		
+		int getXCoord();
+		int getYCoord();
+	
 		void replenish();
 		void refillStamina();
 		void refillMana();

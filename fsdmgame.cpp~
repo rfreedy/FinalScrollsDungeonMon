@@ -145,8 +145,7 @@ int FSDMGame::play(){
 				//Move the player
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
 					gamestate = 2;
-					//player1->moveBack();
-					//player1->mBox.x -= player1->mVelX;
+					
 				}
 				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
 				// this means player1 is on the first staircase and a new level needs to be created

@@ -53,7 +53,7 @@ class Enemy: public Entity{
 		SDL_Rect mBox;	//Collision box of the dot
 		//The velocity of the dot
 		int mVelX, mVelY;
-		SDL_Rect* currentClip;	
+		SDL_Rect currentClip;	
 };
 
 #endif

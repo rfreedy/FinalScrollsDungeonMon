@@ -744,3 +744,11 @@ bool Character::checkCollision( SDL_Rect a, SDL_Rect b )
     //If none of the sides from A are outside B
     return true;
 }
+
+int Character::getXCoord(){
+	return mBox.x;
+}
+
+int Character::getYCoord(){
+	return mBox.y;
+}

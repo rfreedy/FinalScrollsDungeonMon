@@ -70,6 +70,8 @@ class FSDMGame{
 	
 		void handleCombatEvent( SDL_Event& );
 
+		int findOpponent();
+
 		void updateStatText();
 		void loadEnemies();
 

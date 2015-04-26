@@ -35,7 +35,8 @@ class Character: public Entity{
 		void createCharacter();
 		int getLevel();
 		void levelUp();	
-		void fight(Enemy&);		
+		void fight(Enemy&);	
+		void moveBack();	
 
 		int getCurrentHealth();
 		int getCurrentStamina();

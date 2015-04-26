@@ -113,8 +113,6 @@ int FSDMGame::play(){
 		}
 	}*/
 
-		opponent = enemyList[1];
-
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 		std::cout << "Camera created..." << std::endl;
@@ -144,8 +142,9 @@ int FSDMGame::play(){
 
 				//Move the player
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
-					gamestate = 2;
-					
+					int opNum = findOpponent();
+					opponent = enemyList[opNum];					
+					gamestate = 2;					
 				}
 				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
 				// this means player1 is on the first staircase and a new level needs to be created
@@ -1022,3 +1021,21 @@ void FSDMGame::loadEnemies(){
 		}
 	}
 }
+
+//returns index in enemyList of collided enemy
+int FSDMGame::findOpponent(){
+	int retVal = -1;	
+
+	for(int i = 0; i < 10; i++){
+		if(enemyList[i] != NULL){
+			if((player1->getXCoord() <= enemyList[i]->getXCoord() + 30) && (player1->getXCoord() >= enemyList[i]->getXCoord() - 30)){
+				if((player1->getYCoord() <= enemyList[i]->getYCoord() + 40) && (player1->getYCoord() >= enemyList[i]->getYCoord() - 40)){
+					retVal = i;
+				}
+			}
+		}
+	}
+
+	return retVal;
+}
+

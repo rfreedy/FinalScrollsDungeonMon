@@ -33,6 +33,9 @@ class Enemy: public Entity{
 		int getMaxStamina();
 		int getMaxMana();
 
+		int getXCoord();
+		int getYCoord();
+
 		int speedCheck();
 
 		void replenish();
