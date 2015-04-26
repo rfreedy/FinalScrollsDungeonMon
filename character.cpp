@@ -559,7 +559,7 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
     {
         //move back
 //        std::cout << "character thinks level width is: " << LEVEL_WIDTH << std::endl;
-	cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
+	//cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
 	if(touchesEnemy(mBox, enemyList) == 1){
 		cout<<"battle!"<<endl;
 		returnVal = 1;
@@ -601,7 +601,7 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
     if (touchesWall(mBox, tiles) == OVERWORLD) {
 	returnVal = OVERWORLD;
 	}
-cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
+//cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
    return returnVal;
 }
 

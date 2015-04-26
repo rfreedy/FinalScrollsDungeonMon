@@ -79,15 +79,15 @@ int FSDMGame::play(){
 		//player1 = new Character;		
 		//Allocate and Load Enemies
 		//cout << "Loading Enemy..." << endl;		//#DEBUG#
-		//loadEnemies();
-		int count = 0;
+		loadEnemies();
+	/*	int count = 0;
 		int num;
 		int j = 0;
 	
 	vector<int> stats;
 	int monsterPicCount = 0;
 	SDL_Rect pic=gDragon[0];
-		
+	//SDL_Rect pic;
 	ifstream myfile;			//data file for enemy input
 	myfile.open ("enemyLoad.dat");
 		
@@ -95,28 +95,24 @@ int FSDMGame::play(){
 		stats.push_back(num);
 		count++;
 		if(count >=16){	//after 16 numbers are read
-			/*monsterPicCount++;
+			monsterPicCount++;
 			cout<<"monster count: "<<monsterPicCount<<endl;
 			switch (monsterPicCount){
 				case 1:	pic = gDragon[0]; break;
-				case 2:	pic = gDragon[0]; break;
+				case 2:	pic = gRedMan[0]; break;
+				case 3: pic = gDragon[0]; break;
 				//default: pic = gDragon[0]; break;
-			}*/
+			}
 			count = 0;	//reset count
 			//for(int i=j; i<5; i++){
 			//cout <<"pic: "<<endl;
-			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], &pic);
-			j++;
-			//cout<<"enemy health: "<<enemyList[j]->getCurrentHealth()<<endl;
-			//}
-			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
-    			//	cout << *i << ' ';
-			//cout<<stats[15];
-			stats.clear();
-			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
-    			//	cout << *i << ' ';
+			for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
+    				cout << *i << ' ';
+			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], pic);
+			j++;	//increment enemyList
+			stats.clear();	//clear stats vector
 		}
-	}
+	}*/
 
 		opponent = enemyList[1];
 
@@ -975,14 +971,14 @@ void FSDMGame::updateStatText(){
 }
 
 void FSDMGame::loadEnemies(){
-	int count = 0;
-	int num;
-	int j = 0;
+		int count = 0;
+		int num;
+		int j = 0;
 	
 	vector<int> stats;
 	int monsterPicCount = 0;
 	SDL_Rect pic=gDragon[0];
-		
+	//SDL_Rect pic;
 	ifstream myfile;			//data file for enemy input
 	myfile.open ("enemyLoad.dat");
 		
@@ -990,27 +986,23 @@ void FSDMGame::loadEnemies(){
 		stats.push_back(num);
 		count++;
 		if(count >=16){	//after 16 numbers are read
-			/*monsterPicCount++;
+			monsterPicCount++;
 			cout<<"monster count: "<<monsterPicCount<<endl;
 			switch (monsterPicCount){
 				case 1:	pic = gDragon[0]; break;
-				case 2:	pic = gDragon[0]; break;
+				case 2:	pic = gRedMan[7]; break;
+				case 3: pic = gDragon[0]; break;
+				case 4: pic = gRedMan[4]; break;
 				//default: pic = gDragon[0]; break;
-			}*/
+			}
 			count = 0;	//reset count
 			//for(int i=j; i<5; i++){
 			//cout <<"pic: "<<endl;
-			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], &pic);
-			j++;
-			//cout<<"enemy health: "<<enemyList[j]->getCurrentHealth()<<endl;
-			//}
-			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
-    			//	cout << *i << ' ';
-			//cout<<stats[15];
-			stats.clear();
-			//for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
-    			//	cout << *i << ' ';
+			for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
+    				cout << *i << ' ';
+			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], pic);
+			j++;	//increment enemyList
+			stats.clear();	//clear stats vector
 		}
 	}
-	std::cout << "Success!" << std::endl;
 }

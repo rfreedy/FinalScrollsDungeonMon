@@ -17,7 +17,7 @@ using namespace std;
 #include "Dot.h"
 class Enemy: public Entity{
 	public:
-		Enemy(int, int,int,int,int,int,int,int,int,int,int,int,int,int,int,int, SDL_Rect*);	//constructor
+		Enemy(int, int,int,int,int,int,int,int,int,int,int,int,int,int,int,int, SDL_Rect);	//constructor
 		//~Enemy();	//deconstructor
 
 		virtual void render( SDL_Rect&, LTexture*);	//implementation of pure virtual
@@ -38,7 +38,7 @@ class Enemy: public Entity{
 		void replenish();
 		void refillStamina();
 		void refillMana();
-		int getMBox();
+		SDL_Rect getMBox();
 		void defend(int);	//take damage
 		int attack(int);		//calculate output damage
 	private:

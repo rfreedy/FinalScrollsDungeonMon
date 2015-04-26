@@ -49,7 +49,7 @@ Character::Character(): Entity(){
     mVelY = 0;
 
 	count = 0;
-	currentClip = &gRedMan[ 0 ];
+	currentClip = gRedMan[ 0 ];
 	up =0;
 	down = 0;
 	left = 0;
@@ -559,7 +559,7 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
     {
         //move back
 //        std::cout << "character thinks level width is: " << LEVEL_WIDTH << std::endl;
-	cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
+	//cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
 	if(touchesEnemy(mBox, enemyList) == 1){
 		cout<<"battle!"<<endl;
 		returnVal = 1;
@@ -568,6 +568,8 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
 	//mBox.x -= mVelX;
 	//mBox.x = mBox.x - TILE_SIZE;
 	mVelX =0;
+	right = 0;
+	left = 0;
     }
 
     //Move the dot up or down
@@ -584,6 +586,8 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
         mBox.y -= mVelY;
 	//mBox.y -= mVelY;
 	mVelY =0;
+	up = 0;
+	down = 0;
 	//mBox.y = mBox.y + TILE_SIZE;
     }
    
@@ -597,7 +601,7 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
     if (touchesWall(mBox, tiles) == OVERWORLD) {
 	returnVal = OVERWORLD;
 	}
-cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
+//cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
    return returnVal;
 }
 

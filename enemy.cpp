@@ -13,7 +13,7 @@ using namespace std;
 #include "character.h"
 
 //default constructor
-Enemy::Enemy(int s1, int s2,int s3,int s4,int s5,int s6,int s7,int s8,int s9,int s10,int s11,int s12,int s13,int s14,int c1,int c2,SDL_Rect* p1): Entity(){
+Enemy::Enemy(int s1, int s2,int s3,int s4,int s5,int s6,int s7,int s8,int s9,int s10,int s11,int s12,int s13,int s14,int c1,int c2,SDL_Rect p1): Entity(){
 
 	//initialize values in skills/stats structs	
 	skills.slashing = s1;
@@ -54,7 +54,7 @@ Enemy::Enemy(int s1, int s2,int s3,int s4,int s5,int s6,int s7,int s8,int s9,int
 //virtual render function, common to entities
 void Enemy::render( SDL_Rect& camera, LTexture* gDragonTexture){
 	//TODO: draw unit_texture to screen at coordinates
-	gDragonTexture->render( mBox.x - camera.x, mBox.y - camera.y, currentClip );
+	gDragonTexture->render( mBox.x - camera.x, mBox.y - camera.y, &currentClip );
 }
 
 void Enemy::toggleVisibility(){
