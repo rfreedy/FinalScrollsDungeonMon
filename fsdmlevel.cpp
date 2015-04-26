@@ -71,8 +71,8 @@ bool FSDMLevel::setTiles(int maplevel)
     	int x = 0, y = 0;
 	// map names 
 	std::string overworld = "overworld.map";
-	std::string dungeon1 = "dungeon1.map";
-	std::string dungeon2 = "dungeon2.map";
+	std::string dungeon1 = "dungeon4.map";
+	std::string dungeon2 = "dungeon3.map";
 	//declare map variable
 	std::ifstream map; 
 	std::cout << "map level value: " << maplevel << std::endl;
@@ -215,13 +215,13 @@ bool FSDMLevel::setTiles(int maplevel)
 			gTileClips[ TILE_SNOW ].w = TILE_WIDTH;
 			gTileClips[ TILE_SNOW ].h = TILE_HEIGHT;
 	
-			gTileClips[ TILE_SNOW_TREES ].x = 32*13;
-			gTileClips[ TILE_SNOW_TREES ].y = 32*10;
+			gTileClips[ TILE_SNOW_TREES ].x = 32*12;
+			gTileClips[ TILE_SNOW_TREES ].y = 32*9;
 			gTileClips[ TILE_SNOW_TREES ].w = TILE_WIDTH;
 			gTileClips[ TILE_SNOW_TREES ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_SNOW_MOUNTAINS ].x = 32*16;
-			gTileClips[ TILE_SNOW_MOUNTAINS ].y = 32*10;
+			gTileClips[ TILE_SNOW_MOUNTAINS ].x = 32*15;
+			gTileClips[ TILE_SNOW_MOUNTAINS ].y = 32*9;
 			gTileClips[ TILE_SNOW_MOUNTAINS ].w = TILE_WIDTH;
 			gTileClips[ TILE_SNOW_MOUNTAINS ].h = TILE_HEIGHT;
 
