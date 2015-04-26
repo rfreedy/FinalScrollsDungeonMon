@@ -71,6 +71,7 @@ class FSDMGame{
 		int handleCombatEvent( SDL_Event& );
 
 		void updateStatText();
+		void loadEnemies();
 
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:

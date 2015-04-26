@@ -47,6 +47,7 @@ int FSDMGame::play(){
 	//cout <<"Playing..." << endl;		//#DEBUG#	
 	loaded_level = new FSDMLevel;
 	//cout << "Level Created..." << endl;	//#DEBUG#
+	//gamestate = 2;
 	if(!loaded_level->constructed())
 	{
 		printf("Level failed to load!\n");		
@@ -75,7 +76,7 @@ int FSDMGame::play(){
 		player1 = new Character;		
 		//cout << "Success!" << endl;			//#DEBUG#
 
-		
+		//player1 = new Character;		
 		//Allocate and Load Enemies
 		//cout << "Loading Enemy..." << endl;		//#DEBUG#
 		//loadEnemies();
@@ -129,7 +130,7 @@ int FSDMGame::play(){
 			//Clear screen
 			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
 			SDL_RenderClear( gRenderer );
-			std::cout << "Renderer cleared..." << std::endl;
+			//std::cout << "Renderer cleared..." << std::endl;
 			//run current gamestate
 			if(gamestate == 1){		//movement			
 				//Handle events on queue
@@ -149,8 +150,10 @@ int FSDMGame::play(){
 				//Move the player
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
 					gamestate = 2;
+					//player1->moveBack();
+					//player1->mBox.x -= player1->mVelX;
 				}
-				if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
+				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						cout<<"check1"<<endl;
 						delete loaded_level;
@@ -170,7 +173,7 @@ int FSDMGame::play(){
 								return 1;
 							}
 				}
-				if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON2) {
+				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON2) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						delete loaded_level;				
 						for(int i=0; i<5; i++){
@@ -188,7 +191,7 @@ int FSDMGame::play(){
 								return 1;
 							}
 				}
-				if (player1->move( loaded_level->getTileSet(), enemyList ) == OVERWORLD) {
+				else if (player1->move( loaded_level->getTileSet(), enemyList ) == OVERWORLD) {
 				// this means player1 is on the first staircase and a new level needs to be created
 						delete loaded_level;				
 						for(int i=0; i<5; i++){
@@ -215,6 +218,7 @@ int FSDMGame::play(){
 			//	std::cout << "will it render the level?" << std::endl;
 				loaded_level->render(camera, textures.gTileTexture);
 			//	std::cout << "yes" << std::endl;
+				player1->render( camera, textures.gDotTexture );
 				/*
 				//Render level
 				for( int i = 0; i < TOTAL_TILES; ++i )
@@ -233,10 +237,37 @@ int FSDMGame::play(){
 				//opponent->render(camera, textures.gDragonTexture);	//render dragon
 				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
 
+		/*			//WHO DID THIS?!?!
+		//Game State Variables
+		bool quit = false;	//Main loop flag
+		//gamestate = 2;		//1: walking, 2: battle
+		arrowState = 0;
+		combat_menu_state = 0;
+		combat_action = 0;
+		int firstround = 1;
+		int combatround = 0;
+
+		//Render Location Variables		
+		int menuPos[2][4] = {{345, 475, 345, 475}, {310, 310, 375, 375}};
+		int playerStatPos[2][3] = {{50, 50, 50}, {300, 350, 400}};
+		int opponentStatPos[2][3] = {{150, 150, 150}, {50, 75, 100}};
+		int arrowPos[2][4] = {{330, 460, 330, 460}, {315, 315, 380, 380}};
+
+		//Event handler
+		SDL_Event e;
+
+		//Create Default Character
+		//cout << "Creating character..." << endl;	//#DEBUG#
+		player1 = new Character;		
+		//cout << "Success!" << endl;			//#DEBUG#
+
 				//Render dot
 				player1->render( camera, textures.gDotTexture );
 			//	std::cout << "also rendered the player" << endl;
-			}else if(gamestate == 2){	//combat
+
+		*/
+		}
+			else if(gamestate == 2){	//combat
 				
 				//initialize combat instance if first round
 				if(firstround){
@@ -797,7 +828,7 @@ bool FSDMGame::loadMedia()
 	return success;
 }
 
-int FSDMGame::handleCombatEvent( SDL_Event& e)
+void FSDMGame::handleCombatEvent( SDL_Event& e)
 {
 	switch(combat_menu_state){
 		case 0:		
@@ -826,11 +857,17 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 						}
 						break;
 					case SDLK_RETURN:
+						cout << "gamestate: "<<gamestate<<endl;
+						cout << "arrow: "<<arrowState<<endl;
 						if(arrowState == 0){
-							combat_action = 1;
+							combat_action = 1;	//attack
+						}else if(arrowState == 1){
+							gamestate = 1;		//escape combat
+							cout << "gamestate: "<<gamestate<<endl;
 						}else if(arrowState == 2){
-							combat_menu_state = 1;
+							combat_menu_state = 1;	//enter abilities submenu
 						}
+						break;
 					default:
 						break;
 				}
@@ -866,6 +903,7 @@ int FSDMGame::handleCombatEvent( SDL_Event& e)
 					case SDLK_ESCAPE:
 						//return to previous menu
 						combat_menu_state = 0;
+						break;
 					default:
 						break;
 				}

@@ -68,7 +68,7 @@ class FSDMGame{
 		void close();
 		bool loadMedia();
 	
-		int handleCombatEvent( SDL_Event& );
+		void handleCombatEvent( SDL_Event& );
 
 		void updateStatText();
 		void loadEnemies();

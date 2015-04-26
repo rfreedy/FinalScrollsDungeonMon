@@ -433,7 +433,7 @@ void Character::handleEvent( SDL_Event& e )
 		else{
 			currentClip = &gRedMan[ 3 ];
 		}
-		count++;
+		//count++;
 		}
 		break;
 		
@@ -450,7 +450,7 @@ void Character::handleEvent( SDL_Event& e )
 		else{
 			currentClip = &gRedMan[ 1 ];
 		}
-		count++;
+		//count++;
 		}
 		break;
             case SDLK_LEFT:
@@ -508,6 +508,10 @@ void Character::handleEvent( SDL_Event& e )
     }
 }
 
+void Character::moveBack(){
+	mBox.x -= mVelX;
+}
+
 int Character::move( Tile *tiles[], Enemy *enemyList[] )
 {
     //Move the dot left or right
@@ -555,11 +559,13 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
     {
         //move back
 //        std::cout << "character thinks level width is: " << LEVEL_WIDTH << std::endl;
+	cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
 	if(touchesEnemy(mBox, enemyList) == 1){
 		cout<<"battle!"<<endl;
 		returnVal = 1;
 	}
         mBox.x -= mVelX;
+	mBox.x -= mVelX;
 	//mBox.x = mBox.x - TILE_SIZE;
     }
 
@@ -575,6 +581,7 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
 	}
         //move back
         mBox.y -= mVelY;
+	mBox.y -= mVelY;
 	//mBox.y = mBox.y + TILE_SIZE;
     }
    
@@ -588,6 +595,7 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
     if (touchesWall(mBox, tiles) == OVERWORLD) {
 	returnVal = OVERWORLD;
 	}
+cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
    return returnVal;
 }
 
