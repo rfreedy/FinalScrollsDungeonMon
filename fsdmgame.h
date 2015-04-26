@@ -87,10 +87,12 @@ class FSDMGame{
 		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
 		string notification_message;		//0: nothing, 1: attack
-		SDL_Rect gDragon[1];	//1
-		SDL_Rect gYetti[1];	//2
-		SDL_Rect gSkeleton[1];	//3
-		SDL_Rect gMonster[1];	//4
+		SDL_Rect gDragon[1];	//1	down
+		SDL_Rect gYetti[1];	//2	down
+		SDL_Rect gSkeleton[1];	//3	down
+		SDL_Rect gMonster[1];	//4	down
+		SDL_Rect gCyclops[1];	//5	right
+		SDL_Rect gKnight[1];	//6	left
 		Enemy *enemyList[10];
 };
 

@@ -70,6 +70,8 @@ class FSDMGame{
 	
 		void handleCombatEvent( SDL_Event& );
 
+		int findOpponent();
+
 		void updateStatText();
 		void loadEnemies();
 
@@ -89,6 +91,8 @@ class FSDMGame{
 		SDL_Rect gYetti[1];	//2
 		SDL_Rect gSkeleton[1];	//3
 		SDL_Rect gMonster[1];	//4
+		SDL_Rect gCyclops[1];	//5
+		SDL_Rect gKnight[1];	//6
 		Enemy *enemyList[10];
 };
 

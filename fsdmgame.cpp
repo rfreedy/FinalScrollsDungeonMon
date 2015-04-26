@@ -733,6 +733,16 @@ bool FSDMGame::loadMedia()
 		gMonster[0].y = 175*2;
 		gMonster[0].w = 25*2;
 		gMonster[0].h = 25*2;
+
+		gCyclops[0].x = 50*2;
+		gCyclops[0].y = 145*2;
+		gCyclops[0].w = 25*2;
+		gCyclops[0].h = 25*2;
+
+		gKnight[0].x = 295*2;
+		gKnight[0].y = 375*2;
+		gKnight[0].w = 25*2;
+		gKnight[0].h = 25*2;
 		
 	}
 	//Load tile texture - replace with our tile sprite sheet
@@ -1008,6 +1018,8 @@ void FSDMGame::loadEnemies(){
 				case 2:	pic = gYetti[0]; break;
 				case 3: pic = gSkeleton[0]; break;
 				case 4: pic = gMonster[0]; break;
+				case 5: pic = gCyclops[0]; break;
+				case 6: pic = gKnight[0]; break;
 				//default: pic = gDragon[0]; break;
 			}
 			count = 0;	//reset count
