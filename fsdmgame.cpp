@@ -167,6 +167,7 @@ int FSDMGame::play(){
 								//printf("Level failed to load!\n");		
 								return 1;
 							}
+						//loadEnemies();
 				}
 				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON2) {
 				// this means player1 is on the first staircase and a new level needs to be created
@@ -185,6 +186,7 @@ int FSDMGame::play(){
 								//printf("Level failed to load!\n");		
 								return 1;
 							}
+						//loadEnemies();
 				}
 				else if (player1->move( loaded_level->getTileSet(), enemyList ) == OVERWORLD) {
 				// this means player1 is on the first staircase and a new level needs to be created
@@ -203,6 +205,7 @@ int FSDMGame::play(){
 								//printf("Level failed to load!\n");		
 								return 1;
 							}
+						loadEnemies();
 				}
 				player1->move( loaded_level->getTileSet(), enemyList );	//odd number of move functions
 				std::cout << "Move function worked " << std::endl;
