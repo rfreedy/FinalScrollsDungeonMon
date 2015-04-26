@@ -68,7 +68,7 @@ class FSDMGame{
 		void close();
 		bool loadMedia();
 	
-		int handleCombatEvent( SDL_Event& );
+		void handleCombatEvent( SDL_Event& );
 
 		void updateStatText();
 		void loadEnemies();
@@ -85,7 +85,9 @@ class FSDMGame{
 		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
 		string notification_message;		//0: nothing, 1: attack
-
+		SDL_Rect gDragon[1];
+		SDL_Rect gYetti[1];
+		SDL_Rect gSkeleton[1];
 		Enemy *enemyList[10];
 };
 

@@ -22,7 +22,6 @@ using namespace std;
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Rect gRedMan[8];		//class for aninamted character
-SDL_Rect gDragon[1];
 TTF_Font* gFont = NULL;
 
 void FSDMGame::start() {
@@ -718,6 +717,21 @@ bool FSDMGame::loadMedia()
 		gDragon[0].y = 100*2;
 		gDragon[0].w = 25*2;
 		gDragon[0].h = 25*2;
+
+		gYetti[0].x = 448*2;
+		gYetti[0].y = 240*2;
+		gYetti[0].w = 25*2;
+		gYetti[0].h = 25*2;
+
+		gSkeleton[0].x = 250*2;
+		gSkeleton[0].y = 75*2;
+		gSkeleton[0].w = 25*2;
+		gSkeleton[0].h = 25*2;
+
+		gMonster[0].x = 408*2;
+		gMonster[0].y = 175*2;
+		gMonster[0].w = 25*2;
+		gMonster[0].h = 25*2;
 		
 	}
 	//Load tile texture - replace with our tile sprite sheet
@@ -932,7 +946,7 @@ void FSDMGame::updateStatText(){
 	if( !textures.player1mana->loadFromRenderedText(player1mana_text, textColor)){
 		printf("Falied to render player 1 mana text texture!\n");
 		success = false;
-	}
+	}				//case 4: pic = gRedMan[4]; break;
 
 	//---Update Opponent Stat Textures
 	if(opponent != NULL){
@@ -985,14 +999,14 @@ void FSDMGame::loadEnemies(){
 	while(myfile>>num){
 		stats.push_back(num);
 		count++;
-		if(count >=16){	//after 16 numbers are read
-			monsterPicCount++;
+		if(count >=17){	//after 16 numbers are read
+			monsterPicCount = stats[16];
 			cout<<"monster count: "<<monsterPicCount<<endl;
 			switch (monsterPicCount){
 				case 1:	pic = gDragon[0]; break;
-				case 2:	pic = gRedMan[7]; break;
-				case 3: pic = gDragon[0]; break;
-				case 4: pic = gRedMan[4]; break;
+				case 2:	pic = gYetti[0]; break;
+				case 3: pic = gSkeleton[0]; break;
+				case 4: pic = gMonster[0]; break;
 				//default: pic = gDragon[0]; break;
 			}
 			count = 0;	//reset count
