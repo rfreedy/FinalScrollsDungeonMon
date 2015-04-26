@@ -565,8 +565,9 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
 		returnVal = 1;
 	}
         mBox.x -= mVelX;
-mBox.x -= mVelX;
+	//mBox.x -= mVelX;
 	//mBox.x = mBox.x - TILE_SIZE;
+	mVelX =0;
     }
 
     //Move the dot up or down
@@ -581,7 +582,8 @@ mBox.x -= mVelX;
 	}
         //move back
         mBox.y -= mVelY;
-	mBox.y -= mVelY;
+	//mBox.y -= mVelY;
+	mVelY =0;
 	//mBox.y = mBox.y + TILE_SIZE;
     }
    
