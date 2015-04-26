@@ -237,35 +237,7 @@ int FSDMGame::play(){
 				//opponent->render(camera, textures.gDragonTexture);	//render dragon
 				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
 
-		/*			//WHO DID THIS?!?!
-		//Game State Variables
-		bool quit = false;	//Main loop flag
-		//gamestate = 2;		//1: walking, 2: battle
-		arrowState = 0;
-		combat_menu_state = 0;
-		combat_action = 0;
-		int firstround = 1;
-		int combatround = 0;
 
-		//Render Location Variables		
-		int menuPos[2][4] = {{345, 475, 345, 475}, {310, 310, 375, 375}};
-		int playerStatPos[2][3] = {{50, 50, 50}, {300, 350, 400}};
-		int opponentStatPos[2][3] = {{150, 150, 150}, {50, 75, 100}};
-		int arrowPos[2][4] = {{330, 460, 330, 460}, {315, 315, 380, 380}};
-
-		//Event handler
-		SDL_Event e;
-
-		//Create Default Character
-		//cout << "Creating character..." << endl;	//#DEBUG#
-		player1 = new Character;		
-		//cout << "Success!" << endl;			//#DEBUG#
-
-				//Render dot
-				player1->render( camera, textures.gDotTexture );
-			//	std::cout << "also rendered the player" << endl;
-
-		*/
 		}
 		else if(gamestate == 2){	//combat
 				

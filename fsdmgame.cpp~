@@ -267,7 +267,7 @@ int FSDMGame::play(){
 
 		*/
 		}
-			else if(gamestate == 2){	//combat
+		else if(gamestate == 2){	//combat
 				
 				//initialize combat instance if first round
 				if(firstround){
