@@ -78,7 +78,7 @@ int FSDMGame::play(){
 		//player1 = new Character;		
 		//Allocate and Load Enemies
 		//cout << "Loading Enemy..." << endl;		//#DEBUG#
-		loadEnemies();
+		loadEnemies("enemyLoad.dat");
 	/*	int count = 0;
 		int num;
 		int j = 0;
@@ -165,7 +165,7 @@ int FSDMGame::play(){
 								//printf("Level failed to load!\n");		
 								return 1;
 							}
-						//loadEnemies();
+						loadEnemies("enemyLoad2.dat");
 				}
 				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON2) {
 				// this means player1 is on the first staircase and a new level needs to be created
@@ -184,7 +184,7 @@ int FSDMGame::play(){
 								//printf("Level failed to load!\n");		
 								return 1;
 							}
-						//loadEnemies();
+						loadEnemies("enemyLoad3.dat");
 				}
 				else if (player1->move( loaded_level->getTileSet(), enemyList ) == OVERWORLD) {
 				// this means player1 is on the first staircase and a new level needs to be created
@@ -203,7 +203,7 @@ int FSDMGame::play(){
 								//printf("Level failed to load!\n");		
 								return 1;
 							}
-						loadEnemies();
+						loadEnemies("enemyLoad.dat");
 				}
 				player1->move( loaded_level->getTileSet(), enemyList );	//odd number of move functions
 				std::cout << "Move function worked " << std::endl;
@@ -995,17 +995,18 @@ void FSDMGame::updateStatText(){
 	}
 }
 
-void FSDMGame::loadEnemies(){
-		int count = 0;
-		int num;
-		int j = 0;
+void FSDMGame::loadEnemies(string file){
+	//string file = "enemyLoad.dat";
+	int count = 0;
+	int num;
+	int j = 0;
 	
 	vector<int> stats;
 	int monsterPicCount = 0;
 	SDL_Rect pic=gDragon[0];
 	//SDL_Rect pic;
 	ifstream myfile;			//data file for enemy input
-	myfile.open ("enemyLoad.dat");
+	myfile.open(file.c_str());
 		
 	while(myfile>>num){
 		stats.push_back(num);
