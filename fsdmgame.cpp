@@ -230,6 +230,10 @@ int FSDMGame::play(){
 					enemyList[2]->render(camera, textures.gDragonTexture);
 				if(enemyList[3] != NULL)
 					enemyList[3]->render(camera, textures.gDragonTexture);
+				if(enemyList[4] != NULL)
+					enemyList[4]->render(camera, textures.gDragonTexture);
+				if(enemyList[5] != NULL)
+					enemyList[5]->render(camera, textures.gDragonTexture);
 				//opponent->render(camera, textures.gDragonTexture);	//render dragon
 				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
 

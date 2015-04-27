@@ -996,7 +996,7 @@ void FSDMGame::updateStatText(){
 }
 
 void FSDMGame::loadEnemies(string file){
-	string file = "enemyLoad.dat";
+	//string file = "enemyLoad.dat";
 	int count = 0;
 	int num;
 	int j = 0;
@@ -1006,7 +1006,7 @@ void FSDMGame::loadEnemies(string file){
 	SDL_Rect pic=gDragon[0];
 	//SDL_Rect pic;
 	ifstream myfile;			//data file for enemy input
-	myfile.open(file);
+	myfile.open(file.c_str());
 		
 	while(myfile>>num){
 		stats.push_back(num);
