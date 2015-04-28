@@ -25,7 +25,7 @@ class Character: public Entity{
 		static const int TILE_SIZE = 40;	//number of spaces charact moves*/
 		static const int DOT_VEL = 5;
 
-		Character();
+		Character(int = 0);
 		~Character();		
 
 		virtual void render( SDL_Rect&, LTexture*);

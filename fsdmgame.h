@@ -52,6 +52,11 @@ typedef struct Textures {
 	LTexture *arrowTexture = NULL;
 	LTexture *gameOverWinTextTexture = NULL;
 	LTexture *gameOverLoseTextTexture = NULL;
+	LTexture *startTextTexture = NULL;
+	LTexture *warriorTextTexture = NULL;
+	LTexture *rogueTextTexture = NULL;
+	LTexture *wizardTextTexture = NULL;
+
 } Texture_type;
 
 
@@ -71,7 +76,7 @@ class FSDMGame{
 		bool loadMedia();
 	
 		void handleCombatEvent( SDL_Event& );
-
+		void handleStartEvent( SDL_Event& );
 		int findOpponent();
 
 		void updateStatText();
@@ -88,6 +93,7 @@ class FSDMGame{
 		int arrowState;
 		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
+		int characterType; //0 = warrior, 1 = rogue, 2 = wizard
 		string notification_message;		//0: nothing, 1: attack
 		SDL_Rect gDragon[1];	//1	down
 		SDL_Rect gYetti[1];	//2	down

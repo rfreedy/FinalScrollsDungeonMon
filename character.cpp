@@ -15,26 +15,66 @@ using namespace std;
 #include "fsdmgame.h"
 
 //default constructor
-Character::Character(): Entity(){
+Character::Character(int characterType): Entity(){
 
-	//initialize values in skills/stats structs	
-	skills.slashing = 10;
-	skills.blunt = 50;
-	skills.speed = 10;
-	skills.sneak = 10;
-	skills.offmage = 10;
-	skills.defmage = 10;
+	if (characterType == 0) { //warrior
+		//initialize values in skills/stats structs	
+		skills.slashing = 10;
+		skills.blunt = 50;
+		skills.speed = 10;
+		skills.sneak = 10;
+		skills.offmage = 10;
+		skills.defmage = 10;
 
-	stats.type = 0;
-	stats.level = 1;
-	stats.currentHealth = 100;
-	stats.maxHealth = 100;
-	stats.currentStamina = 100;
-	stats.maxStamina = 100;
-	stats.currentMana = 100;
-	stats.maxMana = 100;
+		stats.type = 0;
+		stats.level = 1;
+		stats.currentHealth = 100;
+		stats.maxHealth = 100;
+		stats.currentStamina = 100;
+		stats.maxStamina = 100;
+		stats.currentMana = 100;
+		stats.maxMana = 100;
+	}
 
+	if (characterType == 1) { //rogue
+		//initialize values in skills/stats structs	
+		skills.slashing = 10;
+		skills.blunt = 50;
+		skills.speed = 10;
+		skills.sneak = 10;
+		skills.offmage = 10;
+		skills.defmage = 10;
+
+		stats.type = 0;
+		stats.level = 1;
+		stats.currentHealth = 100;
+		stats.maxHealth = 100;
+		stats.currentStamina = 100;
+		stats.maxStamina = 100;
+		stats.currentMana = 100;
+		stats.maxMana = 100;
+	}
+
+	if (characterType == 2) { //wizard
+		//initialize values in skills/stats structs	
+		skills.slashing = 10;
+		skills.blunt = 50;
+		skills.speed = 10;
+		skills.sneak = 10;
+		skills.offmage = 10;
+		skills.defmage = 10;
+
+		stats.type = 0;
+		stats.level = 1;
+		stats.currentHealth = 100;
+		stats.maxHealth = 100;
+		stats.currentStamina = 100;
+		stats.maxStamina = 100;
+		stats.currentMana = 100;
+		stats.maxMana = 100;
+	}
 	//initialize coordinates to impossible position, indicator of uninitialized level
+	
 	level_coordinates_x = -1;
 	level_coordinates_y = -1;
 

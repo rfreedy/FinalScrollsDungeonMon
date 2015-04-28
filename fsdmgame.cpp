@@ -55,25 +55,25 @@ int FSDMGame::play(){
 	}else{
 		//Game State Variables
 		bool quit = false;	//Main loop flag
-		gamestate = 1;		//1: walking, 2: battle
+		gamestate = 0;		//0: start screen, 1: walking, 2: battle, 3: win, 4: lose
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
 		int firstround = 1;
 		int combatround = 0;
-
+		
 		//Render Location Variables		
 		int menuPos[2][4] = {{345, 475, 345, 475}, {310, 310, 375, 375}};
 		int playerStatPos[2][3] = {{50, 50, 50}, {300, 350, 400}};
 		int opponentStatPos[2][3] = {{150, 150, 150}, {50, 75, 100}};
 		int arrowPos[2][4] = {{330, 460, 330, 460}, {315, 315, 380, 380}};
-
+		int startArrow[2][3] = {{57, 270, 483}, {220, 220, 220}};
+		int startMenu[2][4] = {{233, 77, 290, 503}, {120, 220, 220, 220}};
 		//Event handler
 		SDL_Event e;
 
 		//Create Default Character
 		//cout << "Creating character..." << endl;	//#DEBUG#
-		player1 = new Character;				
 		//Allocate and Load Enemies
 		//cout << "Loading Enemy..." << endl;		//#DEBUG#
 		loadEnemies("enemyLoad.dat");
@@ -92,6 +92,7 @@ int FSDMGame::play(){
 			//run current gamestate
 			if(gamestate == 1){		//movement			
 				//Handle events on queue
+				
 				while( SDL_PollEvent( &e ) != 0 )
 				{
 					//User requests quit
@@ -356,6 +357,21 @@ int FSDMGame::play(){
 				}
 				loaded_level->render(camera, textures.gTileTexture);
 				textures.gameOverLoseTextTexture->render(200,200);
+			} else if (gamestate == 0) {
+				while( SDL_PollEvent( &e ) != 0 )
+				{
+					//User requests quit
+					if( e.type == SDL_QUIT )
+					{
+						quit = true;
+					}
+					handleStartEvent(e);
+				}
+				textures.startTextTexture->render(startMenu[0][0], startMenu[1][0]);
+				textures.warriorTextTexture->render(startMenu[0][1], startMenu[1][1]);
+				textures.rogueTextTexture->render(startMenu[0][2], startMenu[1][2]);
+				textures.wizardTextTexture->render(startMenu[0][3], startMenu[1][3]);
+				textures.arrowTexture->render(startArrow[0][arrowState], startArrow[1][arrowState]);
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -514,6 +530,24 @@ void FSDMGame::close()
 	delete textures.gameOverLoseTextTexture;
 	textures.gameOverLoseTextTexture = NULL;
 
+	textures.startTextTexture->free();
+	delete textures.startTextTexture;
+	textures.startTextTexture = NULL;
+
+	textures.warriorTextTexture->free();
+	delete textures.warriorTextTexture;
+	textures.warriorTextTexture = NULL;
+
+	textures.rogueTextTexture->free();
+	delete textures.rogueTextTexture;
+	textures.rogueTextTexture = NULL;
+
+	textures.wizardTextTexture->free();
+	delete textures.wizardTextTexture;
+	textures.wizardTextTexture = NULL;
+
+
+
 	cout << "Textures freed..." << endl;
 
 	//Free text
@@ -615,7 +649,7 @@ bool FSDMGame::loadMedia()
 
 	textures.opponentmana = new LTexture;
 	if(textures.opponentmana == NULL){
-		printf("Failed to allocate opponentmana!\n");
+		printf("Failed to allocate opponhttps://github.com/rfreedy/FinalScrollsDungeonMon.gitentmana!\n");
 		success = false;
 	}
 
@@ -675,16 +709,39 @@ bool FSDMGame::loadMedia()
 
 	textures.gameOverWinTextTexture = new LTexture;
 	if(textures.gameOverWinTextTexture == NULL){
-		printf("Failed to allocate gameOverTexture!\n");
+		printf("Failed to allocate gameOverWinTextTexture!\n");
 		success = false;
 	}
 
 	textures.gameOverLoseTextTexture = new LTexture;
 	if(textures.gameOverLoseTextTexture == NULL){
-		printf("Failed to allocate gameOverTexture!\n");
+		printf("Failed to allocate gameOverLoseTextTexture!\n");
 		success = false;
 	}
 
+	textures.startTextTexture = new LTexture;
+	if(textures.startTextTexture == NULL){
+		printf("Failed to allocate startTextTexture!\n");
+		success = false;
+	}
+
+	textures.warriorTextTexture = new LTexture;
+	if(textures.warriorTextTexture == NULL){
+		printf("Failed to allocate warriorTextTexture!\n");
+		success = false;
+	}
+
+	textures.rogueTextTexture = new LTexture;
+	if(textures.rogueTextTexture == NULL){
+		printf("Failed to allocate rogueTextTexture!\n");
+		success = false;
+	}
+
+	textures.wizardTextTexture = new LTexture;
+	if(textures.wizardTextTexture == NULL){
+		printf("Failed to allocate wizardTextTexture!\n");
+		success = false;
+	}
 	//-------***Load Textures***-------
 
 	//Load dot texture - replace with character texture
@@ -870,6 +927,22 @@ bool FSDMGame::loadMedia()
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}
+		if( !textures.startTextTexture->loadFromRenderedText("Choose Your Class: ", textColor)){
+			printf("Falied to render game Over text texture!\n");
+			success = false;
+		}
+		if( !textures.warriorTextTexture->loadFromRenderedText("Warrior", textColor)){
+			printf("Falied to render warrior text texture!\n");
+			success = false;
+		}
+		if( !textures.rogueTextTexture->loadFromRenderedText("Rogue", textColor)){
+			printf("Falied to render rogue text texture!\n");
+			success = false;
+		}
+		if( !textures.wizardTextTexture->loadFromRenderedText("Wizard", textColor)){
+			printf("Falied to render wizard text texture!\n");
+			success = false;
+		}
 	}
 
 	/*gFont = TTF_OpenFont("Xerox_Sans_Serif_Narrow.ttf", 24);
@@ -987,6 +1060,41 @@ void FSDMGame::handleCombatEvent( SDL_Event& e)
 	}
 }
 
+void FSDMGame::handleStartEvent(SDL_Event &e) {
+
+	//If a key was pressed
+	if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+		//change arrow location
+		switch( e.key.keysym.sym ){	
+			case SDLK_LEFT:
+				if((arrowState == 1 || arrowState == 2)){
+					arrowState--;
+				}
+				break;
+			case SDLK_RIGHT:
+				if((arrowState == 0 || arrowState == 1)){
+					arrowState++;
+				}
+				break;
+			case SDLK_RETURN:
+				cout << "gamestate: "<<gamestate<<endl;
+					cout << "arrow: "<<arrowState<<endl;
+					gamestate = 1;
+					if(arrowState == 0){
+						characterType = 0;	//warrior
+					}else if(arrowState == 1){
+						characterType = 1;		//rogue
+						cout << "gamestate: "<<gamestate<<endl;
+					}else if(arrowState == 2){
+						characterType = 2;	//wizard
+					}	
+					player1 = new Character(characterType);				
+					break;
+				default:
+					break;
+		}
+	}
+}
 //rebuild character and enemy stat textures
 
 void FSDMGame::updateStatText(){
