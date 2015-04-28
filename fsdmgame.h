@@ -50,6 +50,7 @@ typedef struct Textures {
 	LTexture *abil3TextTexture = NULL;
 
 	LTexture *arrowTexture = NULL;
+	LTexture *gameOverTextTexture = NULL;
 } Texture_type;
 
 

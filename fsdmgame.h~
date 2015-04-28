@@ -73,7 +73,7 @@ class FSDMGame{
 		int findOpponent();
 
 		void updateStatText();
-		void loadEnemies();
+		void loadEnemies(string);
 
 		//SDL_Rect gRedMan[8];		//class for aninamted character
 	private:

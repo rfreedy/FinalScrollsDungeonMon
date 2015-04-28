@@ -274,9 +274,9 @@ int FSDMGame::play(){
 					if(opponent->getCurrentHealth() <= 0){
 						//combat_menu_state = 2;
 						//notification_message = "You defeated the enemy!"; ****** fix this
-						gamestate = 1;
-						delete opponent;
-						opponent = NULL;
+						gamestate = 3;
+						delete enemyList[opNum];
+						enemyList[opNum] = NULL;
 
 					}
 					//delete opponent
@@ -316,6 +316,18 @@ int FSDMGame::play(){
 					//updateNotificationText();
 				}
 				
+			} else if(gamestate == 3) {
+				while( SDL_PollEvent( &e ) != 0 )
+				{
+					//User requests quit
+					if( e.type == SDL_QUIT )
+					{
+						quit = true;
+					}
+				}
+				//textures.battleBackground->render(0,0);
+				loaded_level->render(camera, textures.gTileTexture);
+				textures.gameOverTextTexture->render(200,200);
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -324,6 +336,7 @@ int FSDMGame::play(){
 		//Free resources and close SDL
 		close();
 		cout << "Program Done!" << endl;
+		cout << "Game Over!!" << endl;
 		return 0;
 	}
 }
@@ -461,6 +474,9 @@ void FSDMGame::close()
 	delete textures.gDragonTexture;
 	textures.gDragonTexture = NULL;
 	
+	textures.gameOverTextTexture->free();
+	delete textures.gameOverTextTexture;
+	textures.gameOverTextTexture = NULL;
 
 	cout << "Textures freed..." << endl;
 
@@ -618,6 +634,12 @@ bool FSDMGame::loadMedia()
 	textures.arrowTexture = new LTexture;
 	if(textures.arrowTexture == NULL){
 		printf("Failed to allocate arrowTexture!\n");
+		success = false;
+	}
+
+	textures.gameOverTextTexture = new LTexture;
+	if(textures.gameOverTextTexture == NULL){
+		printf("Failed to allocate gameOverTexture!\n");
 		success = false;
 	}
 
@@ -790,7 +812,24 @@ bool FSDMGame::loadMedia()
 			printf("Falied to render abil3 text texture!\n");
 			success = false;
 		}
+
+		if( !textures.gameOverTextTexture->loadFromRenderedText("Game Over", textColor)){
+			printf("Falied to render game Over text texture!\n");
+			success = false;
+		}
 	}
+
+	/*gFont = TTF_OpenFont("Xerox_Sans_Serif_Narrow.ttf", 24);
+	if(gFont == NULL){
+		printf("Falied to load from font file! SDL_ttf Error: %s\n", TTF_GetError());
+		success = false;
+	} else{
+		SDL_Color textColor = {0, 0, 0};
+		if( !textures.gameOverTextTexture->loadFromRenderedText("Game Over", textColor)){
+			printf("Falied to render game Over text texture!\n");
+			success = false;
+		}
+	}*/
 	
 
 	return success;
