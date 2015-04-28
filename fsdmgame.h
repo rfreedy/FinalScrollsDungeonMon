@@ -94,6 +94,7 @@ class FSDMGame{
 		SDL_Rect gMonster[1];	//4	down
 		SDL_Rect gCyclops[1];	//5	right
 		SDL_Rect gKnight[1];	//6	left
+		SDL_Rect gBae[1];	//7	left
 		Enemy *enemyList[10];
 };
 

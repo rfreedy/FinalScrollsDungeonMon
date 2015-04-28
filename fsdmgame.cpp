@@ -108,8 +108,14 @@ int FSDMGame::play(){
 				//Move the player
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
 					opNum = findOpponent();
-					opponent = enemyList[opNum];					
-					gamestate = 2;					
+					cout<<"Health: "<<enemyList[opNum]->getCurrentHealth()<<endl;
+					if(enemyList[opNum]->getCurrentHealth() == 0){
+						gamestate=3;
+					}
+					else{
+						opponent = enemyList[opNum];					
+						gamestate = 2;
+					}					
 				}
 				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
 				// this means player1 is on the first staircase and a new level needs to be created
@@ -199,6 +205,10 @@ int FSDMGame::play(){
 					enemyList[4]->render(camera, textures.gDragonTexture);
 				if(enemyList[5] != NULL)
 					enemyList[5]->render(camera, textures.gDragonTexture);
+				if(enemyList[6] != NULL)
+					enemyList[6]->render(camera, textures.gDragonTexture);
+				if(enemyList[7] != NULL)
+					enemyList[7]->render(camera, textures.gDragonTexture);
 				//opponent->render(camera, textures.gDragonTexture);	//render dragon
 				//opponent->render(gDragon[0], textures.gDragonTexture);	//render dragon
 
@@ -326,8 +336,10 @@ int FSDMGame::play(){
 					}
 				}
 				//textures.battleBackground->render(0,0);
+				//textures.gameOverTextTexture->render(200,200);
 				loaded_level->render(camera, textures.gTileTexture);
 				textures.gameOverTextTexture->render(200,200);
+
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -740,6 +752,11 @@ bool FSDMGame::loadMedia()
 		gKnight[0].y = 375*2;
 		gKnight[0].w = 25*2;
 		gKnight[0].h = 25*2;
+
+		gBae[0].x = 345*2;
+		gBae[0].y = 375*2;
+		gBae[0].w = 25*2;
+		gBae[0].h = 25*2;
 		
 	}
 	//Load tile texture - replace with our tile sprite sheet
@@ -1035,6 +1052,7 @@ void FSDMGame::loadEnemies(string file){
 				case 4: pic = gMonster[0]; break;
 				case 5: pic = gCyclops[0]; break;
 				case 6: pic = gKnight[0]; break;
+				case 7: pic = gBae[0]; break;
 				//default: pic = gDragon[0]; break;
 			}
 			count = 0;	//reset count

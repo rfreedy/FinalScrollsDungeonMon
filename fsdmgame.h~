@@ -50,6 +50,7 @@ typedef struct Textures {
 	LTexture *abil3TextTexture = NULL;
 
 	LTexture *arrowTexture = NULL;
+	LTexture *gameOverTextTexture = NULL;
 } Texture_type;
 
 
@@ -93,6 +94,7 @@ class FSDMGame{
 		SDL_Rect gMonster[1];	//4	down
 		SDL_Rect gCyclops[1];	//5	right
 		SDL_Rect gKnight[1];	//6	left
+		SDL_Rect gBae[1];	//7
 		Enemy *enemyList[10];
 };
 
