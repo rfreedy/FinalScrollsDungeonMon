@@ -55,7 +55,7 @@ int FSDMGame::play(){
 	}else{
 		//Game State Variables
 		bool quit = false;	//Main loop flag
-		gamestate = 1;		//1: walking, 2: battle
+		gamestate = 3;		//1: walking, 2: battle
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
@@ -289,6 +289,11 @@ int FSDMGame::play(){
 						enemyList[opNum] = NULL;
 
 					}
+
+					//If the player's health is 0, go to game state 4 ie game over lose state
+					if(player1->getCurrentHealth() <= 0){
+						gamestate=4;
+					}
 					//delete opponent
 
 					//gamestate = 1;
@@ -336,10 +341,21 @@ int FSDMGame::play(){
 					}
 				}
 				//textures.battleBackground->render(0,0);
-				//textures.gameOverTextTexture->render(200,200);
+				//textures.gameOverWinTextTexture->render(200,200);
 				loaded_level->render(camera, textures.gTileTexture);
-				textures.gameOverTextTexture->render(200,200);
+				textures.gameOverWinTextTexture->render(200,200);
 
+			} else if(gamestate == 4) {
+				while( SDL_PollEvent( &e ) != 0 )
+				{
+					//User requests quit
+					if( e.type == SDL_QUIT )
+					{
+						quit = true;
+					}
+				}
+				loaded_level->render(camera, textures.gTileTexture);
+				textures.gameOverLoseTextTexture->render(200,200);
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -490,9 +506,13 @@ void FSDMGame::close()
 	delete textures.gDragonTexture;
 	textures.gDragonTexture = NULL;
 	
-	textures.gameOverTextTexture->free();
-	delete textures.gameOverTextTexture;
-	textures.gameOverTextTexture = NULL;
+	textures.gameOverWinTextTexture->free();
+	delete textures.gameOverWinTextTexture;
+	textures.gameOverWinTextTexture = NULL;
+
+	textures.gameOverLoseTextTexture->free();
+	delete textures.gameOverLoseTextTexture;
+	textures.gameOverLoseTextTexture = NULL;
 
 	cout << "Textures freed..." << endl;
 
@@ -653,12 +673,17 @@ bool FSDMGame::loadMedia()
 		success = false;
 	}
 
-	textures.gameOverTextTexture = new LTexture;
-	if(textures.gameOverTextTexture == NULL){
+	textures.gameOverWinTextTexture = new LTexture;
+	if(textures.gameOverWinTextTexture == NULL){
 		printf("Failed to allocate gameOverTexture!\n");
 		success = false;
 	}
 
+	textures.gameOverLoseTextTexture = new LTexture;
+	if(textures.gameOverLoseTextTexture == NULL){
+		printf("Failed to allocate gameOverTexture!\n");
+		success = false;
+	}
 
 	//-------***Load Textures***-------
 
@@ -834,7 +859,12 @@ bool FSDMGame::loadMedia()
 			success = false;
 		}
 
-		if( !textures.gameOverTextTexture->loadFromRenderedText("You Nutted!", textColor)){
+		if( !textures.gameOverWinTextTexture->loadFromRenderedText("You Saved The Princess!", textColor)){
+			printf("Falied to render game Over text texture!\n");
+			success = false;
+		}
+
+		if( !textures.gameOverLoseTextTexture->loadFromRenderedText("Game Over!", textColor)){
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}
@@ -846,7 +876,7 @@ bool FSDMGame::loadMedia()
 		success = false;
 	} else{
 		SDL_Color textColor = {0, 0, 0};
-		if( !textures.gameOverTextTexture->loadFromRenderedText("Game Over", textColor)){
+		if( !textures.gameOverWinTextTexture->loadFromRenderedText("Game Over", textColor)){
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}
