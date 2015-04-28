@@ -819,6 +819,7 @@ bool FSDMGame::loadMedia()
 	}else{
 		//initialize text textures
 		SDL_Color textColor = {0, 0, 0};
+		SDL_Color textColorWhite = {255, 255, 255};
 		if( !textures.attackTextTexture->loadFromRenderedText("Attack", textColor)){
 			printf("Falied to render attack text texture!\n");
 			success = false;
@@ -859,12 +860,13 @@ bool FSDMGame::loadMedia()
 			success = false;
 		}
 
-		if( !textures.gameOverWinTextTexture->loadFromRenderedText("You Saved The Princess!", textColor)){
+		
+		if( !textures.gameOverWinTextTexture->loadFromRenderedText("You Saved The Princess!", textColorWhite)){
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}
 
-		if( !textures.gameOverLoseTextTexture->loadFromRenderedText("Game Over!", textColor)){
+		if( !textures.gameOverLoseTextTexture->loadFromRenderedText("Game Over!", textColorWhite)){
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}
