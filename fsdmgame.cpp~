@@ -108,7 +108,7 @@ int FSDMGame::play(){
 				//Move the player
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
 					opNum = findOpponent();
-					cout<<"opNum: "<<opNum<<endl;
+					cout<<"Health: "<<enemyList[opNum]->getCurrentHealth()<<endl;
 					if(enemyList[opNum]->getCurrentHealth() == 0){
 						gamestate=3;
 					}
@@ -419,7 +419,8 @@ bool FSDMGame::init()
 void FSDMGame::close()
 {
 	cout << "Closing..." << endl;
-
+	
+	
 	loaded_level->free();
 	delete loaded_level;	
 	loaded_level = NULL;	

@@ -419,7 +419,11 @@ bool FSDMGame::init()
 void FSDMGame::close()
 {
 	cout << "Closing..." << endl;
-
+	for(int j = 0; j < 10; j++){
+		delete enemyList[j];	
+		enemyList[j] = NULL;
+	}
+	
 	loaded_level->free();
 	delete loaded_level;	
 	loaded_level = NULL;	
