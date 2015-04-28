@@ -43,6 +43,7 @@ void FSDMGame::start() {
 }
 
 int FSDMGame::play(){
+	int opNum;
 	//cout <<"Playing..." << endl;		//#DEBUG#	
 	loaded_level = new FSDMLevel;
 	//cout << "Level Created..." << endl;	//#DEBUG#
@@ -72,46 +73,10 @@ int FSDMGame::play(){
 
 		//Create Default Character
 		//cout << "Creating character..." << endl;	//#DEBUG#
-		player1 = new Character;		
-		//cout << "Success!" << endl;			//#DEBUG#
-
-		//player1 = new Character;		
+		player1 = new Character;				
 		//Allocate and Load Enemies
 		//cout << "Loading Enemy..." << endl;		//#DEBUG#
 		loadEnemies("enemyLoad.dat");
-	/*	int count = 0;
-		int num;
-		int j = 0;
-	
-	vector<int> stats;
-	int monsterPicCount = 0;
-	SDL_Rect pic=gDragon[0];
-	//SDL_Rect pic;
-	ifstream myfile;			//data file for enemy input
-	myfile.open ("enemyLoad.dat");
-		
-	while(myfile>>num){
-		stats.push_back(num);
-		count++;
-		if(count >=16){	//after 16 numbers are read
-			monsterPicCount++;
-			cout<<"monster count: "<<monsterPicCount<<endl;
-			switch (monsterPicCount){
-				case 1:	pic = gDragon[0]; break;
-				case 2:	pic = gRedMan[0]; break;
-				case 3: pic = gDragon[0]; break;
-				//default: pic = gDragon[0]; break;
-			}
-			count = 0;	//reset count
-			//for(int i=j; i<5; i++){
-			//cout <<"pic: "<<endl;
-			for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
-    				cout << *i << ' ';
-			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], pic);
-			j++;	//increment enemyList
-			stats.clear();	//clear stats vector
-		}
-	}*/
 
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
@@ -142,7 +107,7 @@ int FSDMGame::play(){
 
 				//Move the player
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
-					int opNum = findOpponent();
+					opNum = findOpponent();
 					opponent = enemyList[opNum];					
 					gamestate = 2;					
 				}
@@ -302,11 +267,17 @@ int FSDMGame::play(){
 						combatround++;
 						combat_action = 0;
 					}
+
+
 				}else{
 					//printf("Battle over\n");
-					if(player1->getCurrentHealth() <= 0){
+					if(opponent->getCurrentHealth() <= 0){
 						//combat_menu_state = 2;
-						//notification_message = "You defeated the enemy!";
+						//notification_message = "You defeated the enemy!"; ****** fix this
+						gamestate = 1;
+						delete enemyList[opNum];
+						enemyList[opNum] = NULL;
+
 					}
 					//delete opponent
 
