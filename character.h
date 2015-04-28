@@ -46,6 +46,12 @@ class Character: public Entity{
 		int getMaxStamina();
 		int getMaxMana();
 	
+		int getSlashing();
+		int getBlunt();
+		int getSneak();
+		int getOffmage();
+		int getDefmage();
+
 		int speedCheck();
 		
 		int getXCoord();
@@ -54,6 +60,15 @@ class Character: public Entity{
 		void replenish();
 		void refillStamina();
 		void refillMana();
+
+		void refillAllStats();
+
+		void incrementStat(int);
+		void incrementSkill(int);
+
+		int checkLevelUp();
+
+		void addxp(int);
 
 		void defend(int);		//take damage
 		int attack(int);		//calculate output damage

@@ -55,7 +55,7 @@ int FSDMGame::play(){
 	}else{
 		//Game State Variables
 		bool quit = false;	//Main loop flag
-		gamestate = 0;		//0: start screen, 1: walking, 2: battle, 3: win, 4: lose
+		gamestate = 0;		//0: start screen, 1: walking, 2: battle, 3: win, 4: lose, 5: level up
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
@@ -69,6 +69,8 @@ int FSDMGame::play(){
 		int arrowPos[2][4] = {{330, 460, 330, 460}, {315, 315, 380, 380}};
 		int startArrow[2][3] = {{57, 270, 483}, {220, 220, 220}};
 		int startMenu[2][4] = {{233, 77, 290, 503}, {120, 220, 220, 220}};
+		int levelArrow[2][6] = {{87, 87, 87, 87, 87, 87}, {100, 125, 150, 175, 200, 225}};
+		int levelMenu[2][7] = {{100, 100, 100, 100, 100, 100, 100}, {100, 125, 150, 175, 200, 225, 25}};
 		//Event handler
 		SDL_Event e;
 
@@ -105,6 +107,16 @@ int FSDMGame::play(){
 				}
 
 				std::cout << "Event queue polled..." << std::endl;	
+
+				//check for levelup
+				if(player1->checkLevelUp()){
+					player1->levelUp();
+					arrowState = 1;
+					level_menu_state = 0;
+					points_remaining = 3;
+					updateLevelText(3);
+					gamestate = 5;
+				}
 
 				//Move the player
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
@@ -288,7 +300,8 @@ int FSDMGame::play(){
 						gamestate = 1;
 						delete enemyList[opNum];
 						enemyList[opNum] = NULL;
-
+						
+						player1->addxp(15);
 					}
 
 					//If the player's health is 0, go to game state 4 ie game over lose state
@@ -372,6 +385,34 @@ int FSDMGame::play(){
 				textures.rogueTextTexture->render(startMenu[0][2], startMenu[1][2]);
 				textures.wizardTextTexture->render(startMenu[0][3], startMenu[1][3]);
 				textures.arrowTexture->render(startArrow[0][arrowState], startArrow[1][arrowState]);
+			} else if (gamestate == 5){	//levelup
+
+				while( SDL_PollEvent( &e ) != 0 )
+				{
+					//User requests quit
+					if( e.type == SDL_QUIT )
+					{
+						quit = true;
+					}
+					handleLevelEvent(e);
+				}
+				
+				if(level_menu_state == 0){	//stats page		
+					textures.statsMessageTextTexture->render(levelMenu[0][6], levelMenu[1][6]);
+					textures.healthTextTexture->render(levelMenu[0][0], levelMenu[1][0]);
+					textures.staminaTextTexture->render(levelMenu[0][1], levelMenu[1][1]);
+					textures.manaTextTexture->render(levelMenu[0][2], levelMenu[1][2]);
+					textures.arrowTexture->render(levelArrow[0][arrowState-1], levelArrow[1][arrowState-1]);
+				}else if(level_menu_state == 1){	//skills page
+					textures.skillsMessageTextTexture->render(levelMenu[0][6], levelMenu[1][6]);
+					textures.slashingTextTexture->render(levelMenu[0][0], levelMenu[1][0]);
+					textures.bluntTextTexture->render(levelMenu[0][1], levelMenu[1][1]);
+					textures.speedTextTexture->render(levelMenu[0][2], levelMenu[1][2]);
+					textures.sneakTextTexture->render(levelMenu[0][3], levelMenu[1][3]);
+					textures.offmageTextTexture->render(levelMenu[0][4], levelMenu[1][4]);
+					textures.defmageTextTexture->render(levelMenu[0][5], levelMenu[1][5]);
+					textures.arrowTexture->render(levelArrow[0][arrowState-1], levelArrow[1][arrowState-1]);
+				}
 			}
 			//Update screen
 			SDL_RenderPresent( gRenderer );
@@ -405,7 +446,7 @@ bool FSDMGame::init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		gWindow = SDL_CreateWindow( "FinalScrollsDungeonMon", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
 		if( gWindow == NULL )
 		{
 			printf( "Window could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -546,7 +587,51 @@ void FSDMGame::close()
 	delete textures.wizardTextTexture;
 	textures.wizardTextTexture = NULL;
 
+	//level up screen 1
+	textures.statsMessageTextTexture->free();
+	delete textures.statsMessageTextTexture;
+	textures.statsMessageTextTexture = NULL;
+	
+	textures.healthTextTexture->free();
+	delete textures.healthTextTexture;
+	textures.healthTextTexture = NULL;
 
+	textures.staminaTextTexture->free();
+	delete textures.staminaTextTexture;
+	textures.staminaTextTexture = NULL;
+	
+	textures.manaTextTexture->free();
+	delete textures.manaTextTexture;
+	textures.manaTextTexture = NULL;
+
+	//level up screen 2
+	textures.skillsMessageTextTexture->free();
+	delete textures.skillsMessageTextTexture;
+	textures.skillsMessageTextTexture = NULL;
+
+	textures.slashingTextTexture->free();
+	delete textures.slashingTextTexture;
+	textures.slashingTextTexture = NULL;
+
+	textures.bluntTextTexture->free();
+	delete textures.bluntTextTexture;
+	textures.bluntTextTexture = NULL;
+
+	textures.speedTextTexture->free();
+	delete textures.speedTextTexture;
+	textures.speedTextTexture = NULL;
+
+	textures.sneakTextTexture->free();
+	delete textures.sneakTextTexture;
+	textures.sneakTextTexture = NULL;
+
+	textures.offmageTextTexture->free();
+	delete textures.offmageTextTexture;
+	textures.offmageTextTexture = NULL;
+
+	textures.defmageTextTexture->free();
+	delete textures.defmageTextTexture;
+	textures.defmageTextTexture = NULL;
 
 	cout << "Textures freed..." << endl;
 
@@ -616,7 +701,6 @@ bool FSDMGame::loadMedia()
 
 
 	//-------Text Textures-------	
-
 	textures.player1health = new LTexture;
 	if(textures.player1health == NULL){
 		printf("Failed to allocate player1health!\n");
@@ -740,6 +824,72 @@ bool FSDMGame::loadMedia()
 	textures.wizardTextTexture = new LTexture;
 	if(textures.wizardTextTexture == NULL){
 		printf("Failed to allocate wizardTextTexture!\n");
+		success = false;
+	}
+
+	textures.statsMessageTextTexture = new LTexture;
+	if(textures.statsMessageTextTexture == NULL){
+		printf("Failed to allocate statsMessageTextTexture!\n");
+		success = false;
+	}
+
+	textures.healthTextTexture = new LTexture;
+	if(textures.healthTextTexture == NULL){
+		printf("Failed to allocate healthTextTexture!\n");
+		success = false;
+	}
+
+	textures.staminaTextTexture = new LTexture;
+	if(textures.staminaTextTexture == NULL){
+		printf("Failed to allocate staminaTextTexture!\n");
+		success = false;
+	}
+
+	textures.manaTextTexture = new LTexture;
+	if(textures.manaTextTexture == NULL){
+		printf("Failed to allocate manaTextTexture!\n");
+		success = false;
+	}
+
+	textures.skillsMessageTextTexture = new LTexture;
+	if(textures.skillsMessageTextTexture == NULL){
+		printf("Failed to allocate skillsMessageTextTexture!\n");
+		success = false;
+	}
+
+	textures.slashingTextTexture = new LTexture;
+	if(textures.slashingTextTexture == NULL){
+		printf("Failed to allocate slashingTextTexture!\n");
+		success = false;
+	}
+
+	textures.bluntTextTexture = new LTexture;
+	if(textures.bluntTextTexture == NULL){
+		printf("Failed to allocate bluntTextTexture!\n");
+		success = false;
+	}
+
+	textures.speedTextTexture = new LTexture;
+	if(textures.speedTextTexture == NULL){
+		printf("Failed to allocate speedTextTexture!\n");
+		success = false;
+	}
+
+	textures.sneakTextTexture = new LTexture;
+	if(textures.sneakTextTexture == NULL){
+		printf("Failed to allocate sneakTextTexture!\n");
+		success = false;
+	}
+
+	textures.offmageTextTexture = new LTexture;
+	if(textures.offmageTextTexture == NULL){
+		printf("Failed to allocate offmageTextTexture!\n");
+		success = false;
+	}
+
+	textures.defmageTextTexture = new LTexture;
+	if(textures.defmageTextTexture == NULL){
+		printf("Failed to allocate defmageTextTexture!\n");
 		success = false;
 	}
 	//-------***Load Textures***-------
@@ -917,7 +1067,6 @@ bool FSDMGame::loadMedia()
 			success = false;
 		}
 
-		
 		if( !textures.gameOverWinTextTexture->loadFromRenderedText("You Saved The Princess!", textColorWhite)){
 			printf("Falied to render game Over text texture!\n");
 			success = false;
@@ -927,22 +1076,82 @@ bool FSDMGame::loadMedia()
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}
+
 		if( !textures.startTextTexture->loadFromRenderedText("Choose Your Class: ", textColor)){
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}
+
 		if( !textures.warriorTextTexture->loadFromRenderedText("Warrior", textColor)){
 			printf("Falied to render warrior text texture!\n");
 			success = false;
 		}
+
 		if( !textures.rogueTextTexture->loadFromRenderedText("Rogue", textColor)){
 			printf("Falied to render rogue text texture!\n");
 			success = false;
 		}
+
 		if( !textures.wizardTextTexture->loadFromRenderedText("Wizard", textColor)){
 			printf("Falied to render wizard text texture!\n");
 			success = false;
 		}
+
+		if( !textures.statsMessageTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render stats message text texture!\n");
+			success = false;
+		}
+
+		if( !textures.healthTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render health text texture!\n");
+			success = false;
+		}
+
+		if( !textures.staminaTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render stamina text texture!\n");
+			success = false;
+		}
+
+		if( !textures.manaTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render mana text texture!\n");
+			success = false;
+		}	
+
+		if( !textures.skillsMessageTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render skills message text texture!\n");
+			success = false;
+		}
+
+		if( !textures.slashingTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render slashing text texture!\n");
+			success = false;
+		}
+
+		if( !textures.bluntTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render blunt text texture!\n");
+			success = false;
+		}
+
+		if( !textures.speedTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render speed text texture!\n");
+			success = false;
+		}
+
+		if( !textures.sneakTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render sneak text texture!\n");
+			success = false;
+		}
+
+		if( !textures.offmageTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render offmage text texture!\n");
+			success = false;
+		}
+
+		if( !textures.defmageTextTexture->loadFromRenderedText("Empty", textColor)){
+			printf("Falied to render defmage text texture!\n");
+			success = false;
+		}
+
 	}
 
 	/*gFont = TTF_OpenFont("Xerox_Sans_Serif_Narrow.ttf", 24);
@@ -1095,8 +1304,87 @@ void FSDMGame::handleStartEvent(SDL_Event &e) {
 		}
 	}
 }
-//rebuild character and enemy stat textures
 
+void FSDMGame::handleLevelEvent(SDL_Event &e){
+	switch(level_menu_state){
+		case 0:		//stats page	
+			//If a key was pressed
+			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+				//change arrow location
+				switch( e.key.keysym.sym ){
+					case SDLK_UP:
+						if(arrowState > 1){
+							arrowState--;
+						}
+						break;
+					case SDLK_DOWN:
+						if(arrowState < 3){
+							arrowState++;
+						}
+						break;
+					case SDLK_RETURN:
+						//cout << "gamestate: "<<gamestate<<endl;
+						//cout << "arrow: "<<arrowState<<endl;
+						if(points_remaining > 1){
+							player1->incrementStat(arrowState);
+							points_remaining--;
+						}else{
+							player1->incrementStat(arrowState);
+							points_remaining = 10;
+							arrowState = 1;
+							level_menu_state = 1;	//advance to next screen
+						}
+
+						updateLevelText(points_remaining);
+						break;
+					default:
+						break;
+				}
+			}
+			break;
+
+		case 1:		//skills page
+			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
+				switch(e.key.keysym.sym){
+					case SDLK_UP:
+						if(arrowState > 1){
+							arrowState--;
+						}
+						break;
+					case SDLK_DOWN:
+						if(arrowState < 6){
+							arrowState++;
+						}
+						break;
+					case SDLK_RETURN:
+						//cout << "gamestate: "<<gamestate<<endl;
+						//cout << "arrow: "<<arrowState<<endl;
+						if(points_remaining > 1){
+							player1->incrementSkill(arrowState);
+							points_remaining--;
+						}else{
+							player1->incrementSkill(arrowState);
+							points_remaining = 0;
+							arrowState = 0;
+							level_menu_state = 0;	//advance to next screen
+							player1->refillAllStats();						
+							gamestate = 1;
+							break;
+						}
+
+						updateLevelText(points_remaining);
+						break;
+					default:
+						break;
+				}
+			}
+			break;
+		default:
+			break;
+	}
+}
+
+//rebuild character and enemy stat textures
 void FSDMGame::updateStatText(){
 	bool success = true;
 
@@ -1168,6 +1456,126 @@ void FSDMGame::updateStatText(){
 			success = false;
 		}
 	}
+}
+
+void FSDMGame::updateLevelText(int remaining){
+	bool success = true;
+
+	//---Update player Stat Textures	
+	stringstream convert0;	
+	stringstream convert1;
+	stringstream convert2;
+	stringstream convert3;
+	stringstream convert4;
+	stringstream convert5;
+	stringstream convert6;
+	stringstream convert7;
+	stringstream convert8;
+	stringstream convert9;
+	stringstream convert10;
+
+	string message1;
+	string health_text;
+	string stamina_text;
+	string mana_text;
+
+	string message2;
+	string slashing_text;
+	string blunt_text;
+	string speed_text;
+	string sneak_text;
+	string offmage_text;
+	string defmage_text;
+
+	convert0 << "Assign " << remaining << " stat points!";
+	message1 = convert0.str();
+
+	convert1 << "Health: " << (player1->getMaxHealth());
+	health_text = convert1.str();
+
+	convert2 << "Stamina: " << (player1->getMaxStamina());
+	stamina_text = convert2.str();
+
+	convert3 << "Mana: " << (player1->getMaxMana());
+	mana_text = convert3.str();
+	
+	convert4 << "Assign " << remaining << " skill points!";
+	message2 = convert4.str();
+
+	convert5 << "Slashing: " << (player1->getSlashing());
+	slashing_text = convert5.str();
+
+	convert6 << "Blunt: " << (player1->getBlunt());
+	blunt_text = convert6.str();
+
+	convert7 << "Speed: " << (player1->speedCheck());
+	speed_text = convert7.str();
+
+	convert8 << "Sneak: " << (player1->getSneak());
+	sneak_text = convert8.str();
+
+	convert9 << "Offensive Magic: " << (player1->getOffmage());
+	offmage_text = convert9.str();
+	
+	convert10 << "Defensive Magic: " << (player1->getDefmage());
+	defmage_text = convert10.str();
+
+	SDL_Color textColor = {0, 0, 0};
+	if( !textures.statsMessageTextTexture->loadFromRenderedText(message1, textColor)){
+		printf("Falied to render stats message text texture!\n");
+		success = false;
+	}
+
+	if( !textures.healthTextTexture->loadFromRenderedText(health_text, textColor)){
+		printf("Falied to render health text texture!\n");
+		success = false;
+	}
+
+	if( !textures.staminaTextTexture->loadFromRenderedText(stamina_text, textColor)){
+		printf("Falied to render stamina text texture!\n");
+		success = false;
+	}
+
+	if( !textures.manaTextTexture->loadFromRenderedText(mana_text, textColor)){
+		printf("Falied to render mana text texture!\n");
+		success = false;
+	}
+
+	if( !textures.skillsMessageTextTexture->loadFromRenderedText(message2, textColor)){
+		printf("Falied to render skills message text texture!\n");
+		success = false;
+	}
+
+	if( !textures.slashingTextTexture->loadFromRenderedText(slashing_text, textColor)){
+		printf("Falied to render slashing text texture!\n");
+		success = false;
+	}
+
+	if( !textures.bluntTextTexture->loadFromRenderedText(blunt_text, textColor)){
+		printf("Falied to render blunt text texture!\n");
+		success = false;
+	}
+
+	if( !textures.speedTextTexture->loadFromRenderedText(speed_text, textColor)){
+		printf("Falied to render speed text texture!\n");
+		success = false;
+	}
+
+	if( !textures.sneakTextTexture->loadFromRenderedText(sneak_text, textColor)){
+		printf("Falied to render sneak text texture!\n");
+		success = false;
+	}
+
+	if( !textures.offmageTextTexture->loadFromRenderedText(offmage_text, textColor)){
+		printf("Falied to render offmage text texture!\n");
+		success = false;
+	}
+
+	if( !textures.defmageTextTexture->loadFromRenderedText(defmage_text, textColor)){
+		printf("Falied to render defmage text texture!\n");
+		success = false;
+	}
+
 }
 
 void FSDMGame::loadEnemies(string file){

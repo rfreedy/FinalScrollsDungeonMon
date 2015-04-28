@@ -25,6 +25,8 @@ typedef struct skills{
 
 typedef struct stats{
 	int type; 	//1 = warrior, 2 = rogue, 3 = mage	
+	int xp;
+	int xpthreshold;
 	int level;
 	int currentHealth;
 	int maxHealth;

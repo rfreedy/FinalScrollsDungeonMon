@@ -26,6 +26,8 @@ Character::Character(int characterType): Entity(){
 		skills.offmage = 10;
 		skills.defmage = 10;
 
+		stats.xp = 0;
+		stats.xpthreshold = 100;
 		stats.type = 0;
 		stats.level = 1;
 		stats.currentHealth = 100;
@@ -45,6 +47,8 @@ Character::Character(int characterType): Entity(){
 		skills.offmage = 10;
 		skills.defmage = 10;
 
+		stats.xp = 0;
+		stats.xpthreshold = 100;
 		stats.type = 0;
 		stats.level = 1;
 		stats.currentHealth = 100;
@@ -64,6 +68,8 @@ Character::Character(int characterType): Entity(){
 		skills.offmage = 10;
 		skills.defmage = 10;
 
+		stats.xp = 0;
+		stats.xpthreshold = 100;
 		stats.type = 0;
 		stats.level = 1;
 		stats.currentHealth = 100;
@@ -113,6 +119,14 @@ void Character::toggleVisibility(){
 
 int Character::isVisible(){
 	return getVisibility();
+}
+
+int Character::checkLevelUp(){
+	if(stats.xp >= stats.xpthreshold){				
+		return 1;
+	}else{
+		return 0;
+	}
 }
 
 //interactive character creation
@@ -216,23 +230,94 @@ int Character::speedCheck(){
 	return skills.speed;
 }
 
+int Character::getSlashing(){
+	return skills.slashing;
+}
+
+int Character::getBlunt(){
+	return skills.blunt;
+}
+
+int Character::getSneak(){
+	return skills.sneak;
+}
+
+int Character::getOffmage(){
+	return skills.offmage;
+}
+
+int Character::getDefmage(){
+	return skills.defmage;
+}
+
 //increase level, distribute skill points
 void Character::levelUp(){
 	stats.level++;	//level up!
 
-	//TODO:	convert the below to screen/dialogue box
+	stats.xp = stats.xp - stats.xpthreshold;
 
+	//TODO:	convert the below to screen/dialogue box
+	/*
 	//distribute stats points
 	incStats(2);	
 
 	//distribute skill points
 	incSkills(5);
+	*/
 
 	//free restoration of all stats!
+	refillAllStats();
+}
+
+void Character::incrementStat(int id){
+	switch(id){
+		case 1:
+			stats.maxHealth = stats.maxHealth + 5;
+			break;
+		case 2:
+			stats.maxStamina = stats.maxStamina + 5;
+			break;
+		case 3:	
+			stats.maxMana = stats.maxMana + 5;
+			break;
+		default:
+			break;
+	}
+}
+
+void Character::incrementSkill(int id){
+	switch(id){
+		case 1:
+			skills.slashing++;
+			break;
+		case 2:
+			skills.blunt++;
+			break;
+		case 3:	
+			skills.speed++;
+			break;
+		case 4:	
+			skills.sneak++;
+			break;
+		case 5:	
+			skills.offmage++;
+			break;
+		case 6:	
+			skills.defmage++;
+			break;
+		default:
+			break;
+	}
+}
+
+void Character::addxp(int add){
+	stats.xp += add;
+}
+
+void Character::refillAllStats(){
 	stats.currentHealth = stats.maxHealth;
 	stats.currentStamina = stats.maxStamina;
 	stats.currentMana = stats.maxMana;
-	
 }
 
 //engage in combat, requires enemy as argument

@@ -50,13 +50,32 @@ typedef struct Textures {
 	LTexture *abil3TextTexture = NULL;
 
 	LTexture *arrowTexture = NULL;
+	
+	//game over messages
 	LTexture *gameOverWinTextTexture = NULL;
 	LTexture *gameOverLoseTextTexture = NULL;
+	
+	//character creation
 	LTexture *startTextTexture = NULL;
 	LTexture *warriorTextTexture = NULL;
 	LTexture *rogueTextTexture = NULL;
 	LTexture *wizardTextTexture = NULL;
 
+	//level up screen 1
+	LTexture *statsMessageTextTexture = NULL;
+	LTexture *healthTextTexture = NULL;
+	LTexture *staminaTextTexture = NULL;
+	LTexture *manaTextTexture = NULL;
+
+	//level up screen 2
+	LTexture *skillsMessageTextTexture = NULL;
+	LTexture *slashingTextTexture = NULL;
+	LTexture *bluntTextTexture = NULL;
+	LTexture *speedTextTexture = NULL;
+	LTexture *sneakTextTexture = NULL;
+	LTexture *offmageTextTexture = NULL;
+	LTexture *defmageTextTexture = NULL;
+	
 } Texture_type;
 
 
@@ -77,9 +96,11 @@ class FSDMGame{
 	
 		void handleCombatEvent( SDL_Event& );
 		void handleStartEvent( SDL_Event& );
+		void handleLevelEvent( SDL_Event& );
 		int findOpponent();
 
 		void updateStatText();
+		void updateLevelText(int);
 		void loadEnemies(string);
 
 		//SDL_Rect gRedMan[8];		//class for aninamted character
@@ -93,6 +114,8 @@ class FSDMGame{
 		int arrowState;
 		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
+		int level_menu_state;
+		int points_remaining;		//for distributing points at levelup
 		int characterType; //0 = warrior, 1 = rogue, 2 = wizard
 		string notification_message;		//0: nothing, 1: attack
 		SDL_Rect gDragon[1];	//1	down
