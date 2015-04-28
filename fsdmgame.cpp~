@@ -419,7 +419,10 @@ bool FSDMGame::init()
 void FSDMGame::close()
 {
 	cout << "Closing..." << endl;
-	
+	for(int j = 0; j < 10; j++){
+		delete enemyList[j];	
+		enemyList[j] = NULL;
+	}
 	
 	loaded_level->free();
 	delete loaded_level;	
@@ -831,7 +834,7 @@ bool FSDMGame::loadMedia()
 			success = false;
 		}
 
-		if( !textures.gameOverTextTexture->loadFromRenderedText("Game Over", textColor)){
+		if( !textures.gameOverTextTexture->loadFromRenderedText("You Nutted!", textColor)){
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}

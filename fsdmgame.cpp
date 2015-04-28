@@ -834,7 +834,7 @@ bool FSDMGame::loadMedia()
 			success = false;
 		}
 
-		if( !textures.gameOverTextTexture->loadFromRenderedText("Game Over", textColor)){
+		if( !textures.gameOverTextTexture->loadFromRenderedText("You Saved The Princess!", textColor)){
 			printf("Falied to render game Over text texture!\n");
 			success = false;
 		}
