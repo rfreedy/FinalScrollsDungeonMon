@@ -127,7 +127,7 @@ int FSDMGame::play(){
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
 					opNum = findOpponent();
 					cout<<"Health: "<<enemyList[opNum]->getCurrentHealth()<<endl;
-					if(enemyList[opNum]->getCurrentHealth() == 0){
+					if(enemyList[opNum]->getCurrentHealth() == -100){
 						gamestate=3;
 					}
 					else{
@@ -323,12 +323,12 @@ int FSDMGame::play(){
 					//printf("Battle over\n");
 					if(opponent->getCurrentHealth() <= 0){
 						if(combat_menu_state == 4){						
-							gamestate = 1;
 							delete enemyList[opNum];
 							enemyList[opNum] = NULL;
-							
+							combat_menu_state = 0;
 							player1->refillStamina();
-							player1->addxp(15);	
+							player1->addxp(25);
+							gamestate = 1;	
 						}else{
 							notification_message = "You defeated the enemy!";
 							combat_menu_state = 3;
@@ -337,7 +337,8 @@ int FSDMGame::play(){
 
 					//If the player's health is 0, go to game state 4 ie game over lose state
 					if(player1->getCurrentHealth() <= 0){
-						if(combat_menu_state == 4){						
+						if(combat_menu_state == 4){
+							combat_menu_state = 0;						
 							gamestate = 1;
 				
 						}else{
@@ -1331,8 +1332,8 @@ void FSDMGame::handleCombatEvent( SDL_Event& e)
 			}
 			break;
 		case 4:
-			combat_menu_state = 0;
-			gamestate = 1;
+			//combat_menu_state = 0;
+			//gamestate = 1;
 		default:
 			break;
 	}
