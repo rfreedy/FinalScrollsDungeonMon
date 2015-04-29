@@ -1229,7 +1229,7 @@ bool FSDMGame::loadMedia()
 			success = false;
 		}
 
-		if( !textures.abil2TextTexture->loadFromRenderedText("Debuff", textColor)){
+		if( !textures.abil2TextTexture->loadFromRenderedText("Reflect", textColor)){
 			printf("Falied to render abil2 text texture!\n");
 			success = false;
 		}
