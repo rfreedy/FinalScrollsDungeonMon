@@ -874,7 +874,7 @@ int Character::touchesWall( SDL_Rect box, Tile* tiles[] )
 		return DUNGEON2; //to change floors to dungeon 1
 	    }
 	}	
-	if( (tiles[i]->getType() == TILE_STAIR_UP) && (tiles[i]->getX() == 32*12) && (tiles[i]->getY() == 32*25) ) {
+	if( (tiles[i]->getType() == TILE_STAIR_UP) && (tiles[i]->getX() == 32*13) && (tiles[i]->getY() == 32*26) ) {
 		//if the collision box touches the stair tile
 	    if (checkCollision (box, tiles[i]->getBox() ) ) {
 		return OVERWORLD; //to change floors to dungeon 1
