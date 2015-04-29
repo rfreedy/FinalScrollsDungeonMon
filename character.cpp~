@@ -20,56 +20,62 @@ Character::Character(int characterType): Entity(){
 	if (characterType == 0) { //warrior
 		//initialize values in skills/stats structs	
 		skills.slashing = 10;
-		skills.blunt = 50;
+		skills.blunt = 15;
 		skills.speed = 10;
 		skills.sneak = 10;
 		skills.offmage = 10;
 		skills.defmage = 10;
 
+		stats.xp = 0;
+		stats.xpthreshold = 100;
 		stats.type = 0;
 		stats.level = 1;
-		stats.currentHealth = 100;
-		stats.maxHealth = 100;
-		stats.currentStamina = 100;
-		stats.maxStamina = 100;
-		stats.currentMana = 100;
-		stats.maxMana = 100;
+		stats.currentHealth = 110;
+		stats.maxHealth = 110;
+		stats.currentStamina = 120;
+		stats.maxStamina = 120;
+		stats.currentMana = 50;
+		stats.maxMana = 50;
 	}
 
 	if (characterType == 1) { //rogue
 		//initialize values in skills/stats structs	
-		skills.slashing = 10;
-		skills.blunt = 50;
+		skills.slashing = 15;
+		skills.blunt = 10;
 		skills.speed = 10;
 		skills.sneak = 10;
 		skills.offmage = 10;
 		skills.defmage = 10;
 
+		stats.xp = 0;
+		stats.xpthreshold = 100;
 		stats.type = 0;
 		stats.level = 1;
 		stats.currentHealth = 100;
 		stats.maxHealth = 100;
 		stats.currentStamina = 100;
 		stats.maxStamina = 100;
-		stats.currentMana = 100;
-		stats.maxMana = 100;
+		stats.currentMana = 80;
+		stats.maxMana = 80;
 	}
 
 	if (characterType == 2) { //wizard
 		//initialize values in skills/stats structs	
 		skills.slashing = 10;
-		skills.blunt = 50;
+		skills.blunt = 10;
 		skills.speed = 10;
 		skills.sneak = 10;
-		skills.offmage = 10;
+		skills.offmage = 15;
 		skills.defmage = 10;
 
+		stats.xp = 0;
+		stats.xpthreshold = 100;
 		stats.type = 0;
 		stats.level = 1;
-		stats.currentHealth = 100;
-		stats.maxHealth = 100;
-		stats.currentStamina = 100;
-		stats.maxStamina = 100;
+		stats.currentHealth = 90;
+		stats.maxHealth = 90;
+		stats.currentStamina = 70;
+		stats.maxStamina = 70;
 		stats.currentMana = 100;
 		stats.maxMana = 100;
 	}
@@ -437,7 +443,7 @@ int Character::attack(int move_number){
 		stats.currentMana -= mana_cost;
 		return output_damage;
 	}else{
-		return -1;	//not enough stamina/mana, return indicator
+		return 0;	//not enough stamina/mana, return indicator
 	}
 }
 

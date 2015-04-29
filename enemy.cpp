@@ -172,7 +172,7 @@ int Enemy::attack(int move_number){
 		stats.currentMana -= mana_cost;
 		return output_damage;
 	}else{
-		return -1;	//not enough stamina/mana, return indicator
+		return 0;	//not enough stamina/mana, return indicator
 	}
 }
 

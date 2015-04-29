@@ -192,3 +192,11 @@ int Enemy::getBestAttack(){
 	
 	return atktype;	//return indicator of best attack type
 }
+
+int Enemy::getXCoord(){
+	return mBox.x;
+}
+
+int Enemy::getYCoord(){
+	return mBox.y;
+}

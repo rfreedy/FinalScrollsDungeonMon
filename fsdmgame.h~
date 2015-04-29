@@ -76,6 +76,7 @@ typedef struct Textures {
 	LTexture *offmageTextTexture = NULL;
 	LTexture *defmageTextTexture = NULL;
 	
+	LTexture *notifTextTexture = NULL;
 } Texture_type;
 
 
@@ -96,6 +97,7 @@ class FSDMGame{
 	
 		void handleCombatEvent( SDL_Event& );
 		void handleStartEvent( SDL_Event& );
+		void handleLevelEvent( SDL_Event& );
 		int findOpponent();
 
 		void updateStatText();
