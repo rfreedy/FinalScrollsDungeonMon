@@ -20,6 +20,6 @@ int main(){
 
 	game1.start();	
 
-	printf("Program closed!");
+	printf("Program closed!\n");
 	return 0;
 }

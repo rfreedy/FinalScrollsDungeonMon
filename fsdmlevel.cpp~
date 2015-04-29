@@ -71,20 +71,25 @@ bool FSDMLevel::setTiles(int maplevel)
     	int x = 0, y = 0;
 	// map names 
 	std::string overworld = "overworld.map";
-	std::string dungeon1 = "dungeon1.map";
+	std::string dungeon1 = "dungeon4.map";
+	std::string dungeon2 = "dungeon3.map";
 	//declare map variable
 	std::ifstream map; 
 	std::cout << "map level value: " << maplevel << std::endl;
     	//Open the map
     	switch(maplevel) {
-		case 1: { 
+		case OVERWORLD: { 
 			map.open( overworld.c_str(), std::ifstream::in );
 			break;
 			}
-		case 2: {
+		case DUNGEON1: {
 			 map.open( dungeon1.c_str(), std::ifstream::in );
 			break;
 			}
+		case DUNGEON2: {
+			 map.open( dungeon2.c_str(), std::ifstream::in );
+			break;
+			}	
 	}
     	//If the map couldn't be loaded
     	if( map == NULL )
@@ -210,13 +215,13 @@ bool FSDMLevel::setTiles(int maplevel)
 			gTileClips[ TILE_SNOW ].w = TILE_WIDTH;
 			gTileClips[ TILE_SNOW ].h = TILE_HEIGHT;
 	
-			gTileClips[ TILE_SNOW_TREES ].x = 32*13;
-			gTileClips[ TILE_SNOW_TREES ].y = 32*10;
+			gTileClips[ TILE_SNOW_TREES ].x = 32*12;
+			gTileClips[ TILE_SNOW_TREES ].y = 32*9;
 			gTileClips[ TILE_SNOW_TREES ].w = TILE_WIDTH;
 			gTileClips[ TILE_SNOW_TREES ].h = TILE_HEIGHT;
 
-			gTileClips[ TILE_SNOW_MOUNTAINS ].x = 32*16;
-			gTileClips[ TILE_SNOW_MOUNTAINS ].y = 32*10;
+			gTileClips[ TILE_SNOW_MOUNTAINS ].x = 32*15;
+			gTileClips[ TILE_SNOW_MOUNTAINS ].y = 32*9;
 			gTileClips[ TILE_SNOW_MOUNTAINS ].w = TILE_WIDTH;
 			gTileClips[ TILE_SNOW_MOUNTAINS ].h = TILE_HEIGHT;
 
@@ -234,6 +239,11 @@ bool FSDMLevel::setTiles(int maplevel)
                         gTileClips[ TILE_LAVA_BRIDGE ].y = 32*15;
                         gTileClips[ TILE_LAVA_BRIDGE].w = TILE_WIDTH;
                         gTileClips[ TILE_LAVA_BRIDGE].h = TILE_HEIGHT;
+			
+			gTileClips[ TILE_STAIR_UP ].x = 32*14;
+			gTileClips[ TILE_STAIR_UP ].y = 32*15;
+			gTileClips[ TILE_STAIR_UP ].w = TILE_WIDTH;
+			gTileClips[ TILE_STAIR_UP ].h = TILE_HEIGHT;
 
 
 

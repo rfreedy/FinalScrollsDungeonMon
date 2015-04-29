@@ -15,11 +15,11 @@
 #include "LTexture.h"
 
 int main(){
-	printf("start");
+	//printf("start");
 	FSDMGame game1;
 
 	game1.start();	
 
-	printf("Program closed!\n");
+	//printf("Program closed!\n");
 	return 0;
 }

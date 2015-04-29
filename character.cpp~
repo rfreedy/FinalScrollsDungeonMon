@@ -139,7 +139,12 @@ int Character::checkLevelUp(){
 }
 
 void Character::healCast(){
-	stats.currentHealth += 35;
+	if(stats.currentHealth + 35 < stats.maxHealth){
+		stats.currentHealth += 35;
+	}else{
+		stats.currentHealth = stats.maxHealth;
+	}	
+
 	stats.currentMana -= 30;
 }
 

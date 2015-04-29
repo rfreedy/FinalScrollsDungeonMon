@@ -781,7 +781,7 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
 //        std::cout << "character thinks level width is: " << LEVEL_WIDTH << std::endl;
 	//cout<<"position x: "<<mBox.x<<"position y: "<<mBox.y<<endl;
 	if(touchesEnemy(mBox, enemyList) == 1){
-		cout<<"battle!"<<endl;
+		//cout<<"battle!"<<endl;
 		returnVal = 1;
 	}
         mBox.x -= mVelX;
@@ -799,7 +799,7 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
     if( ( mBox.y < 0 ) || ( mBox.y + DOT_HEIGHT > LEVEL_HEIGHT ) || touchesWall( mBox, tiles ) == 1 || touchesEnemy(mBox,enemyList) == 1)
     {
 	if(touchesEnemy(mBox, enemyList) == 1){
-		cout<<"battle!"<<endl;
+		//cout<<"battle!"<<endl;
 		returnVal = 1;
 	}
         //move back
@@ -912,7 +912,7 @@ int Character::touchesEnemy(SDL_Rect box, Enemy* enemyList[]){
 	for(int i=0; i<10; i++){
 		if(enemyList[i] != NULL){
 			if(checkCollision(box, enemyList[i]->getMBox()) ){
-				cout<<"collision"<<endl;
+				//cout<<"collision"<<endl;
 				return 1;
 			}
 		}

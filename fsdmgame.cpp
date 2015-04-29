@@ -85,7 +85,7 @@ int FSDMGame::play(){
 
 		//Level camera
 		SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-		std::cout << "Camera created..." << std::endl;
+		//std::cout << "Camera created..." << std::endl;
 		
 		//While application is running
 		while( !quit )
@@ -109,7 +109,7 @@ int FSDMGame::play(){
 					player1->handleEvent( e );
 				}
 
-				std::cout << "Event queue polled..." << std::endl;	
+				//std::cout << "Event queue polled..." << std::endl;	
 
 				//check for levelup
 				if(player1->checkLevelUp()){
@@ -129,7 +129,7 @@ int FSDMGame::play(){
 				//Move the player
 				if (player1->move( loaded_level->getTileSet(), enemyList ) == 1) {	//collision detected
 					opNum = findOpponent();
-					cout<<"Health: "<<enemyList[opNum]->getCurrentHealth()<<endl;
+					//cout<<"Health: "<<enemyList[opNum]->getCurrentHealth()<<endl;
 					if(enemyList[opNum]->getCurrentHealth() == -100){
 						gamestate=3;
 					}
@@ -142,12 +142,12 @@ int FSDMGame::play(){
 				}
 				else if (player1->move( loaded_level->getTileSet(), enemyList ) == DUNGEON1) {
 				// this means player1 is on the first staircase and a new level needs to be created
-						cout<<"check1"<<endl;
+						//cout<<"check1"<<endl;
 						delete loaded_level;
-						cout<<"check2"<<endl;
+						//cout<<"check2"<<endl;
 						for(int i=0; i<5; i++){
 							//if(enemyList[i] != NULL){
-							cout<<"check3"<<endl;
+							//cout<<"check3"<<endl;
 								delete enemyList[i];
 								enemyList[i] = NULL;
 							//}
@@ -166,7 +166,7 @@ int FSDMGame::play(){
 						delete loaded_level;				
 						for(int i=0; i<5; i++){
 							//if(enemyList[i] != NULL){
-							cout<<"check3"<<endl;
+							//cout<<"check3"<<endl;
 								delete enemyList[i];
 								enemyList[i] = NULL;
 						
@@ -186,7 +186,7 @@ int FSDMGame::play(){
 						delete loaded_level;				
 						for(int i=0; i<5; i++){
 							//if(enemyList[i] != NULL){
-							cout<<"check3"<<endl;
+							//cout<<"check3"<<endl;
 								delete enemyList[i];
 								enemyList[i] = NULL;
 							//}
@@ -201,10 +201,10 @@ int FSDMGame::play(){
 						loadEnemies("enemyLoad.dat");
 				}
 				player1->move( loaded_level->getTileSet(), enemyList );	//odd number of move functions
-				std::cout << "Move function worked " << std::endl;
+				//std::cout << "Move function worked " << std::endl;
 				player1->setCamera( camera );void healCast();
 		void reflectCast();
-				std::cout << "camer worked " << std::endl;
+				//std::cout << "camer worked " << std::endl;
 	
 				//Render level
 			//	std::cout << "will it render the level?" << std::endl;
@@ -274,7 +274,7 @@ int FSDMGame::play(){
 				if((opponent->getCurrentHealth() > 0) && (player1->getCurrentHealth() > 0) && (combat_menu_state < 3)){
 				
 					if(combat_action){
-						cout << "Combat action!" << endl;
+						//cout << "Combat action!" << endl;
 						//check speed against enemy		
 						if(opponent->speedCheck() > player1->speedCheck()){
 
@@ -292,29 +292,29 @@ int FSDMGame::play(){
 							if(player1->getCurrentHealth() <= 0){continue;};
 					
 							//player move
-							cout << "Player attack!" << endl;
+							//cout << "Player attack!" << endl;
 							int damage_check = player1->attack(combatround);
-							cout << "Damage calculated: " << damage_check << endl;
+							//cout << "Damage calculated: " << damage_check << endl;
 							if(damage_check == -1){							
 								notification_message = "Not enough energy to attack!";
 								combat_menu_state = 2;
 							}else{	
 								opponent->defend(damage_check);
-								cout << "Attacked!" << endl;
+								//cout << "Attacked!" << endl;
 							}
 			
 						}else{
 							//character is faster, player moves first
 							//player move
-							cout << "Player attack!" << endl;
+							//cout << "Player attack!" << endl;
 							int damage_check = player1->attack(combatround);
-							cout << "Damage calculated: " << damage_check << endl;
+							//cout << "Damage calculated: " << damage_check << endl;
 							if(damage_check == -1){							
 								notification_message = "Not enough energy to attack!";
 								combat_menu_state = 2;
 							}else{
 								opponent->defend(damage_check);
-								cout << "Attacked!" << endl;
+								//cout << "Attacked!" << endl;
 							}
 			
 							//check for death
@@ -401,7 +401,7 @@ int FSDMGame::play(){
 					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
 				}else if(combat_menu_state == 2 || combat_menu_state == 3 || combat_menu_state == 4){
 					//notification 
-					cout << "Preparing to update notification." << endl;
+					//cout << "Preparing to update notification." << endl;
 					updateNotificationText(notification_message);
 					textures.notifTextTexture->render(menuPos[0][0]-15, menuPos[1][0]);
 				}
@@ -481,8 +481,8 @@ int FSDMGame::play(){
 		
 		//Free resources and close SDL
 		close();
-		cout << "Program Done!" << endl;
-		cout << "Game Over!!" << endl;
+		//cout << "Program Done!" << endl;
+		//cout << "Game Over!!" << endl;
 		return 0;
 	}
 }
@@ -552,7 +552,7 @@ bool FSDMGame::init()
 
 void FSDMGame::close()
 {
-	cout << "Closing..." << endl;
+	//cout << "Closing..." << endl;
 	for(int j = 0; j < 10; j++){
 		delete enemyList[j];	
 		enemyList[j] = NULL;
@@ -698,13 +698,13 @@ void FSDMGame::close()
 	delete textures.notifTextTexture;
 	textures.notifTextTexture = NULL;
 
-	cout << "Textures freed..." << endl;
+	//cout << "Textures freed..." << endl;
 
 	//Free text
 	TTF_CloseFont(gFont);
 	gFont = NULL;
 
-	cout << "Font closed..." << endl;
+	//cout << "Font closed..." << endl;
 
 	//Destroy window	
 	SDL_DestroyRenderer( gRenderer );
@@ -712,13 +712,13 @@ void FSDMGame::close()
 	gWindow = NULL;
 	gRenderer = NULL;
 
-	cout << "Renderer and Window Destroyed..." << endl;
+	//cout << "Renderer and Window Destroyed..." << endl;
 
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
 	
-	cout << "Returning close function..." << endl;
+	//cout << "Returning close function..." << endl;
 }
 
 bool FSDMGame::loadMedia()
@@ -1376,13 +1376,13 @@ void FSDMGame::handleCombatEvent( SDL_Event& e)
 						}
 						break;
 					case SDLK_RETURN:
-						cout << "gamestate: "<<gamestate<<endl;
-						cout << "arrow: "<<arrowState<<endl;
+						//cout << "gamestate: "<<gamestate<<endl;
+						//cout << "arrow: "<<arrowState<<endl;
 						if(arrowState == 0){
 							combat_action = 1;	//attack
 						}else if(arrowState == 1){
 							gamestate = 1;		//escape combat
-							cout << "gamestate: "<< gamestate <<endl;
+							//cout << "gamestate: "<< gamestate <<endl;
 						}else if(arrowState == 2){
 							combat_menu_state = 1;	//enter abilities submenu
 						}
@@ -1524,14 +1524,14 @@ void FSDMGame::handleStartEvent(SDL_Event &e) {
 				}
 				break;
 			case SDLK_RETURN:
-				cout << "gamestate: "<<gamestate<<endl;
-					cout << "arrow: "<<arrowState<<endl;
+				//cout << "gamestate: "<<gamestate<<endl;
+					//cout << "arrow: "<<arrowState<<endl;
 					gamestate = 1;
 					if(arrowState == 0){
 						characterType = 0;	//warrior
 					}else if(arrowState == 1){
 						characterType = 1;		//rogue
-						cout << "gamestate: "<<gamestate<<endl;
+						//cout << "gamestate: "<<gamestate<<endl;
 					}else if(arrowState == 2){
 						characterType = 2;	//wizard
 					}	
@@ -1817,7 +1817,7 @@ void FSDMGame::updateLevelText(int remaining){
 }
 
 void FSDMGame::updateNotificationText(string message){
-	cout << "Updating message..." << endl;
+	//cout << "Updating message..." << endl;
 	int success = true;
 	SDL_Color textColor = {0, 0, 0};
 	if( !textures.notifTextTexture->loadFromRenderedText(message, textColor)){
@@ -1844,7 +1844,7 @@ void FSDMGame::loadEnemies(string file){
 		count++;
 		if(count >=17){	//after 16 numbers are read
 			monsterPicCount = stats[16];
-			cout<<"monster count: "<<monsterPicCount<<endl;
+			//cout<<"monster count: "<<monsterPicCount<<endl;
 			switch (monsterPicCount){
 				case 1:	pic = gDragon[0]; break;
 				case 2:	pic = gYetti[0]; break;
@@ -1859,7 +1859,7 @@ void FSDMGame::loadEnemies(string file){
 			//for(int i=j; i<5; i++){
 			//cout <<"pic: "<<endl;
 			for( vector<int>::const_iterator i = stats.begin(); i != stats.end(); ++i)
-    				cout << *i << ' ';
+    				//cout << *i << ' ';
 			enemyList[j] = new Enemy(stats[0], stats[1], stats[2], stats[3], stats[4], stats[5], stats[6], stats[7], stats[8], stats[9], stats[10], stats[11], stats[12], stats[13], stats[14], stats[15], pic);
 			j++;	//increment enemyList
 			stats.clear();	//clear stats vector

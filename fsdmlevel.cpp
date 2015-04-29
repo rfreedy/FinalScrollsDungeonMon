@@ -63,7 +63,7 @@ SDL_Rect* FSDMLevel::getTileClip(int mtype){
 
 bool FSDMLevel::setTiles(int maplevel)
 {
-	std::cout << "test" << std::endl;
+	//std::cout << "test" << std::endl;
 	//Success flag
 	bool tilesLoaded = true;
 
@@ -75,7 +75,7 @@ bool FSDMLevel::setTiles(int maplevel)
 	std::string dungeon2 = "dungeon3.map";
 	//declare map variable
 	std::ifstream map; 
-	std::cout << "map level value: " << maplevel << std::endl;
+	//std::cout << "map level value: " << maplevel << std::endl;
     	//Open the map
     	switch(maplevel) {
 		case OVERWORLD: { 
@@ -97,7 +97,7 @@ bool FSDMLevel::setTiles(int maplevel)
 		printf( "Unable to load map file!\n" );
 		tilesLoaded = false;
     	}else{
-		std::cout << "total tiles is: " << TOTAL_TILES << std::endl;
+		//std::cout << "total tiles is: " << TOTAL_TILES << std::endl;
 		//Initialize the tiles
 		for( int i = 0; i < TOTAL_TILES; ++i )
 		{
