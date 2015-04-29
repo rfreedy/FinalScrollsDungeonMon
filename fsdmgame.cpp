@@ -22,6 +22,8 @@ using namespace std;
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 SDL_Rect gRedMan[8];		//class for aninamted character
+SDL_Rect gWizMan[8]; // class for animated wizard
+SDL_Rect gWarMan[8]; //class for animated warrior
 TTF_Font* gFont = NULL;
 
 void FSDMGame::start() {
@@ -1001,6 +1003,106 @@ bool FSDMGame::loadMedia()
 		gRedMan[ 7 ].y = 158;
 		gRedMan[ 7 ].w = 30;
 		gRedMan[ 7 ].h = 40;
+
+// WIZARD Sprite
+		//Set top left sprite		FRONT
+		gWizMan[ 0 ].x =   196;
+		gWizMan[ 0 ].y =   420;
+		gWizMan[ 0 ].w = 35;
+		gWizMan[ 0 ].h = 40;
+
+		//Set top right spriten
+		gWizMan[ 1 ].x =  235;
+		gWizMan[ 1 ].y =  420;
+		gWizMan[ 1 ].w =  35;
+		gWizMan[ 1 ].h =  40;
+		
+		//Set bottom left sprite	BACK
+		gWizMan[ 2 ].x =   196;
+		gWizMan[ 2 ].y =   370;
+		gWizMan[ 2 ].w =    35;
+		gWizMan[ 2 ].h =    40;
+
+		//Set bottom right sprite
+		gWizMan[ 3 ].x = 235;
+		gWizMan[ 3 ].y = 372;
+		gWizMan[ 3 ].w = 35;
+		gWizMan[ 3 ].h = 40;
+
+		//Set bottom left sprite	RIGHT
+		gWizMan[ 4 ].x = 275;
+		gWizMan[ 4 ].y = 372;
+		gWizMan[ 4 ].w = 35;
+		gWizMan[ 4 ].h = 40;
+
+		//Set bottom right sprite
+		gWizMan[ 5 ].x = 313;
+		gWizMan[ 5 ].y = 372;
+		gWizMan[ 5 ].w = 35;
+		gWizMan[ 5 ].h = 40;
+
+		//Set bottom left sprite	LEFT
+
+		gWizMan[ 6 ].x = 275;
+		gWizMan[ 6 ].y = 417;
+		gWizMan[ 6 ].w = 30;
+		gWizMan[ 6 ].h = 40;
+
+		//Set bottom right sprite
+		gWizMan[ 7 ].x = 311;
+		gWizMan[ 7 ].y = 414;
+		gWizMan[ 7 ].w = 30;
+		gWizMan[ 7 ].h = 40;
+
+	// WARRIOR Sprite
+		//Set top left sprite		FRONT
+		gWarMan[ 0 ].x =   7;
+		gWarMan[ 0 ].y = 202;
+		gWarMan[ 0 ].w =  35;
+		gWarMan[ 0 ].h =  40;
+
+		//Set top right spriten
+		gWarMan[ 1 ].x =  53;
+		gWarMan[ 1 ].y =  202;
+		gWarMan[ 1 ].w =  35;
+		gWarMan[ 1 ].h =  40;
+	
+		//Set bottom left sprite	BACK
+		gWarMan[ 2 ].x =   7;
+		gWarMan[ 2 ].y = 248;
+		gWarMan[ 2 ].w =  35;
+		gWarMan[ 2 ].h =  40;
+
+		//Set bottom right sprite
+		gWarMan[ 3 ].x =  53;
+		gWarMan[ 3 ].y = 248;
+		gWarMan[ 3 ].w =  35;
+		gWarMan[ 3 ].h =  40;
+
+		//Set bottom right sprite	RIGHT
+		gWarMan[ 4 ].x = 109;
+		gWarMan[ 4 ].y = 202;
+		gWarMan[ 4 ].w =  35;
+		gWarMan[ 4 ].h =  40;
+
+		//Set bottom right sprite
+		gWarMan[ 5 ].x = 151;
+		gWarMan[ 5 ].y = 202;
+		gWarMan[ 5 ].w =  35;
+		gWarMan[ 5 ].h =  40;
+
+		//Set bottom left sprite	LEFT
+
+		gWarMan[ 6 ].x = 108;
+		gWarMan[ 6 ].y = 249;
+		gWarMan[ 6 ].w = 30;
+		gWarMan[ 6 ].h = 40;
+
+		//Set bottom right sprite
+		gWarMan[ 7 ].x = 147;
+		gWarMan[ 7 ].y = 249;
+		gWarMan[ 7 ].w =  30;
+		gWarMan[ 7 ].h =  40;
 	}
 
 	if( !textures.gDragonTexture->loadFromFile( "characters-2sizeChange.png" ) )

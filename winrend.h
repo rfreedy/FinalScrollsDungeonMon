@@ -6,6 +6,8 @@
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
 extern SDL_Rect gRedMan[8];		//class for aninamted character
+extern SDL_Rect gWizMan[8];
+extern SDL_Rect gWarMan[8];
 extern TTF_Font* gFont;
 extern SDL_Rect gDragon[1];
 extern SDL_Rect gBoss[1];	//need to be implemented
