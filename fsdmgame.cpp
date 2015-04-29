@@ -339,8 +339,13 @@ int FSDMGame::play(){
 
 					//If the player's health is 0, go to game state 4 ie game over lose state
 					if(player1->getCurrentHealth() <= 0){
-						notification_message = "You have been killed.";						
-						combat_menu_state = 3;
+						if(combat_menu_state == 4){						
+							gamestate = 1;
+				
+						}else{
+							notification_message = "You've been killed!";
+							combat_menu_state = 3;
+						}
 					}
 					//delete opponent
 
