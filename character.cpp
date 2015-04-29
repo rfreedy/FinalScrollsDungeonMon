@@ -43,7 +43,7 @@ Character::Character(int characterType): Entity(){
 		//initialize values in skills/stats structs	
 		skills.slashing = 15;
 		skills.blunt = 10;
-		skills.speed = 10;
+		skills.speed = 20;
 		skills.sneak = 10;
 		skills.offmage = 10;
 		skills.defmage = 10;
@@ -66,8 +66,8 @@ Character::Character(int characterType): Entity(){
 		skills.blunt = 10;
 		skills.speed = 10;
 		skills.sneak = 10;
-		skills.offmage = 15;
-		skills.defmage = 10;
+		skills.offmage = 25;
+		skills.defmage = 25;
 
 		stats.xp = 0;
 		stats.xpthreshold = 100;

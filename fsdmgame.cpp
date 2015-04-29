@@ -1179,7 +1179,7 @@ bool FSDMGame::loadMedia()
 	}else{
 		//initialize text textures
 		SDL_Color textColor = {0, 0, 0};
-		SDL_Color textColorWhite = {255, 204, 51};
+		SDL_Color textColorWhite = {0, 0, 204};
 		if( !textures.attackTextTexture->loadFromRenderedText("Attack", textColor)){
 			printf("Falied to render attack text texture!\n");
 			success = false;
