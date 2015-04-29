@@ -138,6 +138,20 @@ int Character::checkLevelUp(){
 	}
 }
 
+void Character::healCast(){
+	if(stats.currentHealth + 35 < stats.maxHealth){
+		stats.currentHealth += 35;
+	}else{
+		stats.currentHealth = stats.maxHealth;
+	}	
+
+	stats.currentMana -= 30;
+}
+
+void Character::reflectCast(){
+	stats.currentMana -= 35;
+}
+
 //interactive character creation
 void Character::createCharacter(){
 	//TODO: convert to screen and GUI
@@ -498,6 +512,7 @@ void Character::incStats(int toAssign){
 				break;			
 		}
 	}
+
 	printf("Done allocating %i points!\n", (toAssign*5));
 	return;
 }

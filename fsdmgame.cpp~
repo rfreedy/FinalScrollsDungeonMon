@@ -61,6 +61,7 @@ int FSDMGame::play(){
 		arrowState = 0;
 		combat_menu_state = 0;
 		combat_action = 0;
+		reflect_flag = 0;
 		//int firstround = 1;
 		int combatround = 1;
 		
@@ -134,7 +135,8 @@ int FSDMGame::play(){
 					}
 					else{
 						combat_menu_state = 0;
-						opponent = enemyList[opNum];					
+						opponent = enemyList[opNum];
+						reflect_flag = 0;					
 						gamestate = 2;
 					}					
 				}
@@ -167,7 +169,8 @@ int FSDMGame::play(){
 							cout<<"check3"<<endl;
 								delete enemyList[i];
 								enemyList[i] = NULL;
-							//}
+						
+	//}
 						}
 						loaded_level = new FSDMLevel(DUNGEON2); // this will create the first dungeon
 						//std::cout << "loaded level?" << std::endl;
@@ -199,7 +202,8 @@ int FSDMGame::play(){
 				}
 				player1->move( loaded_level->getTileSet(), enemyList );	//odd number of move functions
 				std::cout << "Move function worked " << std::endl;
-				player1->setCamera( camera );
+				player1->setCamera( camera );void healCast();
+		void reflectCast();
 				std::cout << "camer worked " << std::endl;
 	
 				//Render level
@@ -244,7 +248,8 @@ int FSDMGame::play(){
 					//opponent->refillStamina();
 					//firstround = 0;
 					//combatround = 0;
-				//}
+				//}void healCast();
+		void reflectCast();
 				
 
 
@@ -274,7 +279,14 @@ int FSDMGame::play(){
 						if(opponent->speedCheck() > player1->speedCheck()){
 
 							//opponent is faster, enemy moves first
-							player1->defend(opponent->attack(combatround));
+							if(reflect_flag == 1){
+								opponent->defend(opponent->attack(combatround));
+								reflect_flag = 0;
+								notification_message = "Enemy attack reflected!";
+								combat_menu_state = 2;
+							}else{
+								player1->defend(opponent->attack(combatround));
+							}
 		
 							//check for death
 							if(player1->getCurrentHealth() <= 0){continue;};
@@ -309,7 +321,14 @@ int FSDMGame::play(){
 							if(opponent->getCurrentHealth() <= 0){continue;};
 				
 							//opponent move
-							player1->defend(opponent->attack(combatround));
+							if(reflect_flag == 1){
+								opponent->defend(opponent->attack(combatround));
+								reflect_flag = 0;
+								notification_message = "Enemy attack reflected!";
+								combat_menu_state = 2;
+							}else{
+								player1->defend(opponent->attack(combatround));
+							}
 						}
 		
 						//give stamina/mana allowances
@@ -376,9 +395,9 @@ int FSDMGame::play(){
 					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
 				}else if(combat_menu_state == 1){
 					textures.abil0TextTexture->render(menuPos[0][0], menuPos[1][0]);
-					textures.abil1TextTexture->render(menuPos[0][1], menuPos[1][1]);
+					//textures.abil1TextTexture->render(menuPos[0][1], menuPos[1][1]);
 					textures.abil2TextTexture->render(menuPos[0][2], menuPos[1][2]);
-					textures.abil3TextTexture->render(menuPos[0][3], menuPos[1][3]);
+					//textures.abil3TextTexture->render(menuPos[0][3], menuPos[1][3]);
 					textures.arrowTexture->render(arrowPos[0][arrowState], arrowPos[1][arrowState]);
 				}else if(combat_menu_state == 2 || combat_menu_state == 3 || combat_menu_state == 4){
 					//notification 
@@ -1179,7 +1198,7 @@ bool FSDMGame::loadMedia()
 	}else{
 		//initialize text textures
 		SDL_Color textColor = {0, 0, 0};
-		SDL_Color textColorWhite = {255, 255, 255};
+		SDL_Color textColorWhite = {255, 255, 0};
 		if( !textures.attackTextTexture->loadFromRenderedText("Attack", textColor)){
 			printf("Falied to render attack text texture!\n");
 			success = false;
@@ -1378,16 +1397,16 @@ void FSDMGame::handleCombatEvent( SDL_Event& e)
 			if( e.type == SDL_KEYDOWN && e.key.repeat == 0 ){
 				switch(e.key.keysym.sym){
 					case SDLK_UP:
-						if(arrowState > 1){
+						if(arrowState == 2){
 							arrowState -= 2;
 						}
 						break;
 					case SDLK_DOWN:
-						if(arrowState < 2){
+						if(arrowState == 0){
 							arrowState += 2;
 						}
 						break;
-					case SDLK_LEFT:
+					/*case SDLK_LEFT:
 						if((arrowState == 1) || (arrowState == 3)){
 							arrowState--;
 						}
@@ -1396,9 +1415,50 @@ void FSDMGame::handleCombatEvent( SDL_Event& e)
 						if((arrowState == 0) || (arrowState == 2)){
 							arrowState++;
 						}
-						break;
+						break; */
 					case SDLK_RETURN:
 						//activate ability
+						if(arrowState == 0){	//heal
+							if(player1->getCurrentMana() > 30){
+								
+								if(player1->getDefmage() >= 17){
+									player1->healCast();
+									arrowState = 0;
+									combat_menu_state = 0;
+								}else{
+									notification_message = "Not enough skill to cast.";
+									combat_menu_state = 2;
+									arrowState = 0;
+								}							
+							}else{
+								notification_message = "Not enough mana to heal.";
+								combat_menu_state = 2;
+								arrowState = 0;
+							}
+						}else if(arrowState == 2){	//reflect
+							if(reflect_flag == 0){
+								if(player1->getCurrentMana() > 35){
+									if(player1->getDefmage() >= 35){
+										reflect_flag = 1;
+										player1->reflectCast();
+										arrowState = 0;
+										combat_menu_state = 0;
+									}else{
+										notification_message = "Not enough skill to cast.";
+										combat_menu_state = 2;
+										arrowState = 0;
+									}							
+								}else{
+									notification_message = "Not enough mana to reflect.";
+									combat_menu_state = 2;
+									arrowState = 0;
+								}
+							}else{
+								notification_message = "Already cast this turn.";
+								combat_menu_state = 2;
+								arrowState = 0;
+							}
+						}
 						break;
 					case SDLK_ESCAPE:
 						//return to previous menu

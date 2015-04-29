@@ -63,6 +63,9 @@ class Character: public Entity{
 
 		void refillAllStats();
 
+		void healCast();
+		void reflectCast();
+
 		void incrementStat(int);
 		void incrementSkill(int);
 
