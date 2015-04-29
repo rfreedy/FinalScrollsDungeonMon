@@ -14,7 +14,6 @@ using namespace std;
 
 #include "entity.h"
 #include "character.h"
-#include "Dot.h"
 class Enemy: public Entity{
 	public:
 		Enemy(int, int,int,int,int,int,int,int,int,int,int,int,int,int,int,int, SDL_Rect);	//constructor

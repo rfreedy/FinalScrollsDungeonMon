@@ -10,7 +10,6 @@
 #include <fstream>
 #include "fsdmgame.h"
 #include "fsdmlevel.h"
-#include "Dot.h"
 #include "Tile.h"
 #include "LTexture.h"
 

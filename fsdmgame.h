@@ -15,7 +15,6 @@ using namespace std;
 #include <SDL2/SDL_ttf.h>
 #include "LTexture.h"
 #include "Tile.h"
-#include "Dot.h"
 #include "fsdmlevel.h"
 #include "entity.h"
 #include "character.h"
