@@ -1294,6 +1294,7 @@ void FSDMGame::handleCombatEvent( SDL_Event& e)
 						break;
 					case SDLK_ESCAPE:
 						//return to previous menu
+						arrowState = 0;
 						combat_menu_state = 0;
 						break;
 					default:

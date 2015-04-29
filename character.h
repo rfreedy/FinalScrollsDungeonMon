@@ -98,7 +98,7 @@ class Character: public Entity{
 
 		int level_coordinates_x;
 		int level_coordinates_y;
-		
+		int chType;	
 		//movement, animation and tiling
 		SDL_Rect mBox;	//Collision box of the dot
 		//The velocity of the dot

@@ -17,6 +17,7 @@ using namespace std;
 //default constructor
 Character::Character(int characterType): Entity(){
 
+	chType = characterType;
 	if (characterType == 0) { //warrior
 		//initialize values in skills/stats structs	
 		skills.slashing = 10;
@@ -95,7 +96,15 @@ Character::Character(int characterType): Entity(){
     mVelY = 0;
 
 	count = 0;
-	currentClip = &gRedMan[ 0 ];
+	if (chType == 0) {
+		currentClip = &gWarMan[ 0 ];
+	}
+	if (chType == 1) {
+		currentClip = &gRedMan[ 0 ];
+	} 
+	if (chType == 2)  {
+		currentClip = &gWizMan[ 0 ];
+	}
 	up =0;
 	down = 0;
 	left = 0;
@@ -241,7 +250,6 @@ int Character::getBlunt(){
 int Character::getSneak(){
 	return skills.sneak;
 }
-
 int Character::getOffmage(){
 	return skills.offmage;
 }
@@ -338,7 +346,7 @@ void Character::fight(Enemy &opponent){
 			//opponent is faster, enemy moves first
 			defend(opponent.attack(movecount));
 
-			//check for death
+	//check for death
 			if(stats.currentHealth <= 0){break;};
 			
 			//player move
@@ -398,7 +406,6 @@ void Character::refillMana(){
 void Character::defend(int base_damage){
 	
 	int damage = base_damage;	//base_damage could just be substituted, but this would make damage modification easier
-
 	if(stats.currentHealth - damage > 0){
 		//regular damage taken, no KO
 		stats.currentHealth -= damage;
@@ -553,10 +560,10 @@ void Character::handleEvent( SDL_Event& e )
 		//mBox.y = mBox.y - TILE_SIZE; 
 		mVelY -= DOT_VEL; 
 		if(count%2 == 0){
-			currentClip = &gRedMan[ 2 ];
+	//		currentClip = &gRedMan[ 2 ];
 		}
 		else{
-			currentClip = &gRedMan[ 3 ];
+	//		currentClip = &gRedMan[ 3 ];
 		}
 		//count++;
 		}
@@ -570,10 +577,10 @@ void Character::handleEvent( SDL_Event& e )
 		//mBox.y = mBox.y + TILE_SIZE; 
 		mVelY += DOT_VEL;
 		if(count%2 == 0){
-			currentClip = &gRedMan[ 0 ];
+	//		currentClip = &gRedMan[ 0 ];
 		}
 		else{
-			currentClip = &gRedMan[ 1 ];
+	//		currentClip = &gRedMan[ 1 ];
 		}
 		//count++;
 		}
@@ -587,10 +594,10 @@ void Character::handleEvent( SDL_Event& e )
 		//mBox.x = mBox.x - TILE_SIZE; 
 		mVelX -= DOT_VEL; 
 		if(count%2 == 0){
-			currentClip = &gRedMan[ 6 ];
+	//		currentClip = &gRedMan[ 6 ];
 		}
 		else{
-			currentClip = &gRedMan[ 7 ];
+	//		currentClip = &gRedMan[ 7 ];
 		}
 		}
 		break;
@@ -604,10 +611,10 @@ void Character::handleEvent( SDL_Event& e )
 		//mBox.x = mBox.x + TILE_SIZE; 
 		mVelX += DOT_VEL; 
 		if(count%2 == 0){
-			currentClip = &gRedMan[ 4 ];
+	//		currentClip = &gRedMan[ 4 ];
 		}
 		else{
-			currentClip = &gRedMan[ 5 ];
+	//		currentClip = &gRedMan[ 5 ];
 		}
 		}
 		break;
@@ -643,6 +650,45 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
 	//left =0;
 	count++;		//increment count in move (continuous
 	int returnVal =0;
+
+    if(chType == 0) {
+	if (right > 0){		//update SDL_ract in move
+		if(count%2 == 0){
+			currentClip = &gWarMan[ 4 ];
+		}
+		else{
+			currentClip = &gWarMan[ 5 ];
+		}
+	}
+	else if (left >0){
+		if(count%2 == 0){
+			currentClip = &gWarMan[ 6 ];
+		}
+		else{
+			currentClip = &gWarMan[ 7 ];
+		}
+	}
+	else if(down > 0){
+		if(count%2 == 0){
+			currentClip = &gWarMan[ 0 ];
+		}
+		else{
+			currentClip = &gWarMan[ 1 ];
+		}
+	}
+	else if (up >0){
+		if(count%2 == 0){
+			currentClip = &gWarMan[ 2 ];
+		}
+		else{
+			currentClip = &gWarMan[ 3 ];
+		}
+	}
+    }
+
+
+
+   if(chType == 1) {
 	if (right > 0){		//update SDL_ract in move
 		if(count%2 == 0){
 			currentClip = &gRedMan[ 4 ];
@@ -675,7 +721,41 @@ int Character::move( Tile *tiles[], Enemy *enemyList[] )
 			currentClip = &gRedMan[ 3 ];
 		}
 	}
-
+    }
+  if(chType == 2) {
+	if (right > 0){		//update SDL_ract in move
+		if(count%2 == 0){
+			currentClip = &gWizMan[ 4 ];
+		}
+		else{
+			currentClip = &gWizMan[ 5 ];
+		}
+	}
+	else if (left >0){
+		if(count%2 == 0){
+			currentClip = &gWizMan[ 6 ];
+		}
+		else{
+			currentClip = &gWizMan[ 7 ];
+		}
+	}
+	else if(down > 0){
+		if(count%2 == 0){
+			currentClip = &gWizMan[ 0 ];
+		}
+		else{
+			currentClip = &gWizMan[ 1 ];
+		}
+	}
+	else if (up >0){
+		if(count%2 == 0){
+			currentClip = &gWizMan[ 2 ];
+		}
+		else{
+			currentClip = &gWizMan[ 3 ];
+		}
+	}
+    }
 
 
     mBox.x += mVelX;
