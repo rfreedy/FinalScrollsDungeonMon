@@ -117,6 +117,7 @@ class FSDMGame{
 		int arrowState;
 		int combat_menu_state;		//0: top level, 1: abilities, 2: notification
 		int combat_action;		//0: nothing, 1: attack
+		int reflect_flag;
 		int level_menu_state;
 		int points_remaining;		//for distributing points at levelup
 		int characterType; //0 = warrior, 1 = rogue, 2 = wizard

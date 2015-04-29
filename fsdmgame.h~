@@ -100,6 +100,8 @@ class FSDMGame{
 		void handleLevelEvent( SDL_Event& );
 		int findOpponent();
 
+		void updateNotificationText(string);
+
 		void updateStatText();
 		void updateLevelText(int);
 		void loadEnemies(string);
